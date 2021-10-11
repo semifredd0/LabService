@@ -1,4 +1,4 @@
-package com.uniba.di.dfmdevelop.labservice.registration;
+package com.uniba.di.dfmdevelop.labservice.email;
 
 import org.springframework.stereotype.Service;
 import java.util.function.Predicate;

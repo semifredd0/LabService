@@ -1,6 +1,5 @@
-package com.uniba.di.dfmdevelop.labservice.registration.token;
+package com.uniba.di.dfmdevelop.labservice.model;
 
-import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,5 +1,7 @@
-package com.uniba.di.dfmdevelop.labservice.registration.token;
+package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
+import com.uniba.di.dfmdevelop.labservice.repository.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

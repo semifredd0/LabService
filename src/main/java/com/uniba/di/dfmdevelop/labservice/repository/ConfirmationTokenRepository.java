@@ -1,5 +1,6 @@
-package com.uniba.di.dfmdevelop.labservice.registration.token;
+package com.uniba.di.dfmdevelop.labservice.repository;
 
+import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

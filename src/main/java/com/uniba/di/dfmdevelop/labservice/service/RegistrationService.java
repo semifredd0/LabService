@@ -1,16 +1,15 @@
-package com.uniba.di.dfmdevelop.labservice.registration;
+package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
+import com.uniba.di.dfmdevelop.labservice.email.EmailValidator;
+import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.registration.requests.LaboratorioRegistrationRequest;
-import com.uniba.di.dfmdevelop.labservice.registration.requests.RegistrationRequest;
-import com.uniba.di.dfmdevelop.labservice.registration.token.ConfirmationToken;
-import com.uniba.di.dfmdevelop.labservice.registration.token.ConfirmationTokenService;
-import com.uniba.di.dfmdevelop.labservice.security.CustomUserDetailService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -22,7 +21,7 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
-    public String register(RegistrationRequest request) {
+    public String register(LaboratorioDTO request) {
         boolean isValidEmail = emailValidator.
                 test(request.getIndirizzoEmail());
 
@@ -129,21 +128,19 @@ public class RegistrationService {
                 "</div></div>";
     }
 
-    private String getToken(RegistrationRequest request) {
+    private String getToken(LaboratorioDTO request) {
 
         String token;
         RequestEnum tipoUtente = RequestEnum.valueOf(request.getClass().getSimpleName());
 
         switch(tipoUtente) {
 
-            case LaboratorioRegistrationRequest:
-
-                LaboratorioRegistrationRequest customReq = (LaboratorioRegistrationRequest) request;
+            case LaboratorioDTO:
                 UtenteGenerico u1 = new UtenteGenerico(
-                        customReq.getIndirizzoEmail(), customReq.getPassword(), customReq.getRuolo());
-                Laboratorio l1 = new Laboratorio(customReq.getNomeLaboratorio(),
-                        customReq.getNumeroTelefono(), customReq.getIndirizzoStradale(),
-                        customReq.getCodiceIban(), customReq.getPartitaIva(), u1);
+                        request.getIndirizzoEmail(), request.getPassword(), request.getRuolo());
+                Laboratorio l1 = new Laboratorio(request.getNomeLaboratorio(),
+                        request.getNumeroTelefono(), request.getIndirizzoStradale(),
+                        request.getCodiceIban(), request.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
                 token = userDetailService.signUpUser(u1);
                 return token;
@@ -152,7 +149,7 @@ public class RegistrationService {
     }
 
     private enum RequestEnum {
-        LaboratorioRegistrationRequest,
-        // ... aggiungere nomi delle altre classi del modello
+        LaboratorioDTO,
+        // ... aggiungere nomi delle altre classi DTO
     }
 }

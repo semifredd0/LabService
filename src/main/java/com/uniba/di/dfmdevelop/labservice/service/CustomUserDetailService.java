@@ -1,8 +1,7 @@
-package com.uniba.di.dfmdevelop.labservice.security;
+package com.uniba.di.dfmdevelop.labservice.service;
 
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.registration.token.ConfirmationToken;
-import com.uniba.di.dfmdevelop.labservice.registration.token.ConfirmationTokenService;
+import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
