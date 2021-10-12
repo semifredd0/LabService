@@ -7,18 +7,22 @@
     <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-user"></i> Please Login
+                <i class="fa fa-user"></i> Login
             </div>
             <div class="card-block" style="padding: 24px;">
                 <form name="f" th:action="@{/login}" method="post">
                     <fieldset>
                         <!-- Thymeleaf + Spring Security error display -->
                         <div th:if="${param.error}" class="alert alert-danger">
-                            Invalid username and password.
+                            Credenziali non valide.
                         </div>
 
                         <div th:if="${param.logout}" class="alert alert-success">
-                            You have been logged out.
+                            Logout effettuato.
+                        </div>
+
+                        <div th:if="${param.confirmed}" class="alert alert-success">
+                            Account confermato. Puoi effettuare l'accesso.
                         </div>
 
                         <!-- Login Controls -->

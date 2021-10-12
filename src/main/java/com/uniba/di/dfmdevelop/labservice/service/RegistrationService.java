@@ -9,7 +9,6 @@ import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -56,7 +55,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         userDetailService.enableUser(
                 confirmationToken.getUtenteGenerico().getEmail());
-        return "confirmed";
+        return "redirect:/login?confirmed";
     }
 
     private String buildEmail(String name, String link) {

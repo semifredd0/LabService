@@ -40,7 +40,6 @@ public class HomeController {
     public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
                            BindingResult bindingResult,
                            Model model) {
-        // System.out.println(request);
         model.addAttribute("laboratorioDTO", request);
         if(bindingResult.hasErrors())
             return "registration";

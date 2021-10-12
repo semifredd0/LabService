@@ -2,7 +2,6 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 import javax.validation.constraints.NotEmpty;
 
 @EqualsAndHashCode
@@ -34,7 +33,7 @@ public class LaboratorioDTO {
                           String indirizzoStradale,
                           String codiceIban,
                           String partitaIva) {
-
+        super();
         this.indirizzoEmail = indirizzoEmail;
         this.password = password;
         this.ruolo = ruolo;
@@ -77,5 +76,37 @@ public class LaboratorioDTO {
 
     public String getPartitaIva() {
         return partitaIva;
+    }
+
+    public void setIndirizzoEmail(String indirizzoEmail) {
+        this.indirizzoEmail = indirizzoEmail;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+    }
+
+    public void setNomeLaboratorio(String nomeLaboratorio) {
+        this.nomeLaboratorio = nomeLaboratorio;
+    }
+
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
+    }
+
+    public void setIndirizzoStradale(String indirizzoStradale) {
+        this.indirizzoStradale = indirizzoStradale;
+    }
+
+    public void setCodiceIban(String codiceIban) {
+        this.codiceIban = codiceIban;
+    }
+
+    public void setPartitaIva(String partitaIva) {
+        this.partitaIva = partitaIva;
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import lombok.Data;
@@ -6,8 +7,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity( name = "cittadino")
-public class Cittadino extends UtenteGenerico{
+@Entity(name = "cittadino")
+public class Cittadino extends UtenteGenerico {
 
     @Column(
             name = "data_nascita",
@@ -36,3 +37,4 @@ public class Cittadino extends UtenteGenerico{
         this.codFiscale = codFiscale;
     }
 }
+*/

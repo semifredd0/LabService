@@ -1,3 +1,4 @@
+/*
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import lombok.Data;
@@ -35,3 +36,4 @@ public class DatoreLavoro extends UtenteGenerico{
         this.indirizzoAzienda = indirizzoAzienda;
     }
 }
+ */
