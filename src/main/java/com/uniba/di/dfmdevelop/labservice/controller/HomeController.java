@@ -1,6 +1,8 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
+import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -39,17 +41,21 @@ public class HomeController {
     @PostMapping("registration")
     public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
                            BindingResult bindingResult,
-                           Model model) {
+                           Model model) throws CustomException {
         model.addAttribute("laboratorioDTO", request);
         if(bindingResult.hasErrors())
             return "registration";
+
+        if(request.getPassword().equals(request.getConferma_password()));
+        else throw new CustomException(ErrorMessage.PASSWORD_DOESNT_MATCH);
 
         registrationService.register(request);
         return "redirect:/registration?success";
     }
 
     @GetMapping(path = "registration/confirm")
-    public String confirm(@RequestParam("token") String token) {
+    public String confirm(@RequestParam("token") String token)
+            throws CustomException {
         return registrationService.confirmToken(token);
     }
 

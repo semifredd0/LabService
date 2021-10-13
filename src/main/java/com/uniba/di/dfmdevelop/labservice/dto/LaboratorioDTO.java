@@ -12,6 +12,8 @@ public class LaboratorioDTO {
     private String indirizzoEmail;
     @NotEmpty(message = "Inserisci la password")
     private String password;
+    @NotEmpty(message = "Conferma la password")
+    private String conferma_password;
     @NotEmpty(message = "Inserisci il ruolo")
     private String ruolo;
     @NotEmpty(message = "Inserisci il nome laboratorio")
@@ -54,6 +56,10 @@ public class LaboratorioDTO {
         return password;
     }
 
+    public String getConferma_password() {
+        return conferma_password;
+    }
+
     public String getRuolo() {
         return ruolo;
     }
@@ -84,6 +90,10 @@ public class LaboratorioDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setConferma_password(String conferma_password) {
+        this.conferma_password = conferma_password;
     }
 
     public void setRuolo(String ruolo) {
