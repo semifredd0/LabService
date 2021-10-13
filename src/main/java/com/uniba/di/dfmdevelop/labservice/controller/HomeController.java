@@ -47,9 +47,27 @@ public class HomeController {
             return "registration";
 
         if(request.getPassword().equals(request.getConferma_password()));
-        else throw new CustomException(ErrorMessage.PASSWORD_DOESNT_MATCH);
+        else {
+            // throw new CustomException(ErrorMessage.PASSWORD_DOESNT_MATCH);
+            return "redirect:/registration?pass_match";
+        }
 
-        registrationService.register(request);
+        try {
+            registrationService.register(request);
+        } catch(CustomException e) {
+            switch(e.getMessage()) {
+                case ErrorMessage.EMAIL_ALREADY_CONFIRMED:
+                    return "redirect:/login?already_confirmed";
+                case ErrorMessage.EMAIL_ALREADY_TAKEN:
+                    return "redirect:/registration?already_taken";
+                case ErrorMessage.EMAIL_FAIL_SEND:
+                    return "redirect:/registration?fail_send";
+                case ErrorMessage.TOKEN_EXPIRED:
+                case ErrorMessage.TOKEN_NOT_FOUND:
+                    return "redirect:/registration?token_exp";
+            }
+        }
+        // Successo
         return "redirect:/registration?success";
     }
 

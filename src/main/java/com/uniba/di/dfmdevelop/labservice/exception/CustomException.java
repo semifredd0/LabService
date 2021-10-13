@@ -31,7 +31,7 @@ public class CustomException extends Exception {
      * Riceve come parametro un oggetto Throwable
      * che indica la causa dell'eccezione, e si occupa
      * di invocare il costruttore della classe Exception
-     * che prende in input un oggetto Thowable.
+     * che prende in input un oggetto Throwable.
      * @param cause Causa dell'eccezione.
      * @see Exception#Exception(Throwable)
      */

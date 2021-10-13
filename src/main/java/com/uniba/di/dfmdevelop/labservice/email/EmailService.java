@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.email;
 
+import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,7 +19,7 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void send(String to, String email) {
+    public void send(String to, String email) throws CustomException {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -28,7 +29,7 @@ public class EmailService implements EmailSender {
             helper.setFrom("labservice.management@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new IllegalStateException(ErrorMessage.EMAIL_FAIL_SEND);
+            throw new CustomException(ErrorMessage.EMAIL_FAIL_SEND);
         }
     }
 }

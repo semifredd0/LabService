@@ -2,29 +2,47 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @EqualsAndHashCode
 @ToString
 public class LaboratorioDTO {
 
-    @NotEmpty(message = "Inserisci l'indirizzo e-mail")
+    @NotEmpty
+    @Email(message = "Il campo deve essere del formato corretto")
     private String indirizzoEmail;
-    @NotEmpty(message = "Inserisci la password")
+
+    @NotEmpty
+    @Size(min = 6, message = "Il campo deve contenere almeno 6 caratteri")
     private String password;
-    @NotEmpty(message = "Conferma la password")
+
+    @NotEmpty
     private String conferma_password;
-    @NotEmpty(message = "Inserisci il ruolo")
+
+    // TODO: enum
+    @NotEmpty
     private String ruolo;
-    @NotEmpty(message = "Inserisci il nome laboratorio")
+
+    @NotEmpty
+    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
     private String nomeLaboratorio;
-    @NotEmpty(message = "Inserisci il numero di telefono")
+
+    @NotEmpty
+    @Size(min = 10, max = 10, message = "Il campo deve contenere esattamente 10 caratteri")
     private String numeroTelefono;
-    @NotEmpty(message = "Inserisci l'indirizzo stradale")
+
+    @NotEmpty
+    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
     private String indirizzoStradale;
-    @NotEmpty(message = "Inserisci il codice IBAN")
+
+    @NotEmpty
+    @Size(min = 27, max = 27, message = "Il campo deve contenere esattamente 27 caratteri")
     private String codiceIban;
-    @NotEmpty(message = "Inserisci la partita IVA")
+
+    @NotEmpty
+    @Size(min = 11, max = 11, message = "Il campo deve contenere esattamente 11 caratteri")
     private String partitaIva;
 
     public LaboratorioDTO(String indirizzoEmail,

@@ -17,6 +17,10 @@
                             Credenziali non valide.
                         </div>
 
+                        <div th:if="${param.already_confirmed}" class="alert alert-success">
+                            Indirizzo e-mail gia' confermato. Puoi effettuare l'accesso.
+                        </div>
+
                         <div th:if="${param.logout}" class="alert alert-success">
                             Logout effettuato.
                         </div>

@@ -23,11 +23,13 @@ public class RegistrationService {
     private final EmailSender emailSender;
 
     public String register(LaboratorioDTO request) throws CustomException {
-        boolean isValidEmail = emailValidator.
-                test(request.getIndirizzoEmail());
 
-        if (!isValidEmail)
-            throw new CustomException(ErrorMessage.EMAIL_NOT_VALID);
+        /* -- Aggiunta la validazione direttamente nel DTO con @Email --
+            boolean isValidEmail = emailValidator.
+                    test(request.getIndirizzoEmail());
+            if (!isValidEmail)
+                throw new CustomException(ErrorMessage.EMAIL_NOT_VALID);
+         */
 
         String token = getToken(request);
         String link = "http://localhost:8080/registration/confirm?token=" + token;
@@ -41,8 +43,7 @@ public class RegistrationService {
     public String confirmToken(String token) throws CustomException {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
-                .orElseThrow(() ->
-                        new CustomException(ErrorMessage.TOKEN_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorMessage.TOKEN_NOT_FOUND));
 
         if (confirmationToken.getConfirmedAt() != null) {
             throw new CustomException(ErrorMessage.EMAIL_ALREADY_CONFIRMED);
