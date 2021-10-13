@@ -3,6 +3,8 @@ package com.uniba.di.dfmdevelop.labservice.service;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.email.EmailValidator;
+import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
+import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
@@ -20,12 +22,12 @@ public class RegistrationService {
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
-    public String register(LaboratorioDTO request) {
+    public String register(LaboratorioDTO request) throws CustomException {
         boolean isValidEmail = emailValidator.
                 test(request.getIndirizzoEmail());
 
         if (!isValidEmail)
-            throw new IllegalStateException("email not valid");
+            throw new CustomException(ErrorMessage.EMAIL_NOT_VALID);
 
         String token = getToken(request);
         String link = "http://localhost:8080/registration/confirm?token=" + token;
@@ -36,20 +38,20 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String confirmToken(String token) {
+    public String confirmToken(String token) throws CustomException {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                        new CustomException(ErrorMessage.TOKEN_NOT_FOUND));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            throw new CustomException(ErrorMessage.EMAIL_ALREADY_CONFIRMED);
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            throw new CustomException(ErrorMessage.TOKEN_EXPIRED);
         }
 
         confirmationTokenService.setConfirmedAt(token);
@@ -127,7 +129,7 @@ public class RegistrationService {
                 "</div></div>";
     }
 
-    private String getToken(LaboratorioDTO request) {
+    private String getToken(LaboratorioDTO request) throws CustomException {
 
         String token;
         RequestEnum tipoUtente = RequestEnum.valueOf(request.getClass().getSimpleName());

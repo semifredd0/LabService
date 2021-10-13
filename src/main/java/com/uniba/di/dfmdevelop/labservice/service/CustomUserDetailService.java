@@ -1,7 +1,9 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
-import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
+import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
+import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,13 +34,12 @@ public class CustomUserDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public String signUpUser(UtenteGenerico utenteGenerico) {
+    public String signUpUser(UtenteGenerico utenteGenerico) throws CustomException {
         boolean userExists = utenteGenericoRepository
                 .findByEmail(utenteGenerico.getEmail()).isPresent();
 
         if (userExists) {
-            // TODO reinviare email con link di conferma
-            throw new IllegalStateException("email already taken");
+            throw new CustomException(ErrorMessage.EMAIL_ALREADY_TAKEN);
         }
 
         String encodedPassword = bCryptPasswordEncoder.encode(utenteGenerico.getPassword());

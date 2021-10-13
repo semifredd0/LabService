@@ -60,6 +60,14 @@
                 </div>
 
                 <div class="form-group">
+                    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <label class="control-label" for="conferma_password"> Conferma password </label> <input
+                        id="conferma_password" class="form-control" type="password" th:field="*{conferma_password}"
+                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                    <div th:if="${#fields.hasErrors('conferma_password')}" th:errors="*{conferma_password}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
                     <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="ruolo"> Ruolo </label> <input
                         id="ruolo" class="form-control" th:field="*{ruolo}"
