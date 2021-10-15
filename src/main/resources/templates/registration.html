@@ -93,10 +93,14 @@
 
                 <div class="form-group">
                     <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="ruolo"> Ruolo </label> <input
-                        id="ruolo" class="form-control" th:field="*{ruolo}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('ruolo')}" th:errors="*{ruolo}" class="invalid-feedback"></div>
+                    <label class="control-label" for="ruolo"> Ruolo </label>
+                    <select id="ruolo" class="form-control" th:field="*{ruolo}" required autofocus="autofocus">
+                        <option value="LABORATORIO">Laboratorio</option>
+                        <option value="CITTADINO">Cittadino</option>
+                        <option value="MEDICO">Medico di Medicina Generale</option>
+                        <option value="DATORE">Datore di Lavoro</option>
+                        <option value="ASL">ASL</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
