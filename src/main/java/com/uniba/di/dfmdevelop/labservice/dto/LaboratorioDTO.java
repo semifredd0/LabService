@@ -2,7 +2,6 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -87,8 +86,23 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
         return partitaIva;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNomeLaboratorio(String nomeLaboratorio) {
+        this.nomeLaboratorio = nomeLaboratorio;
     }
 
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
+    }
+
+    public void setIndirizzoStradale(String indirizzoStradale) {
+        this.indirizzoStradale = indirizzoStradale;
+    }
+
+    public void setCodiceIban(String codiceIban) {
+        this.codiceIban = codiceIban;
+    }
+
+    public void setPartitaIva(String partitaIva) {
+        this.partitaIva = partitaIva;
+    }
 }

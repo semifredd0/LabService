@@ -2,6 +2,7 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -10,18 +11,17 @@ import javax.validation.constraints.Size;
 @ToString
 public class UtenteGenericoDTO {
 
-    @NotEmpty
+    @NotEmpty(message = "Compilare questo campo")
     @Email(message = "Il campo deve essere del formato corretto")
     protected String indirizzoEmail;
 
-    @NotEmpty
+    @NotEmpty(message = "Compilare questo campo")
     @Size(min = 6, message = "Il campo deve contenere almeno 6 caratteri")
     protected String password;
 
-    @NotEmpty
+    @NotEmpty(message = "Compilare questo campo")
     protected String conferma_password;
 
-    @NotEmpty
     protected String ruolo;
 
     public UtenteGenericoDTO(String indirizzoEmail, String password, String conferma_password, String ruolo) {
@@ -50,7 +50,19 @@ public class UtenteGenericoDTO {
         return ruolo;
     }
 
+    public void setIndirizzoEmail(String indirizzoEmail) {
+        this.indirizzoEmail = indirizzoEmail;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setConferma_password(String conferma_password) {
+        this.conferma_password = conferma_password;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
     }
 }

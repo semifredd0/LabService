@@ -1,8 +1,8 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
-import com.uniba.di.dfmdevelop.labservice.email.EmailValidator;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
@@ -18,11 +18,10 @@ import java.time.LocalDateTime;
 public class RegistrationService {
 
     private final CustomUserDetailService userDetailService;
-    private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
-    public String register(LaboratorioDTO request) throws CustomException {
+    public String register(UtenteGenericoDTO request, String role) throws CustomException {
 
         /* -- Aggiunta la validazione direttamente nel DTO con @Email --
             boolean isValidEmail = emailValidator.
@@ -31,11 +30,11 @@ public class RegistrationService {
                 throw new CustomException(ErrorMessage.EMAIL_NOT_VALID);
          */
 
-        String token = getToken(request);
+        String token = getToken(request,role);
         String link = "http://localhost:8080/registration/confirm?token=" + token;
         emailSender.send(
                 request.getIndirizzoEmail(),
-                buildEmail(request.getNomeLaboratorio(), link));
+                buildEmail(request.getIndirizzoEmail(), link));
         return token;
     }
 
@@ -130,28 +129,22 @@ public class RegistrationService {
                 "</div></div>";
     }
 
-    private String getToken(LaboratorioDTO request) throws CustomException {
+    private String getToken(UtenteGenericoDTO request, String role) throws CustomException {
 
         String token;
-        RequestEnum tipoUtente = RequestEnum.valueOf(request.getClass().getSimpleName());
+        switch(role) {
 
-        switch(tipoUtente) {
-
-            case LaboratorioDTO:
+            case "laboratorioDTO":
+                LaboratorioDTO tmp_req = (LaboratorioDTO) request;
                 UtenteGenerico u1 = new UtenteGenerico(
-                        request.getIndirizzoEmail(), request.getPassword(), request.getRuolo());
-                Laboratorio l1 = new Laboratorio(request.getNomeLaboratorio(),
-                        request.getNumeroTelefono(), request.getIndirizzoStradale(),
-                        request.getCodiceIban(), request.getPartitaIva(), u1);
+                        tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
+                Laboratorio l1 = new Laboratorio(tmp_req.getNomeLaboratorio(),
+                        tmp_req.getNumeroTelefono(), tmp_req.getIndirizzoStradale(),
+                        tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
                 token = userDetailService.signUpUser(u1);
                 return token;
         }
         return null; // eliminare alla fine
-    }
-
-    private enum RequestEnum {
-        LaboratorioDTO,
-        // ... aggiungere nomi delle altre classi DTO
     }
 }

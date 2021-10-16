@@ -12,13 +12,28 @@
             <div class="card-block" style="padding: 24px;">
                 <form name="f" th:action="@{/login}" method="post">
                     <fieldset>
-                        <!-- Thymeleaf + Spring Security error display -->
+
+                        <!-- Se passiamo al link il parametro success, allora viene mostrato il div -->
+                        <!-- success message -->
+                        <div th:if="${param.success}">
+                            <div class="alert alert-success">
+                                Account creato correttamente.
+                                Un link di conferma e' stato inviato sul vostro indirizzo e-mail.
+                            </div>
+                        </div>
+
+                        <div th:if="${param.token_exp}">
+                            <div class="alert alert-danger">
+                                Link di conferma scaduto: effettuare nuovamente la registrazione.
+                            </div>
+                        </div>
+
                         <div th:if="${param.error}" class="alert alert-danger">
                             Credenziali non valide.
                         </div>
 
                         <div th:if="${param.already_confirmed}" class="alert alert-success">
-                            Indirizzo e-mail gia' confermato. Puoi effettuare l'accesso.
+                            Account gia' confermato. Puoi effettuare l'accesso.
                         </div>
 
                         <div th:if="${param.logout}" class="alert alert-success">

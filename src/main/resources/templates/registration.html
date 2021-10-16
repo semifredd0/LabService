@@ -21,7 +21,7 @@
                         class="icon-bar"></span> <span class="icon-bar"></span> <span
                         class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" th:href="@{/}">Registrazione Laboratorio</a>
+                <a class="navbar-brand" href="#" th:href="@{/}">Registrazione</a>
             </div>
         </div>
     </nav>
@@ -33,24 +33,10 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <br><br>
-            <!-- Se passiamo al link il parametro success, allora viene mostrato il div -->
-            <!-- success message -->
-            <div th:if="${param.success}">
-                <div class="alert alert-success">
-                    Account creato correttamente.
-                    Un link di conferma e' stato inviato sul vostro indirizzo e-mail.
-                </div>
-            </div>
 
             <div th:if="${param.already_taken}">
                 <div class="alert alert-danger">
                     Indirizzo e-mail gia' registrato.
-                </div>
-            </div>
-
-            <div th:if="${param.fail_send}">
-                <div class="alert alert-danger">
-                    Impossibile inviare il link di conferma all'indirizzo e-mail specificato.
                 </div>
             </div>
 
@@ -60,15 +46,9 @@
                 </div>
             </div>
 
-            <div th:if="${param.token_exp}">
-                <div class="alert alert-danger">
-                    Link di conferma scaduto: effettuare nuovamente la registrazione.
-                </div>
-            </div>
-
-            <form th:action="@{/registration}" th:object="${laboratorioDTO}" th:method="post">
+            <form th:action="@{/registration}" th:object="${utentegenericoDTO}" th:method="post">
                 <div class="form-group">
-                    <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="indirizzoEmail"> Indirizzo Email </label>
                     <input type="text" id="indirizzoEmail" class="form-control" th:field="*{indirizzoEmail}"
                            th:errorClass="is-invalid" required autofocus="autofocus" />
@@ -76,7 +56,7 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="password"> Password </label> <input
                         id="password" class="form-control" type="password" th:field="*{password}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
@@ -84,7 +64,7 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <!--/*@thymesVar id="conferma_password" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="conferma_password"> Conferma password </label> <input
                         id="conferma_password" class="form-control" type="password" th:field="*{conferma_password}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
@@ -92,7 +72,7 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="ruolo"> Ruolo </label>
                     <select id="ruolo" class="form-control" th:field="*{ruolo}" required autofocus="autofocus">
                         <option value="LABORATORIO">Laboratorio</option>
@@ -104,49 +84,7 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="nomeLaboratorio"> Nome Laboratorio </label> <input
-                        id="nomeLaboratorio" class="form-control" th:field="*{nomeLaboratorio}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('nomeLaboratorio')}" th:errors="*{nomeLaboratorio}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
-                        id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="indirizzoStradale"> Indirizzo Stradale </label> <input
-                        id="indirizzoStradale" class="form-control" th:field="*{indirizzoStradale}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('indirizzoStradale')}" th:errors="*{indirizzoStradale}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <!--/*@thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="codiceIban"> Codice IBAN </label> <input
-                        id="codiceIban" class="form-control" th:field="*{codiceIban}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('codiceIban')}" th:errors="*{codiceIban}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <!--/*@thymesVar id="partitaIva" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="partitaIva"> Partita IVA </label> <input
-                        id="partitaIva" class="form-control" th:field="*{partitaIva}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                    <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Register</button>
-                    <span>Already registered? <a href="/" th:href="@{/login}">Login
-								here</a></span>
+                    <button type="submit" class="btn btn-success"> Continua </button>
                 </div>
             </form>
         </div>

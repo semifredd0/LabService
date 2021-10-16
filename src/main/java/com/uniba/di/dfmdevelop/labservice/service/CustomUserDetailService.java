@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
+    private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;

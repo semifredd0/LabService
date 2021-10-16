@@ -1,10 +1,13 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import javax.validation.Valid;
 public class HomeController {
 
     private final RegistrationService registrationService;
+    private final CustomUserDetailService customUserDetailService;
 
     @GetMapping("index")
     public String index() {
@@ -29,53 +33,66 @@ public class HomeController {
         return "login";
     }
 
-    // REGISTRATION -----------------
-
+    // Get registrazione generico
     @GetMapping("registration")
     public String registration(Model model) {
-        LaboratorioDTO laboratorioDTO = new LaboratorioDTO();
-        model.addAttribute("laboratorioDTO",laboratorioDTO);
+        UtenteGenericoDTO utenteGenericoDTO = new UtenteGenericoDTO();
+        model.addAttribute("utentegenericoDTO", utenteGenericoDTO);
         return "registration";
     }
 
+    // Post registrazione generico
     @PostMapping("registration")
-    public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
+    public String register(@Valid @ModelAttribute("utentegenericoDTO") UtenteGenericoDTO request,
                            BindingResult bindingResult,
-                           Model model) throws CustomException {
-        model.addAttribute("laboratorioDTO", request);
-        if(bindingResult.hasErrors())
+                           Model model) {
+        model.addAttribute("utentegenericoDTO", request);
+        if (bindingResult.hasErrors())
             return "registration";
 
-        if(request.getPassword().equals(request.getConferma_password()));
+        // Controllo se l'email esiste già nel DB
+        boolean flag = false;
+        try {
+            customUserDetailService.loadUserByUsername(request.getIndirizzoEmail());
+        } catch (UsernameNotFoundException e) {
+            flag = true;
+        }
+        if(flag == false)
+            return "redirect:/registration?already_taken";
+
+        // Controllo che le password coincidano
+        if (request.getPassword().equals(request.getConferma_password()));
         else {
             // throw new CustomException(ErrorMessage.PASSWORD_DOESNT_MATCH);
             return "redirect:/registration?pass_match";
         }
 
-        try {
-            registrationService.register(request);
-        } catch(CustomException e) {
-            switch(e.getMessage()) {
-                case ErrorMessage.EMAIL_ALREADY_CONFIRMED:
-                    return "redirect:/login?already_confirmed";
-                case ErrorMessage.EMAIL_ALREADY_TAKEN:
-                    return "redirect:/registration?already_taken";
-                case ErrorMessage.EMAIL_FAIL_SEND:
-                    return "redirect:/registration?fail_send";
-                case ErrorMessage.TOKEN_EXPIRED:
-                case ErrorMessage.TOKEN_NOT_FOUND:
-                    return "redirect:/registration?token_exp";
-            }
+        // Collegamento alla seconda pagina di registrazione
+        switch (request.getRuolo()) {
+            case "LABORATORIO":
+                LaboratorioDTO laboratorioDTO = new LaboratorioDTO();
+                model.addAttribute("laboratorioDTO", laboratorioDTO);
+                laboratorioDTO.setIndirizzoEmail(request.getIndirizzoEmail());
+                laboratorioDTO.setPassword(request.getPassword());
+                laboratorioDTO.setConferma_password(request.getConferma_password());
+                laboratorioDTO.setRuolo(request.getRuolo());
+                return "laboratorio/registration";
         }
-        // Successo
-        return "redirect:/registration?success";
+
+        return null; // TOGLIERE INFINE
     }
 
     @GetMapping(path = "registration/confirm")
-    public String confirm(@RequestParam("token") String token)
-            throws CustomException {
-        return registrationService.confirmToken(token);
+    public String confirm(@RequestParam("token") String token) {
+        try {
+            return registrationService.confirmToken(token);
+        } catch (CustomException e) {
+            if(e.getMessage().equals(ErrorMessage.EMAIL_ALREADY_CONFIRMED))
+                return "redirect:/login?already_confirmed";
+            else if(e.getMessage().equals(ErrorMessage.TOKEN_NOT_FOUND))
+                return "redirect:/login?token_exp";
+            else // Token expired
+                return "redirect:/login?token_exp";
+        }
     }
-
-    // -----------------
 }
