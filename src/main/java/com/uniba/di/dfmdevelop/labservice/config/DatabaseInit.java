@@ -1,9 +1,12 @@
-package com.uniba.di.dfmdevelop.labservice.repository;
+package com.uniba.di.dfmdevelop.labservice.config;
 
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
+import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
