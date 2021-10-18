@@ -98,6 +98,14 @@
                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                 </div>
 
+                <!-- modificare e aggiungere i campi per i prezzi -->
+                <br>
+                Tamponi offerti:
+                Test molecolare <checkbox path="lista_tamponi" value="Molecolare"/>
+                Test antigenico (rapido) <checkbox path="lista_tamponi" value="Antigenico"/>
+                Test sierologico <checkbox path="lista_tamponi" value="Sierologico"/>
+                <br>
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Registati</button>
                     <span>Sei gia' registrato? <a href="/" th:href="@{/login}">Accedi</a></span>

@@ -2,8 +2,11 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode
 @ToString
@@ -28,6 +31,9 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     @NotEmpty
     @Size(min = 11, max = 11, message = "Il campo deve contenere esattamente 11 caratteri")
     private String partitaIva;
+
+    // Memorizza i tamponi inseriti in fase di registrazione
+    private List<TamponeDTO> lista_tamponi = new ArrayList<>();
 
     public LaboratorioDTO(String indirizzoEmail,
                           String password,
@@ -86,6 +92,10 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
         return partitaIva;
     }
 
+    public List<TamponeDTO> getLista_tamponi() {
+        return lista_tamponi;
+    }
+
     public void setNomeLaboratorio(String nomeLaboratorio) {
         this.nomeLaboratorio = nomeLaboratorio;
     }
@@ -104,5 +114,9 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
 
     public void setPartitaIva(String partitaIva) {
         this.partitaIva = partitaIva;
+    }
+
+    public void setLista_tamponi(List<TamponeDTO> lista_tamponi) {
+        this.lista_tamponi = lista_tamponi;
     }
 }

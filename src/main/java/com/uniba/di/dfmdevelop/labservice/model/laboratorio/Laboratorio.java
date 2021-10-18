@@ -1,7 +1,10 @@
-package com.uniba.di.dfmdevelop.labservice.model;
+package com.uniba.di.dfmdevelop.labservice.model.laboratorio;
 
+import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Data
 @Entity(name = "laboratorio")
@@ -49,6 +52,9 @@ public class Laboratorio {
             nullable = false,
             columnDefinition = "TEXT" )
     private String partitaIVA;
+
+    @OneToMany(mappedBy = "laboratorio", cascade = CascadeType.ALL)
+    private Collection<LaboratorioTampone> listaTamponi = new ArrayList<>();
 
     @OneToOne(
             fetch = FetchType.LAZY,

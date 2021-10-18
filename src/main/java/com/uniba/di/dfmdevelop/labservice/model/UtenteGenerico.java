@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -58,6 +59,10 @@ public class UtenteGenerico implements UserDetails {
     private String role;
 
     // Disattivo finchè non conferma la registrazione
+    @Column(
+            name = "enabled",
+            nullable = false
+    )
     private Boolean enabled = false;
 
     @OneToOne(
