@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,6 @@ public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> 
     @Modifying
     @Query("UPDATE laboratorio l SET l.IBAN = ?2, l.indirizzo = ?3, l.nome = ?4, l.partitaIVA =?5, l.telefono = ?6 WHERE l.id = ?1")
     void modifyLaborartorio(Laboratorio laboratorio);
+
+    Calendar save(final Calendar calendario);
 }
