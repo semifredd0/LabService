@@ -99,12 +99,12 @@
                 </div>
 
                 <!-- modificare e aggiungere i campi per i prezzi -->
-                <br>
-                Tamponi offerti:
-                Test molecolare <checkbox path="lista_tamponi" value="Molecolare"/>
-                Test antigenico (rapido) <checkbox path="lista_tamponi" value="Antigenico"/>
-                Test sierologico <checkbox path="lista_tamponi" value="Sierologico"/>
-                <br>
+                <div class="form-group">
+                    <label class="control-label"> Tamponi offerti </label>
+                    <br><input type="checkbox" id="molecolare" value="0" /> Tampone molecolare
+                    <br><input type="checkbox" id="antigenico" value="0" /> Tampone antigenico
+                    <br><input type="checkbox" id="sierologico" value="0" /> Tampone sierologico
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Registati</button>

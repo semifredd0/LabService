@@ -1,3 +1,4 @@
+/*
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import lombok.Data;
@@ -76,3 +77,4 @@ public class Asl {
         this.partitaIva = partitaIva;
     }
 }
+*/
