@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guida</title>
+    <<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link th:href="@{~/css/style.css}" rel="stylesheet">
+    <link href="https://fontss.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo" style="padding-left: 20px">
+            <a th:href="@{/index}" href="index.html"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+        </div>
+        <ul class="menu" id="menu">
+            <li><a th:href="@{/index}" id="Home" class="text"><i class="fas fa-home"></i> Home</a></li>
+            <li><a th:href="@{/guida}" id="Info" class="text"><i class="fas fa-info-circle"></i> Guida</a></li>
+        </ul>
+        <div class="hamburger" onclick="iconaMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="cta" style="padding-right: 20px">
+            <a class="button" onclick= "document.getElementById('id01').style.display='block' " style="width:auto;">Accesso</a>
+        </div>
+    </div>
+
+    <p style="padding:20px"></p>
+
+    <div>
+        <video autoplay muted loop id="myVideo">
+            <source th:src="@{~/img/covid.mp4}" type="video/mp4">
+        </video>
+        <table  class="table table-borderless" >
+            <tbody>
+            <tr>
+                <td>
+                    <h1 style="color: #FFFFFF">TEST SERIOLOGICO </h1>
+                    <span>
+                        I tamponi sierologici prevedono che si vada alla ricerca degli anticorpi diretti contro Sars-Cov-2.
+                        L'eventuale presenza di questi ultimi significa che si è contratto il virus.
+                        Nello specifico ciò che viene valutata è la presenza delle IgM e delle IgG.
+                        Le prime vengono prodotte dopo l'entrata in contatto con il virus, le seconde indicano che si è instaurata una memoria (almeno temporanea) e quindi l'infezione è avvenuta da diverso tempo.
+                        I test sierologici forniscono in linea di massima il "ciclo di vita" dell'infezione, ma poco utili per stabilire se c'è un'infezione in atto.
+                        Questi si dividono in sierologici qualitativi (con una goccia di sangue ci dicono la presenza o meno degli anticorpi) e quantitativi (con un prelievo viene valutata, oltre la presenza, il livello di anticorpi presenti).
+                    </span>
+                    <br>
+                    <span>
+                        La refertazione del test sierologico avviene generalmente entro 24 ore.
+                    </span>
+                    <br>
+                </td>
+                <td>
+                    <img style= "width: 555px; height: 320px" th:src="@{~/img/seriologico.jpg}" alt="sierologico">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img style= "width: 555px; height: 320px" th:src="@{~/img/molecolare.jpg}" alt="molecolare">
+                </td>
+                <td>
+                    <h1 style="color: #FFFFFF">TEST MOLECOLARE</h1>
+                    <span>
+                        Il test molecolare è il test che evidenzia la presenza di geni virali da SARS-CoV-2 nell’organismo.
+                        Di norma, si inserisce un tampone tipo cotton fioc di 15 centimetri all’interno di naso e/o bocca per raccogliere un campione di secrezioni nasali per il primo e
+                        orofaringee per il secondo. L’analisi del campione avviene in un laboratorio specializzato che, attraverso una tecnica chiamata RT-PCR (Reverse Transcription-Polymerase Chain
+                        Reaction - metodo molecolare real-time), rileva i frammenti di RNA virale del Covid (qualora presenti) e le sue quantità.
+                        La principale caratteristica del test molecolare è l’affidabilità, infatti ha scarse probabilità di errore (meno dell’1%) se viene eseguito correttamente.
+                    </span>
+                    <br>
+                    <span>
+                        La refertazione del test molecolare avviene dopo 1-2 giorni dal prelievo.
+                    </span>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 style="color: #FFFFFF">TEST ANTIGENICO</h1>
+                    <span>
+                         Il test antigenico per COVID-19 è un'indagine di tipo qualitativo che si basa sulla ricerca degli antigeni virali presenti sulla superficie di SARS-CoV-2.
+                         Le modalità di raccolta del campione biologico sono del tutto analoghe a quelle dei test molecolari (tampone naso-faringeo), quindi anche questa tipologia di
+                         test raccoglie le secrezioni respiratorie del paziente.
+                         Il test antigenico non identifica tracce specifiche del genoma RNA del virus SARS-CoV-2, ma rileva alcune componenti del virus (proteine Spike e Nucleocapside) indicative dell'avvenuta esposizione all'agente virale
+                         La sensibilità e la specificità del test antigenico COVID-19 sono, però, inferiori a quelle del test molecolare, quindi le diagnosi di positività ottenute devono essere confermate
+                         da un secondo tampone molecolare.
+                    </span>
+                    <br>
+                    <span>
+                        La refertazione del test antigenico avviene generalmente entro 15-30 minuti.
+                    </span>
+                    <br>
+                </td>
+                <td>
+                    <img style= "width: 555px; height: 320px" th:src="@{~/img/antigenico.jpg}" alt="antigenico">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="spacer">
+    </div>
+
+</body>
+
+</html>
