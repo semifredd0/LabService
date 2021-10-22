@@ -1,13 +1,117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments.html :: headerfiles"></head>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link th:href="@{~/css/style.css}" rel="stylesheet">
+    <link href="https://fontss.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../../static/js/index.js"></script>
+
+</head>
+
 <body>
-<header th:insert="fragments.html :: nav"></header>
-<!-- Page content goes here -->
-<div class="container">
-    <div class="jumbotron">
-        <h1 class="display-4">Homepage</h1>
+    <div class="header">
+        <div class="logo" style="padding-left: 20px">
+            <a th:href="@{/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+        </div>
+        <ul class="menu" id="menu">
+            <li><a th:href="@{/index}" id="Home" class="text"><i class="fas fa-home"></i> Home</a></li>
+            <li><a th:href="@{/guida}" id="Info" class="text"><i class="fas fa-info-circle"></i> Guida</a></li>
+        </ul>
+        <div class="hamburger" onclick="iconaMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="cta" style="padding-right: 20px">
+            <a class="button" th:href="@{/login}" style="width:auto;">Accesso</a>
+        </div>
     </div>
-</div>
+
+    <div class="hero" style="margin-top:40px">
+        <p style="margin-bottom: 30px"></p>
+        <div class="hero__content" >
+            <video autoplay muted loop id="myVideo">
+                <source th:src="@{~/img/covid.mp4}" type="video/mp4">
+            </video>
+            <p></p>
+            <div class="container" style="text-align: center;">
+
+                <div class="card text-left" style="float: left; width: 35%; height: 100%; margin-right: 20px">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="voce1" onclick="changeTextCard(this)">LabService</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="voce2" onclick="changeTextCard(this)">Il nostro Team</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" id="testoCard" style="color: black; "> LabService è una sistema informatico facile ed intuitivo che nasce per soddisfare l’esigenza di diversi utenti di
+                            controllare il proprio stato di salute. Più nello specifico, LabService si occupa di gestire l'intero ciclo di vita legato allo svolgimento dei tamponi utili
+                            a verificare la positività o meno degli utenti che vi si stoppongono.<br><br>
+
+                            LabService si rivolge a vari tipi di utenza:<br>
+                            - Utenti individuali che desiderano sottoporsi ad un tampone (Business to Customer)<br>
+                            - Medici di medicina generale i quali vogliono prenotare un tampone per i propri assistiti (Business to Customer)<br>
+                            - Datori di lavoro che vogliono prenotare un tampone per i propri dipendenti, in modo da poter favorire la completa sicurezza sul luogo di lavoro (Business to Business).<br><br>
+
+                            Il  sistema fornisce un punto di incontro tra le esigenze degli utenti ed una rete di laboratori di analisi che effettuano tamponi,
+                            permettendo così agli utenti di scegliere la tipologia di tampone a cui sottoporsi, specificando contestualmente il laboratorio, il giorno e l’ora in cui
+                            effettuarlo, in base alle proprie esigenze.
+                        </p>
+
+                        <span class="card-text text-center" id="testoCard1" style="display: none;">
+                            <h1>STAFF LabService:</h1><br><br>
+                            - FRANCESCO BRESCIA;<br><br>
+                            - MATTEO COSTANTINI;<br><br>
+                            - DOMENICO DEGAETANO;<br><br>
+                        </span>
+                    </div>
+                </div>
+
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="float: left; width: 700px; height: 500px">
+
+                    <div class="carousel-inner">
+
+                        <div class="item active">
+                            <img th:src="@{~/img/test1.jpg}" class="d-block ">
+                        </div>
+
+                        <div class="item">
+                            <img th:src="@{~/img/test2.jpg}" class="d-block ">
+                        </div>
+
+                        <div class="item">
+                            <img th:src="@{~/img/test3.jpg}" class="d-block ">
+                        </div>
+                    </div>
+
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev" style="z-index: 1">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Precedente</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next" style="z-index: 1">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Successivo</span>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
+
 </html>

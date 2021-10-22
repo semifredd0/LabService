@@ -1,0 +1,78 @@
+body {
+    font-family: 'Muli', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input-group-text{
+    font-size: 15px;
+}
+
+.form-control{
+    font-size: 15px;
+}
+
+img {
+    border-radius: 8px
+}
+
+.big-text {
+    font-size: 70px;
+}
+
+.med-text {
+    font-size: 40px;
+}
+
+.normal-text {
+    font-size: 20px;
+}
+
+.small-text {
+    font-size: 14px;
+}
+
+.intro-text {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.button {
+    padding: 10px 15px;
+    background: #0e1f75;
+    color: #fff;
+    display: inline-block;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.header {
+    background-color: rgba(33,30,39,255);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    padding: 20px;
+    z-index: 2;
+}
+
+.logo {
+    z-index: 1;
+}
+
+radio:hover {
+    opacity: 0.8;
+}
+
+*,
+*:before *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

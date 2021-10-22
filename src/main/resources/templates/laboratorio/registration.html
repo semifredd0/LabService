@@ -1,35 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="ISO-8859-1">
-    <title>Registration</title>
+    <title>RegistrazioneLaboratorio</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link th:href="@{~/css/registrazioneStyle.css}" rel="stylesheet">
+    <link href="https://fontss.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="js/laboratorio.js"></script>
+
 </head>
+
 <body>
 
-    <!-- create navigation bar ( header) -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed"
-                        data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                        aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#" th:href="@{/}">Registrazione Laboratorio</a>
-            </div>
+    <div class="header">
+        <div class="logo" style="padding-left: 20px;">
+            <a th:href="@{/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
         </div>
-    </nav>
+    </div>
 
 <br>
 <br>
 <!-- Create HTML registration form -->
-<div class="container">
+<div class="container" style="margin-top: 20px;">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <br><br>
@@ -76,7 +73,7 @@
 
                 <div class="form-group">
                     <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="indirizzoStradale"> Indirizzo Stradale </label> <input
+                    <label class="control-label" for="indirizzoStradale"> Indirizzo Sede </label> <input
                         id="indirizzoStradale" class="form-control" th:field="*{indirizzoStradale}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('indirizzoStradale')}" th:errors="*{indirizzoStradale}" class="invalid-feedback"></div>
@@ -98,17 +95,42 @@
                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                 </div>
 
-                <!-- modificare e aggiungere i campi per i prezzi -->
                 <div class="form-group">
-                    <label class="control-label"> Tamponi offerti </label>
-                    <br><input type="checkbox" id="molecolare" value="0" /> Tampone molecolare
-                    <br><input type="checkbox" id="antigenico" value="0" /> Tampone antigenico
-                    <br><input type="checkbox" id="sierologico" value="0" /> Tampone sierologico
+                    <label class="control-label"> Costo Tamponi </label>
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Registati</button>
-                    <span>Sei gia' registrato? <a href="/" th:href="@{/login}">Accedi</a></span>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <input type="checkbox"  name="molecolare" id="molecolare" onclick="abilitaDisabilita(this)">
+                        </div>
+                        <span class="input-group-text" style="size: 20px">Tampone Molecolare</span>
+                        <span class="input-group-text">&euro;</span>
+                        <input type="text" class="form-control" id="prezzoMolecolare" placeholder="Es. 20,00" disabled>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <input style="padding-left: 3px" type="checkbox" name="antigenico" id="antigenico" onclick="abilitaDisabilita(this)">
+                        </div>
+                        <span class="input-group-text" style="padding-right: 12px">Tampone Antigenico </span>
+                        <span class="input-group-text">&euro;</span>
+                        <input type="text" class="form-control" id="prezzoAntigenico" placeholder="Es. 20,00" disabled>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="sierologico" id="sierologico" onclick="abilitaDisabilita(this)">
+                        </div>
+                        <span class="input-group-text">Tampone Sierologico</span>
+                        <span class="input-group-text">&euro;</span>
+                        <input type="text" class="form-control" id="prezzoSierologico" placeholder="Es. 20,00" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="button">Registati</button>
+                    <span >Sei gia' registrato? <a th:href="@{/login}">Conferma</a></span>
                 </div>
             </form>
         </div>

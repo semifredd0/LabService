@@ -33,6 +33,11 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("guida")
+    public String guida() {
+        return "guida";
+    }
+
     // Get registrazione generico
     @GetMapping("registration")
     public String registration(Model model) {
