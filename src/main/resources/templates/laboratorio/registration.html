@@ -94,9 +94,9 @@
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                 </div>
-
+                <br>
                 <div class="form-group">
-                    <label class="control-label"> Costo Tamponi </label>
+                    <label class="control-label"> Seleziona i tipi di tamponi offerti e il relativo costo: </label>
                 </div>
 
                 <div class="form-group">
@@ -130,7 +130,6 @@
 
                 <div class="form-group">
                     <button type="submit" class="button">Registati</button>
-                    <span >Sei gia' registrato? <a th:href="@{/login}">Conferma</a></span>
                 </div>
             </form>
         </div>

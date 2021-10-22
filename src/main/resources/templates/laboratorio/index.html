@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<!-- Page content goes here -->
+<div class="container">
+    <p>Profilo laboratorio</p>
+    <table>
+        <tr>
+            <td>Indirizzo email:</td>
+            <td><span sec:authentication="name"></span></td>
+        </tr>
+        <tr>
+            <td>Permessi:</td>
+            <td><span sec:authentication="principal.authorities"></span></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
