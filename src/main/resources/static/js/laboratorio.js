@@ -6,6 +6,7 @@ function abilitaDisabilita(element){
             document.getElementById("prezzoMolecolare").disabled = false;
         }
         else{
+            document.getElementById("prezzoMolecolare").value = "";
             document.getElementById("prezzoMolecolare").disabled = true;
         }
     }
@@ -14,6 +15,7 @@ function abilitaDisabilita(element){
             document.getElementById("prezzoAntigenico").disabled = false;
         }
         else{
+            document.getElementById("prezzoAntigenico").value = "";
             document.getElementById("prezzoAntigenico").disabled = true;
         }
     }
@@ -22,6 +24,7 @@ function abilitaDisabilita(element){
             document.getElementById("prezzoSierologico").disabled = false;
         }
         else{
+            document.getElementById("prezzoSierologico").value = "";
             document.getElementById("prezzoSierologico").disabled = true;
         }
     }
