@@ -27,6 +27,11 @@ span{
     height: 1000px;
 }
 
+.d-block{
+    width: 700px;
+    height: 500px;
+}
+
 video {
     position: fixed;
     left: 0;
