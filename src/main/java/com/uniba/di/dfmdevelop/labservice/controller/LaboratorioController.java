@@ -26,6 +26,11 @@ public class LaboratorioController {
         return "laboratorio/index";
     }
 
+    @GetMapping("update")
+    public String updateProfile() {
+        return "laboratorio/update";
+    }
+
     @PostMapping("registration")
     public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
                            BindingResult bindingResult,
