@@ -15,8 +15,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-
-
 <body>
 
     <div class="header">
@@ -26,14 +24,12 @@
     </div>
 
     <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
-
         <form th:action="@{/login}" method="post">
             <fieldset>
 
                 <div class="imgcontainer ">
                     <img th:src="@{~/img/img_avatar.png}" alt="Avatar " class="avatar " style="max-height: 150px; max-width: 150px ">
                 </div>
-
 
                 <!-- Se passiamo al link il parametro success, allora viene mostrato il div -->
                 <!-- success message -->
@@ -68,21 +64,21 @@
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
-                            <td style="width:8%; ">
-                                <div style="text-align: center; margin-top: 10% "><i class="fa fa-user "></i></div>
+                            <td style="width:8%;">
+                                <div style="text-align: center; margin-top: 10%"><i class="fa fa-user"></i></div>
                             </td>
-                            <td><input type="email " class="form-control mb-3 " id="username" name="username" placeholder="Email  " required></td>
+                            <td><input type="email" class="form-control mb-3 " id="username" name="username" placeholder="Email" required></td>
                         </tr>
                         <tr>
                             <td style="width:8%; ">
                                 <div style="text-align: center; margin-top: 10% "><i class="fa fa-lock "></i></div>
                             </td>
-                            <td><input type="password  " id="password" name="password" class="form-control mb-3 " placeholder="Password  " required></td>
+                            <td><input type="password" id="password" name="password" class="form-control mb-3" placeholder="Password" required></td>
                         </tr>
                         <tr>
                             <td style="width:8%; text-align: center "><input type="checkbox" class="form-check-input" id="remember-me" name="remember-me"></td>
                             <td>
-                                <label class="form-check-label mb-3 " for="remember-me">Remember me?</label>
+                                <label class="form-check-label mb-3" for="remember-me">Remember me?</label>
                             </td>
                         </tr>
                     </tbody>

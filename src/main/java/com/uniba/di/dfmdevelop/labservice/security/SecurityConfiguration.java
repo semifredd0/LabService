@@ -15,9 +15,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private CustomUserDetailService customUserDetailService;
-    private LoginSuccessHandler successHandler;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CustomUserDetailService customUserDetailService;
+    private final LoginSuccessHandler successHandler;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public SecurityConfiguration(CustomUserDetailService customUserDetailService,
                                  LoginSuccessHandler successHandler, BCryptPasswordEncoder bCryptPasswordEncoder) {
