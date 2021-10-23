@@ -92,11 +92,12 @@ public class HomeController {
             case "LABORATORIO":
                 log.info("Connecting to the second page of registration");
                 LaboratorioDTO laboratorioDTO = new LaboratorioDTO();
-                model.addAttribute("laboratorioDTO", laboratorioDTO);
+                // Aggiungo le info di UtenteGenericoDTO al modello
                 laboratorioDTO.setIndirizzoEmail(request.getIndirizzoEmail());
                 laboratorioDTO.setPassword(request.getPassword());
                 laboratorioDTO.setConferma_password(request.getConferma_password());
                 laboratorioDTO.setRuolo(request.getRuolo());
+                model.addAttribute("laboratorioDTO", laboratorioDTO);
                 return "laboratorio/registration";
         }
 

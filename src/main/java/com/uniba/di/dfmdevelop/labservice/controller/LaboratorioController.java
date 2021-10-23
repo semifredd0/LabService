@@ -39,8 +39,9 @@ public class LaboratorioController {
     public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
                            BindingResult bindingResult,
                            Model model) {
-        log.info("Starting registratiom Labooratorio");
+        log.info("Starting registration Laboratorio...");
         model.addAttribute("laboratorioDTO", request);
+
         if (bindingResult.hasErrors()){
             log.error("Error in Laboratorio registration");
             return "laboratorio/registration";}
@@ -51,10 +52,8 @@ public class LaboratorioController {
         } catch (CustomException e) {
             switch (e.getMessage()) {
                 case ErrorMessage.EMAIL_ALREADY_TAKEN:
-                    log.error("... Mail already taken");
                     return "redirect:/registration?already_taken";
                 case ErrorMessage.EMAIL_FAIL_SEND:
-                    log.error("... Error in sending request");
                     return "redirect:/registration?fail_send";
             }
         }

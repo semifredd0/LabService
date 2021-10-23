@@ -1,7 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.TamponeDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -9,8 +8,6 @@ import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
 import lombok.AllArgsConstructor;
@@ -18,9 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -153,7 +147,7 @@ public class RegistrationService {
                         tmp_req.getNumeroTelefono(), tmp_req.getIndirizzoStradale(),
                         tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
-
+                /*
                 List<LaboratorioTampone> lista = new ArrayList<>();
                 List<TamponeDTO> lista_tamponi = tmp_req.getLista_tamponi();
                 for (Iterator<TamponeDTO> i = lista_tamponi.iterator(); i.hasNext();) {
@@ -164,9 +158,10 @@ public class RegistrationService {
                     // Aggiungo tutti i tamponi alla lista
                     lista.add(laboratorioTampone);
                 }
+                 */
                 token = userDetailService.signUpUser(u1);
                 // Carico la lista tamponi del laboratorio nel DB
-                laboratorioTamponeRepository.saveAll(lista);
+                // laboratorioTamponeRepository.saveAll(lista);
                 return token;
         }
         return null; // eliminare alla fine

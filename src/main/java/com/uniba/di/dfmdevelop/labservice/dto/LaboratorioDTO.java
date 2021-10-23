@@ -1,13 +1,13 @@
 package com.uniba.di.dfmdevelop.labservice.dto;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
+@Data
 @EqualsAndHashCode
 @ToString
 public class LaboratorioDTO extends UtenteGenericoDTO {
@@ -33,7 +33,12 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private String partitaIva;
 
     // Memorizza i tamponi inseriti in fase di registrazione
-    private List<TamponeDTO> lista_tamponi = new ArrayList<>();
+    private boolean molecolare = false;
+    private boolean antigenico = false;
+    private boolean sierologico = false;
+    private double prezzo_molecolare;
+    private double prezzo_antigenico;
+    private double prezzo_sierologico;
 
     public LaboratorioDTO(String indirizzoEmail,
                           String password,
@@ -54,69 +59,5 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
 
     public LaboratorioDTO() {
         super();
-    }
-
-    public String getIndirizzoEmail() {
-        return indirizzoEmail;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getConferma_password() {
-        return conferma_password;
-    }
-
-    public String getRuolo() {
-        return ruolo;
-    }
-
-    public String getNomeLaboratorio() {
-        return nomeLaboratorio;
-    }
-
-    public String getNumeroTelefono() {
-        return numeroTelefono;
-    }
-
-    public String getIndirizzoStradale() {
-        return indirizzoStradale;
-    }
-
-    public String getCodiceIban() {
-        return codiceIban;
-    }
-
-    public String getPartitaIva() {
-        return partitaIva;
-    }
-
-    public List<TamponeDTO> getLista_tamponi() {
-        return lista_tamponi;
-    }
-
-    public void setNomeLaboratorio(String nomeLaboratorio) {
-        this.nomeLaboratorio = nomeLaboratorio;
-    }
-
-    public void setNumeroTelefono(String numeroTelefono) {
-        this.numeroTelefono = numeroTelefono;
-    }
-
-    public void setIndirizzoStradale(String indirizzoStradale) {
-        this.indirizzoStradale = indirizzoStradale;
-    }
-
-    public void setCodiceIban(String codiceIban) {
-        this.codiceIban = codiceIban;
-    }
-
-    public void setPartitaIva(String partitaIva) {
-        this.partitaIva = partitaIva;
-    }
-
-    public void setLista_tamponi(List<TamponeDTO> lista_tamponi) {
-        this.lista_tamponi = lista_tamponi;
     }
 }

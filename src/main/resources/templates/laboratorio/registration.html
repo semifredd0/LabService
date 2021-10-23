@@ -94,6 +94,7 @@
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                 </div>
+
                 <br>
                 <div class="form-group">
                     <label class="control-label"> Seleziona i tipi di tamponi offerti e il relativo costo: </label>
@@ -101,30 +102,25 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox"  name="molecolare" id="molecolare" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="size: 20px">Tampone Molecolare</span>
-                        <span class="input-group-text">&euro;</span>
-                        <input type="text" class="form-control" id="prezzoMolecolare" placeholder="Es. 20,00" disabled>
+                        <input style="padding-left: 3px" type="checkbox" name="molecolare" id="molecolare"
+                                   th:checked="*{molecolare}" onclick="abilitaDisabilita(this)">
+                        <span style="size: 20px; padding-left: 3px">Tampone Molecolare</span>
+                        <input style="padding-left: 3px" type="text" class="form-control" th:field="*{prezzo_molecolare}"
+                                   id="prezzoMolecolare" placeholder="es. 20,00" disabled>
                     </div>
-
                     <div class="input-group">
-                        <div class="input-group-text">
-                            <input style="padding-left: 3px" type="checkbox" name="antigenico" id="antigenico" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="padding-right: 12px">Tampone Antigenico </span>
-                        <span class="input-group-text">&euro;</span>
-                        <input type="text" class="form-control" id="prezzoAntigenico" placeholder="Es. 20,00" disabled>
+                        <input style="padding-left: 3px" type="checkbox" name="antigenico" id="antigenico"
+                                   th:checked="*{antigenico}" onclick="abilitaDisabilita(this)">
+                        <span style="size: 20px; padding-left: 3px">Tampone Antigenico</span>
+                        <input style="padding-left: 3px" type="text" class="form-control" th:field="*{prezzo_antigenico}"
+                                   id="prezzoAntigenico" placeholder="es. 20,00" disabled>
                     </div>
-
                     <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="sierologico" id="sierologico" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text">Tampone Sierologico</span>
-                        <span class="input-group-text">&euro;</span>
-                        <input type="text" class="form-control" id="prezzoSierologico" placeholder="Es. 20,00" disabled>
+                        <input style="padding-left: 3px" type="checkbox" name="sierologico" id="sierologico"
+                                   th:checked="*{sierologico}" onclick="abilitaDisabilita(this)">
+                        <span style="size: 20px; padding-left: 3px">Tampone Sierologico</span>
+                        <input style="padding-left: 3px" type="text" class="form-control" th:field="*{prezzo_sierologico}"
+                                   id="prezzoSierologico" placeholder="es. 20,00" disabled>
                     </div>
                 </div>
 
