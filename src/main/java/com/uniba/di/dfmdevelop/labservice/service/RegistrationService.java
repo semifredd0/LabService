@@ -8,13 +8,16 @@ import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +25,6 @@ public class RegistrationService {
 
     private final CustomUserDetailService userDetailService;
     private final ConfirmationTokenService confirmationTokenService;
-    private final TamponeRepository tamponeRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final EmailSender emailSender;
 
@@ -141,27 +143,39 @@ public class RegistrationService {
 
             case "laboratorioDTO":
                 LaboratorioDTO tmp_req = (LaboratorioDTO) request;
+
                 UtenteGenerico u1 = new UtenteGenerico(
                         tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
                 Laboratorio l1 = new Laboratorio(tmp_req.getNomeLaboratorio(),
                         tmp_req.getNumeroTelefono(), tmp_req.getIndirizzoStradale(),
                         tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
-                /*
+
                 List<LaboratorioTampone> lista = new ArrayList<>();
-                List<TamponeDTO> lista_tamponi = tmp_req.getLista_tamponi();
-                for (Iterator<TamponeDTO> i = lista_tamponi.iterator(); i.hasNext();) {
-                    TamponeDTO item = i.next();
-                    Tampone tampone = tamponeRepository.getById(item.getTampone_id());
-                    LaboratorioTampone laboratorioTampone = new LaboratorioTampone(
-                            l1,tampone, item.getPrezzo());
-                    // Aggiungo tutti i tamponi alla lista
-                    lista.add(laboratorioTampone);
+                if(tmp_req.isMolecolare())
+                {
+                    Tampone tampone = new Tampone();
+                    tampone.setId(Long.valueOf(0));
+                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_molecolare());
+                    lista.add(labTamp);
                 }
-                 */
+                if(tmp_req.isAntigenico())
+                {
+                    Tampone tampone = new Tampone();
+                    tampone.setId(Long.valueOf(1));
+                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_antigenico());
+                    lista.add(labTamp);
+                }
+                if(tmp_req.isSierologico())
+                {
+                    Tampone tampone = new Tampone();
+                    tampone.setId(Long.valueOf(2));
+                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_sierologico());
+                    lista.add(labTamp);
+                }
+
                 token = userDetailService.signUpUser(u1);
-                // Carico la lista tamponi del laboratorio nel DB
-                // laboratorioTamponeRepository.saveAll(lista);
+                laboratorioTamponeRepository.saveAll(lista);
                 return token;
         }
         return null; // eliminare alla fine
