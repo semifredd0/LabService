@@ -2,12 +2,11 @@ function iconaMenu() {
     var x = document.getElementById("menu");
     if (x.style.right === "0px") {
         x.style.right = "1000px";
-        x.style.textAlign = "right";
+        x.style.textAlign = "center";
     } else {
         x.style.right = "0px";
         x.style.textAlign = "center";
     }
-    document.getElementById("demo").innerHTML = x.style.right;
 }
 
 // Get the modal
