@@ -64,7 +64,7 @@
 
                 <div class="form-group">
                     <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="nome"> Cognome </label> <input
+                    <label class="control-label" for="cognome"> Cognome </label> <input
                         id="cognome" class="form-control" th:field="*{cognome}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" class="invalid-feedback"></div>
