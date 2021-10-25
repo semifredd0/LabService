@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -12,22 +12,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-
-<div class="header">
-    <div class="logo" style="padding-left: 20px">
-        <a th:href="@{/index}" href="index.html"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+<
+    <div class="header">
+        <div class="logo" style="padding-left: 20px">
+            <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+        </div>
+        <div class="main">
+            <button class="openbtn" onclick="openNav()">Menu ☰</button>
+        </div>
     </div>
-    <div class="main">
-        <button class="openbtn" onclick="openNav()">Menu ☰</button>
+<!--
+    <div sec:authorize="isAuthenticated()">
+        Authenticated as <span sec:authentication="principal.laboratorio.nome"></span></div>
+-->
+    <div id="mySidebar" class="sidebar">
+        <a class="closebtn" onclick="closeNav()">×</a>
+        <a href="#">Ricerca Laboratorio</a>
+        <a href="#">Esito Tamponi</a>
+        <a th:href="@{/index}" >Esci</a>
     </div>
-</div>
 
-
-<div id="mySidebar" class="sidebar">
-    <a class="closebtn" onclick="closeNav()">×</a>
-    <a href="#">Ricerca Laboratorio</a>
-    <a href="#">Esito Tamponi</a>
-    <a th:href="@{/index}" >Esci</a>
-</div>
 </body>
 </html>
