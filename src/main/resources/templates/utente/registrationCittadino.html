@@ -80,7 +80,7 @@
 
                 <div class="form-group">
                     <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="dataNascita"> Data di nascita </label> <input
+                    <label class="control-label" for="dataNascita"> Data di nascita </label> <input type="date"
                         id="dataNascita" class="form-control" th:field="*{dataNascita}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
