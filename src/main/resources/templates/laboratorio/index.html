@@ -15,8 +15,8 @@
 <body>
 
     <div class="header">
-        <div class="logo" style="padding-left: 20px">
-            <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+        <div style="padding-left: 20px">
+            <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
         </div>
         <div class="menuBtn" style="margin-left: 78%">
             <button class="openbtn" onclick="openNav()">Menu &#9776;</button>
@@ -28,18 +28,47 @@
 -->
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#"><i class="fa fa-search"></i> Ricerca Laboratorio</a>
-        <a href="#"><i class="fa fa-file-text-o"></i> Esito Tamponi</a>
-        <a th:href="@{/index}" ><i class="fa fa-sign-out"></i> Esci</a>
+        <a href="#"><i class="fa fa-search"></i>   Ricerca Pretazioni</a>
+        <a href="#"><i class="fa fa-calendar"></i>   Aggiorna Calendario</a>
+        <a th:href="@{/index}" ><i class="fa fa-sign-out"></i>  Esci</a>
     </div>
 
-    <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+    <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
             <fieldset>
                 <div class="imgcontainer ">
-                    <img th:src="@{~/img/img_avatar.png}" alt="Avatar " class="avatar " style="max-height: 150px; max-width: 150px ">
+                    <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar " style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
                 </div>
 
+                <div class="breaks3 " id="floating">
+                    <div id="containerDettaglii" class="breaks3 record">
+                        <h3 class="record-h2">Informazioni sul laboratorio</h3>
+                        <dl class="record-riga">
+                            <hr>
+                            <dt>Nome Laboratorio</dt>
+                            <dd>    </dd><!--Qui bisogna mettere i dati -->
+                            <hr>
+                            <dt>Numero di telefono</dt>
+                            <dd>     </dd>
+                            <hr>
+                            <dt>Indirizzo Sede</dt>
+                            <dd>     </dd>
+                            <hr>
+                            <dt>Codice IBAN</dt>
+                            <dd>      </dd>
+                            <hr>
+                            <dt>Partita IVA</dt>
+                            <dd>      </dd>
+                            <hr>
+                            <dt>Email</dt>
+                            <dd>      </dd>
+                            <br>
+                        </dl>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <a th:href="@{/login}" class="openbtn">Modifica Profilo</a>
+                </div>
             </fieldset>
     </div>
 
