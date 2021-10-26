@@ -73,7 +73,7 @@
 
                 <div class="form-group">
                     <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="indirizzoStradale"> Indirizzo Sede </label> <input
+                    <label class="control-label" for="indirizzoStradale"> Indirizzo stradale sede </label> <input
                         id="indirizzoStradale" class="form-control" th:field="*{indirizzoStradale}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
                     <div th:if="${#fields.hasErrors('indirizzoStradale')}" th:errors="*{indirizzoStradale}" class="invalid-feedback"></div>
