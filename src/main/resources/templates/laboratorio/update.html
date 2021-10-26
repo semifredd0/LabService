@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Profilo</title>
+</head>
+<body>
+<form th:action="@{/laboratorio/update}" th:object="${laboratorioDTO}" th:method="post">
+
+    <div th:if="${param.success}">
+        <div class="alert alert-success">
+            Profilo aggiornato correttamente.
+        </div>
+    </div>
+
+    <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+    <input class="form-control" type="hidden"
+           th:attr="value = ${laboratorioDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
+
+    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+    <input class="form-control" type="hidden"
+           th:attr="value = ${laboratorioDTO.password}" th:field="*{password}"/>
+
+    <!--/*@thymesVar id="conferma_password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+    <input class="form-control" type="hidden"
+           th:attr="value = ${laboratorioDTO.conferma_password}" th:field="*{conferma_password}"/>
+
+    <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+    <input class="form-control" type="hidden"
+           th:attr="value = ${laboratorioDTO.ruolo}" th:field="*{ruolo}"/>
+
+    <div class="form-group">
+        <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+        <label class="control-label" for="nomeLaboratorio"> Nome Laboratorio </label> <input
+            id="nomeLaboratorio" class="form-control" th:field="*{nomeLaboratorio}" th:value="*{nomeLaboratorio}"
+            th:errorClass="is-invalid" required autofocus="autofocus" />
+        <div th:if="${#fields.hasErrors('nomeLaboratorio')}" th:errors="*{nomeLaboratorio}" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group">
+        <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+        <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
+            id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}" th:value="*{numeroTelefono}"
+            th:errorClass="is-invalid" required autofocus="autofocus" />
+        <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group">
+        <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+        <label class="control-label" for="indirizzoStradale"> Indirizzo Sede </label> <input
+            id="indirizzoStradale" class="form-control" th:field="*{indirizzoStradale}" th:value="*{indirizzoStradale}"
+            th:errorClass="is-invalid" required autofocus="autofocus" />
+        <div th:if="${#fields.hasErrors('indirizzoStradale')}" th:errors="*{indirizzoStradale}" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group">
+        <!--/*@thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+        <label class="control-label" for="codiceIban"> Codice IBAN </label> <input
+            id="codiceIban" class="form-control" th:field="*{codiceIban}" th:value="*{codiceIban}"
+            th:errorClass="is-invalid" required autofocus="autofocus" />
+        <div th:if="${#fields.hasErrors('codiceIban')}" th:errors="*{codiceIban}" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group">
+        <!--/*@thymesVar id="partitaIva" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+        <label class="control-label" for="partitaIva"> Partita IVA </label> <input
+            id="partitaIva" class="form-control" th:field="*{partitaIva}" th:value="*{partitaIva}"
+            th:errorClass="is-invalid" required autofocus="autofocus" />
+        <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="button">Conferma</button>
+    </div>
+</form>
+</body>
+</html>

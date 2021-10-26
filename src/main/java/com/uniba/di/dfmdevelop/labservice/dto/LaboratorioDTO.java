@@ -3,7 +3,6 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 

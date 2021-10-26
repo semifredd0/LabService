@@ -1,10 +1,14 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,16 +18,19 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
     private final UtenteGenericoRepository utenteGenericoRepository;
+    private final LaboratorioRepository laboratorioRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
+    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
         this.utenteGenericoRepository = utenteGenericoRepository;
+        this.laboratorioRepository = laboratorioRepository1;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
     }
@@ -59,5 +66,21 @@ public class CustomUserDetailService implements UserDetailsService {
 
     public int enableUser(String email) {
         return utenteGenericoRepository.enableUtenteGenerico(email);
+    }
+
+    public void updateUser(UtenteGenericoDTO request, String role) {
+
+        switch(role) {
+            case "laboratorioDTO":
+                LaboratorioDTO tmp_req = (LaboratorioDTO)request;
+                UtenteGenerico utenteGenerico = utenteGenericoRepository.
+                        findByEmail(request.getIndirizzoEmail()).get();
+
+                laboratorioRepository.updateNome(utenteGenerico, tmp_req.getNomeLaboratorio());
+                laboratorioRepository.updateTelefono(utenteGenerico, tmp_req.getNumeroTelefono());
+                laboratorioRepository.updateIndirizzo(utenteGenerico, tmp_req.getIndirizzoStradale());
+                laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
+                laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
+        }
     }
 }

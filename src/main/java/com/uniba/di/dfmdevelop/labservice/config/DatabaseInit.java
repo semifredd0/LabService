@@ -46,7 +46,7 @@ public class DatabaseInit implements CommandLineRunner {
         utenteGenerico2.setEnabled(true);
         Laboratorio lab1 = new Laboratorio(
                 "Laboratorio Analisi Lecce",
-                "0376-8676978",
+                "3768676978",
                 "Via E. Fermi, 22",
                 "IT07O0300203280722787714851",
                 "31805080079",
@@ -54,7 +54,7 @@ public class DatabaseInit implements CommandLineRunner {
         );
         Laboratorio lab2 = new Laboratorio(
                 "Laboratorio Analisi Bari",
-                "0334-2977722",
+                "3342977722",
                 "Via E. Fermi, 22",
                 "IT16R0300203280345696191345",
                 "76013160171",
