@@ -21,7 +21,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public SecurityConfiguration(CustomUserDetailService customUserDetailService,
                                  LoginSuccessHandler successHandler, BCryptPasswordEncoder bCryptPasswordEncoder) {
-
         this.customUserDetailService = customUserDetailService;
         this.successHandler = successHandler;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -29,13 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/laboratorio/registration").permitAll()
@@ -47,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login?logout")
                 .and()
                 .rememberMe();
     }

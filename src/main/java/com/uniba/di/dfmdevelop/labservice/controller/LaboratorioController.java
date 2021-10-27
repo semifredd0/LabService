@@ -4,6 +4,7 @@ import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
@@ -32,7 +33,6 @@ public class LaboratorioController {
 
     @GetMapping("index")
     public String index() {
-        log.info("Starting index laboratorio");
         return "laboratorio/index";
     }
 
@@ -58,6 +58,7 @@ public class LaboratorioController {
 
     @PostMapping("update")
     public String updateProfile(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
+                           @AuthenticationPrincipal UtenteGenerico utente,
                            BindingResult bindingResult,
                            Model model) {
 
@@ -66,8 +67,15 @@ public class LaboratorioController {
             log.error("Error in updating laboratorio");
             return "laboratorio/update";
         }
-
-        log.info("Validation completed");
+        // Aggiorna i campi del principal nella sessione corrente
+        Laboratorio laboratorio = new Laboratorio();
+        laboratorio.setNome(request.getNomeLaboratorio());
+        laboratorio.setIndirizzo(request.getIndirizzoStradale());
+        laboratorio.setTelefono(request.getNumeroTelefono());
+        laboratorio.setIBAN(request.getCodiceIban());
+        laboratorio.setPartitaIVA(request.getPartitaIva());
+        utente.setLaboratorio(laboratorio);
+        // Carico le modifiche nel database
         service.updateUser(request,"laboratorioDTO");
         return "redirect:/laboratorio/update?success";
     }

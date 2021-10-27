@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
     <script th:src="@{~/js/menu.js}"></script>
-    <link href="https://fontss.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -29,9 +29,9 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="#"><i class="fa fa-home"></i>   Home Riservata</a>
-        <a href="#"><i class="fa fa-search"></i>   Elenco Pretazioni</a>
+        <a href="#"><i class="fa fa-search"></i>   Elenco Prenotazioni</a>
         <a href="#"><i class="fa fa-calendar"></i>   Aggiorna Calendario</a>
-        <a th:href="@{/index}" ><i class="fa fa-sign-out"></i>  Esci</a>
+        <a href="/logout"><i class="fa fa-sign-out"></i>   Logout</a>
     </div>
 
     <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
@@ -42,26 +42,38 @@
 
                 <div class="breaks3 " id="floating">
                     <div id="containerDettagli" class="breaks3 record">
-                        <h3 class="record-h2">Informazioni sul laboratorio</h3>
+                        <h3 class="record-h2">Informazioni Laboratorio</h3>
                         <dl class="record-riga">
                             <hr>
-                            <dt>Nome Laboratorio</dt>
-                            <dd>    </dd><!--Qui bisogna mettere i dati -->
+                            <dt>Indirizzo e-mail:</dt>
+                            <dd>
+                                <span sec:authentication="principal.email"></span>
+                            </dd>
                             <hr>
-                            <dt>Numero di telefono</dt>
-                            <dd>     </dd>
+                            <dt>Nome laboratorio:</dt>
+                            <dd>
+                                <span sec:authentication="principal.laboratorio.nome"></span>
+                            </dd>
                             <hr>
-                            <dt>Indirizzo stadale sede</dt>
-                            <dd>     </dd>
+                            <dt>Numero di telefono:</dt>
+                            <dd>
+                                <span sec:authentication="principal.laboratorio.telefono"></span>
+                            </dd>
                             <hr>
-                            <dt>Codice IBAN</dt>
-                            <dd>      </dd>
+                            <dt>Indirizzo sede:</dt>
+                            <dd>
+                                <span sec:authentication="principal.laboratorio.indirizzo"></span>
+                            </dd>
                             <hr>
-                            <dt>Partita IVA</dt>
-                            <dd>      </dd>
+                            <dt>Codice IBAN:</dt>
+                            <dd>
+                                <span sec:authentication="principal.laboratorio.IBAN"></span>
+                            </dd>
                             <hr>
-                            <dt>Email</dt>
-                            <dd>      </dd>
+                            <dt>Partita IVA:</dt>
+                            <dd>
+                                <span sec:authentication="principal.laboratorio.partitaIVA"></span>
+                            </dd>
                             <br>
                         </dl>
                     </div>
