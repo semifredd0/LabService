@@ -51,7 +51,7 @@ public class RegistrationService {
         String link = "http://localhost:8080/registration/confirm?token=" + token;
         emailSender.send(
                 request.getIndirizzoEmail(),
-                buildEmail(request.getIndirizzoEmail(), link));
+                buildEmail(request.getIndirizzoEmail(), link), "Conferma la tua email");
         return token;
     }
 
@@ -133,7 +133,7 @@ public class RegistrationService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Grazie per esserti registrato sul nostro sistema. Clicca il link qua sotto per attivare il tuo account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Attiva il tuo account</a> </p></blockquote>\n Questo link scadrà dopo 15 minuti. <p>A presto!</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Grazie per esserti registrato sul nostro sistema. Clicca il link qui sotto per attivare il tuo account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Attiva il tuo account</a> </p></blockquote>\n Questo link scadrà dopo 15 minuti. <p>A presto!</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

@@ -2,6 +2,7 @@ package com.uniba.di.dfmdevelop.labservice.service;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
+import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
@@ -27,12 +28,14 @@ public class CustomUserDetailService implements UserDetailsService {
     private final LaboratorioRepository laboratorioRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSender emailSender;
 
-    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
+    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
         this.utenteGenericoRepository = utenteGenericoRepository;
         this.laboratorioRepository = laboratorioRepository1;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
+        this.emailSender = emailSender;
     }
 
     @Override
@@ -82,5 +85,23 @@ public class CustomUserDetailService implements UserDetailsService {
                 laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
                 laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
         }
+    }
+
+    public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
+        UtenteGenerico utenteGenerico = utenteGenericoRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
+            utenteGenerico.setResetPasswordToken(token);
+            utenteGenericoRepository.save(utenteGenerico);
+    }
+
+    public UtenteGenerico getByResetPasswordToken(String token) {
+        return utenteGenericoRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(UtenteGenerico utenteGenerico, String newPassword) {
+        String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+        utenteGenerico.setPassword(encodedPassword);
+        utenteGenerico.setResetPasswordToken(null);
+        utenteGenericoRepository.save(utenteGenerico);
     }
 }

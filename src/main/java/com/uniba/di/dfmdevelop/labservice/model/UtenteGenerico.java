@@ -70,6 +70,8 @@ public class UtenteGenerico implements UserDetails {
     )
     private Laboratorio laboratorio;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
 
     public UtenteGenerico() {
     }

@@ -14,6 +14,8 @@ public interface UtenteGenericoRepository extends JpaRepository<UtenteGenerico, 
 
     Optional<UtenteGenerico> findByEmail(String email);
 
+    UtenteGenerico findByResetPasswordToken(String token);
+
     @Transactional
     @Modifying
     @Query("UPDATE utente_generico a SET a.enabled = TRUE WHERE a.email = ?1")

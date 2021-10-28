@@ -62,7 +62,6 @@ public class HomeController {
         if (bindingResult.hasErrors()){
             log.error("Error while registering");
             return "registration";
-
         }
 
         // Controllo se l'email esiste già nel DB
