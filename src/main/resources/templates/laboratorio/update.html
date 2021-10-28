@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HomeLabroatorio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
+    <link rel="stylesheet" th:href="@{~/css/style.css}">
     <script th:src="@{~/js/menu.js}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -49,7 +49,8 @@
                 <div class="breaks3 " id="floating">
                     <div id="containerDettagli" class="breaks3 record">
                         <dl class="record-riga">
-                            <hr>
+                            <h3 style="color: black; padding-bottom: 6px"> <b>Pagina di Modifica </b></h3>
+                            <p style="color: black; padding-bottom: 3px">In questa pagina viene visualizzato il modulo per la modifica delle informazioni relative al laboratorio.</p>
                             <dt>Nome Laboratorio</dt>
                             <dd>
                                 <div class="form-group">
@@ -99,15 +100,18 @@
                                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                                 </div>
                             </dd>
-                            <br>
                         </dl>
                     </div>
                 </div>
-            </fieldset>
-        </div>
 
-        <div class="form-group">
-            <button type="submit" class="button">Conferma</button>
+                <div class="form-group">
+                    <a th:href="@{/laboratorio/index}" type="submit" class="button" style="float: right; background: red; padding-bottom: 14px;">Annulla</a>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="button" style="float: right; margin-right: 5px">Conferma</button>
+                </div>
+            </fieldset>
         </div>
     </form>
 </body>

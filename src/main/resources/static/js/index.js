@@ -25,10 +25,14 @@ function changeTextCard(element){
     if(x === "voce1"){
         document.getElementById("testoCard").style.display = "block";
         document.getElementById("testoCard1").style.display = "none";
+        document.getElementById("voce1").className="nav-link active";
+        document.getElementById("voce2").className="nav-link";
     }
     else{
         document.getElementById("testoCard").style.display = "none";
         document.getElementById("testoCard1").style.display = "block";
         document.getElementById("testoCard1").style.color = "black";
+        document.getElementById("voce2").className="nav-link active";
+        document.getElementById("voce1").className="nav-link";
     }
 }

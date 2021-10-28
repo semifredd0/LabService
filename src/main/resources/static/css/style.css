@@ -10,7 +10,11 @@ a {
     text-decoration: none;
     color: #FFFFFF;
     margin-top:2px;
+}
 
+a:hover{
+    color:white;
+    opacity: 0.8;
 }
 
 h1, h2, h3, h4, h5, p {
@@ -107,6 +111,10 @@ img {
     max-width: 1200px;
     border-radius: 8px;
     z-index: 1;
+}
+
+.nav-link{
+    padding: 9px;
 }
 
 .logo {
@@ -214,8 +222,6 @@ button:hover {
 
 span.psw {
     float: right;
-    margin-right: 5%;
-
 }
 
 /* The Close Button (x) */
@@ -238,6 +244,10 @@ span.psw {
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
+}
+
+dt{
+    margin-bottom: 2px;
 }
 
 @-webkit-keyframes animatezoom {

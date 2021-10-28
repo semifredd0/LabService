@@ -28,19 +28,18 @@
 -->
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#"><i class="fa fa-home"></i>   Home Riservata</a>
         <a href="#"><i class="fa fa-search"></i>   Elenco Prenotazioni</a>
-        <a href="#"><i class="fa fa-calendar"></i>   Aggiorna Calendario</a>
         <a href="/logout"><i class="fa fa-sign-out"></i>   Logout</a>
     </div>
 
-    <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
+    <div style="width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
             <fieldset>
                 <div class="imgcontainer ">
                     <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar " style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
                 </div>
 
-                <div class="breaks3 " id="floating">
+                <div class="colonne">
+                    <div class="breaks3 " id="floating" style="margin-right: 23px">
                     <div id="containerDettagli" class="breaks3 record">
                         <h3 class="record-h2">Informazioni Laboratorio</h3>
                         <dl class="record-riga">
@@ -74,13 +73,64 @@
                             <dd>
                                 <span sec:authentication="principal.laboratorio.partitaIVA"></span>
                             </dd>
-                            <br>
+                            <br><br><br>
                         </dl>
                     </div>
-                </div>
+                        <div class="form-group" style="float: right">
+                            <a th:href="@{/laboratorio/update}" class="openbtn">Modifica Profilo</a>
+                        </div>
 
-                <div class="form-group">
-                    <a th:href="@{/laboratorio/update}" class="openbtn">Modifica Profilo</a>
+                    </div>
+
+
+
+                    <div class="breaks3 " id="floating1">
+                        <div id="containerCalendario" class="breaks3 record">
+                            <h3 class="record-h2">Calendario Laboratorio</h3>
+                            <dl class="record-riga">
+                                <hr>
+                                <dt>Lunedì:</dt>
+                                <dd>
+                                    <span ></span> <!-- riempire -->
+                                </dd>
+                                <hr>
+                                <dt>Martedì:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <hr>
+                                <dt>Mercoledì:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <hr>
+                                <dt>Giovedì:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <hr>
+                                <dt>Venerdì:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <hr>
+                                <dt>Sabato:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <hr>
+                                <dt>Domenica:</dt>
+                                <dd>
+                                    <span ></span>
+                                </dd>
+                                <br>
+                            </dl>
+                        </div>
+
+                        <div class="form-group" style="float: right">
+                            <a th:href="@{/laboratorio/update}" class="openbtn">Aggiorna Calendario</a>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
     </div>
