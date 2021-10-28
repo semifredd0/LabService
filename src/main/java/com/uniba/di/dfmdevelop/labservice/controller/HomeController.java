@@ -71,7 +71,6 @@ public class HomeController {
             log.info("Checking for email presence");
             customUserDetailService.loadUserByUsername(request.getIndirizzoEmail());
         } catch (UsernameNotFoundException e) {
-            log.error("Error while loading");
             flag = true;
         }
         if(flag == false) {

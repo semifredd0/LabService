@@ -6,14 +6,24 @@ import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
+import com.uniba.di.dfmdevelop.labservice.model.FileDB;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +34,7 @@ public class RegistrationService {
 
     private final CustomUserDetailService userDetailService;
     private final ConfirmationTokenService confirmationTokenService;
+    private final FileStorageService storageService;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final EmailSender emailSender;
 
@@ -143,6 +154,7 @@ public class RegistrationService {
             case "laboratorioDTO":
                 LaboratorioDTO tmp_req = (LaboratorioDTO) request;
 
+                // Creo utente e laboratorio
                 UtenteGenerico u1 = new UtenteGenerico(
                         tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
                 Laboratorio l1 = new Laboratorio(tmp_req.getNomeLaboratorio(),
@@ -150,6 +162,7 @@ public class RegistrationService {
                         tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
 
+                // Creo lista tamponi
                 List<LaboratorioTampone> lista = new ArrayList<>();
                 if(tmp_req.isMolecolare())
                 {
@@ -173,6 +186,41 @@ public class RegistrationService {
                     lista.add(labTamp);
                 }
 
+                // Scrivo su file il calendario
+                try {
+                    File file = new File("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
+                    if(file.createNewFile());
+                    else
+                        throw new IOException("File not created");
+                    FileWriter fw = new FileWriter("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
+                    fw.write(""); // Passare gli orari in formato csv
+                    fw.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Converto File in MultipartFile
+                Path path = Paths.get("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
+                String name = u1.getEmail() + ".txt";
+                String originalFileName = u1.getEmail() + ".txt";
+                String contentType = "text/plain";
+                byte[] content = null;
+                try {
+                    content = Files.readAllBytes(path);
+                } catch(final IOException e) {
+                    e.printStackTrace();
+                }
+                MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
+
+                // Salvo il file nel DB e aggiungo il suo riferimento al laboratorio
+                try {
+                    FileDB file = storageService.store(result);
+                    l1.setCalendario(file);
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Salvo utente e i relativi tamponi nel DB
                 token = userDetailService.signUpUser(u1);
                 laboratorioTamponeRepository.saveAll(lista);
                 return token;

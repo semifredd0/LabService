@@ -39,6 +39,8 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private double prezzo_antigenico;
     private double prezzo_sierologico;
 
+    // aggiungere calendario
+
     public LaboratorioDTO(String indirizzoEmail,
                           String password,
                           String confermaPassword,
