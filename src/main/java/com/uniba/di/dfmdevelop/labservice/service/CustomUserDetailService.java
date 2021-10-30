@@ -90,8 +90,8 @@ public class CustomUserDetailService implements UserDetailsService {
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
         UtenteGenerico utenteGenerico = utenteGenericoRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
-            utenteGenerico.setResetPasswordToken(token);
-            utenteGenericoRepository.save(utenteGenerico);
+        utenteGenerico.setResetPasswordToken(token);
+        utenteGenericoRepository.save(utenteGenerico);
     }
 
     public UtenteGenerico getByResetPasswordToken(String token) {
