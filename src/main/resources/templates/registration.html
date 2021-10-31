@@ -58,7 +58,7 @@
                     <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="password"> Password </label> <input
                         id="password" class="form-control" type="password" th:field="*{password}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required/>
                     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
                 </div>
 
@@ -66,7 +66,7 @@
                     <!--/*@thymesVar id="conferma_password" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="conferma_password"> Conferma password </label> <input
                         id="conferma_password" class="form-control" type="password" th:field="*{conferma_password}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required/>
                     <div th:if="${#fields.hasErrors('conferma_password')}" th:errors="*{conferma_password}" class="invalid-feedback"></div>
                 </div>
 

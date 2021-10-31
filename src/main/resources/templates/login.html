@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div th:if="${param.error}" class="alert alert-danger">
+                <div style="display: none" class="alert alert-danger">
                     Credenziali non valide.
                 </div>
 
@@ -67,7 +67,7 @@
                             <td style="width:8%;">
                                 <div style="text-align: center; margin-top: 10%"><i class="fa fa-user"></i></div>
                             </td>
-                            <td><input type="email" class="form-control mb-3 " id="username" name="username" placeholder="Email" required></td>
+                            <td><input type="email" class="form-control mb-3 " id="username" name="username" placeholder="Email" required autofocus></td>
                         </tr>
                         <tr>
                             <td style="width:8%; ">

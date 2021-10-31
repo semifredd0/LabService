@@ -67,7 +67,7 @@
                     <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
                         id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
                 </div>
 
@@ -75,7 +75,7 @@
                     <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="indirizzoStradale"> Indirizzo stradale sede </label> <input
                         id="indirizzoStradale" class="form-control" th:field="*{indirizzoStradale}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('indirizzoStradale')}" th:errors="*{indirizzoStradale}" class="invalid-feedback"></div>
                 </div>
 
@@ -83,7 +83,7 @@
                     <!--/*@thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="codiceIban"> Codice IBAN </label> <input
                         id="codiceIban" class="form-control" th:field="*{codiceIban}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('codiceIban')}" th:errors="*{codiceIban}" class="invalid-feedback"></div>
                 </div>
 
@@ -91,7 +91,7 @@
                     <!--/*@thymesVar id="partitaIva" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="partitaIva"> Partita IVA </label> <input
                         id="partitaIva" class="form-control" th:field="*{partitaIva}"
-                        th:errorClass="is-invalid" required autofocus="autofocus" />
+                        th:errorClass="is-invalid" required/>
                     <div th:if="${#fields.hasErrors('partitaIva')}" th:errors="*{partitaIva}" class="invalid-feedback"></div>
                 </div>
 
