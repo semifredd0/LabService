@@ -40,6 +40,13 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private double prezzo_sierologico;
 
     // aggiungere calendario
+    private String lunedi;
+    private String martedi;
+    private String mercoledì;
+    private String giovedi;
+    private String venerdi;
+    private String sabato;
+    private String domenica;
 
     public LaboratorioDTO(String indirizzoEmail,
                           String password,

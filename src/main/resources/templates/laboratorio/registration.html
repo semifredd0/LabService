@@ -134,6 +134,37 @@
                 </div>
 
                 <!-- aggiungere calendario -->
+                Codice HTML
+                <div class="calendario">
+                    <div class="month">
+                        <ul>
+                            <li class="prev">&#10094;</li>
+                            <li class="next">&#10095;</li>
+                            <li>Calendario<br><span style="font-size:18px">Laboratorio</span></li>
+                        </ul>
+                    </div>
+
+                    <ul class="weekdays">
+                        <li>Lu</li>
+                        <li>Ma</li>
+                        <li>Me</li>
+                        <li>Gi</li>
+                        <li>Ve</li>
+                        <li>Sa</li>
+                        <li>Do</li>
+                    </ul>
+
+                    <ul class="days">
+                        <li></li>
+                        <li><input type="text" class="form-control" th:field="*{lunedi}"></li>
+                        <li><input type="text" class="form-control" th:field="*{martedi}"></li>
+                        <li><input type="text" class="form-control" th:field="*{mercoledi}"></li>
+                        <li><input type="text" class="form-control" th:field="*{giovedi}"></li>
+                        <li><input type="text" class="form-control" th:field="*{venerdi}"></li>
+                        <li><input type="text" class="form-control" th:field="*{sabato}"></li>
+                        <li><input type="text" class="form-control" th:field="*{domenica}"></li>
+                    </ul>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="button">Registati</button>

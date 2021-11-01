@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -103,6 +106,24 @@ public class LaboratorioController {
             }
         }
         // Successo
+        // Scrittura su file
+        try{
+            FileWriter file;
+            file = new FileWriter("labDatas.txt");
+
+            BufferedWriter buffer;
+            buffer = new BufferedWriter(file);
+
+            buffer.write(request.getNomeLaboratorio() + "/n" +
+                             request.getIndirizzoStradale() + "/n" +
+                             request.getNumeroTelefono() + "/n" +
+                             request.getCodiceIban() + "/n" +
+                             request.getPartitaIva());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "redirect:/login?success";
     }
 }
