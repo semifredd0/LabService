@@ -135,20 +135,17 @@ public class ForgotPasswordController {
         String password = request.getParameter("password");
         String confermaPassword = request.getParameter("confermaPassword");
         UtenteGenerico customer = service.getByResetPasswordToken(token);
-        if (customer == null) {
+        if (customer == null)
             model.addAttribute("message", "Token non valido.");
-        } else {
-            if(password.length()<6){
-                model.addAttribute("message", "La password deve essere composta da almeno 6 caratteri.");
-            } else {
-                if (password.equals(confermaPassword)) {
-                    service.updatePassword(customer, password);
-                    model.addAttribute("message", "Password aggiornata correttamente.");
-                } else {
-                    model.addAttribute("message", "Le password non coincidono.");
-                }
-            }
-        }
+        else if (password.length()<6)
+            model.addAttribute("message", "La password deve essere composta da almeno 6 caratteri.");
+        else if (password.equals(confermaPassword)) {
+            service.updatePassword(customer, password);
+            return "redirect:/login?new_password";
+        } else
+            model.addAttribute("message", "Le password non coincidono.");
+
+        model.addAttribute("token", token);
         return "resetPasswordForm";
     }
 }
