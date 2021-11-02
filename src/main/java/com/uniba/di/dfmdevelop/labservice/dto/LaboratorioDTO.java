@@ -3,6 +3,7 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -39,7 +40,21 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private double prezzo_antigenico;
     private double prezzo_sierologico;
 
-    // aggiungere calendario
+    // Calendario laboratorio
+    private boolean lunedi = false;
+    private boolean martedi = false;
+    private boolean mercoledi = false;
+    private boolean giovedi = false;
+    private boolean venerdi = false;
+    private boolean sabato = false;
+    private boolean domenica = false;
+    private GiornoLavorativo orario_lunedi = new GiornoLavorativo();
+    private GiornoLavorativo orario_martedi = new GiornoLavorativo();
+    private GiornoLavorativo orario_mercoledi = new GiornoLavorativo();
+    private GiornoLavorativo orario_giovedi = new GiornoLavorativo();
+    private GiornoLavorativo orario_venerdi = new GiornoLavorativo();
+    private GiornoLavorativo orario_sabato = new GiornoLavorativo();
+    private GiornoLavorativo orario_domenica = new GiornoLavorativo();
 
     public LaboratorioDTO(String indirizzoEmail,
                           String password,
@@ -60,5 +75,16 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
 
     public LaboratorioDTO() {
         super();
+    }
+
+    public String calendarioToString() {
+        String calendario = "Lunedi: " + (lunedi ? orario_lunedi.toString() : "Chiuso");
+        calendario += "\nMartedi: " + (martedi ? orario_martedi.toString() : "Chiuso");
+        calendario += "\nMercoledi: " + (mercoledi ? orario_mercoledi.toString() : "Chiuso");
+        calendario += "\nGiovedi: " + (giovedi ? orario_giovedi.toString() : "Chiuso");
+        calendario += "\nVenerdi: " + (venerdi ? orario_venerdi.toString() : "Chiuso");
+        calendario += "\nSabato: " + (sabato ? orario_sabato.toString() : "Chiuso");
+        calendario += "\nDomenica: " + (domenica ? orario_domenica.toString() : "Chiuso");
+        return calendario;
     }
 }

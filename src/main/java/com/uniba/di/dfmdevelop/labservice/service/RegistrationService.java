@@ -12,6 +12,7 @@ import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class RegistrationService {
     private final CustomUserDetailService userDetailService;
     private final ConfirmationTokenService confirmationTokenService;
     private final FileStorageService storageService;
+    private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final EmailSender emailSender;
 
@@ -187,22 +189,23 @@ public class RegistrationService {
                 }
 
                 // Scrivo su file il calendario
+                Long userID = utenteGenericoRepository.count() +1;
                 try {
-                    File file = new File("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
+                    File file = new File("src/main/resources/static/calendario/lab_" + userID + ".txt");
                     if(file.createNewFile());
                     else
                         throw new IOException("File not created");
-                    FileWriter fw = new FileWriter("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
-                    fw.write(""); // Passare gli orari in formato csv
+                    FileWriter fw = new FileWriter("src/main/resources/static/calendario/lab_" + userID + ".txt");
+                    fw.write(tmp_req.calendarioToString());
                     fw.close();
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
 
                 // Converto File in MultipartFile
-                Path path = Paths.get("src/main/resources/static/calendario/lab_" + u1.getEmail() + ".txt");
-                String name = u1.getEmail() + ".txt";
-                String originalFileName = u1.getEmail() + ".txt";
+                Path path = Paths.get("src/main/resources/static/calendario/lab_" + userID + ".txt");
+                String name = "lab_" + userID + ".txt";
+                String originalFileName = "lab_" + userID + ".txt";
                 String contentType = "text/plain";
                 byte[] content = null;
                 try {

@@ -63,7 +63,7 @@ public class LaboratorioController {
                            Model model) {
 
         model.addAttribute("laboratorioDTO", request);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.error("Error in updating laboratorio");
             return "laboratorio/update";
         }
@@ -86,11 +86,10 @@ public class LaboratorioController {
                            Model model) {
 
         model.addAttribute("laboratorioDTO", request);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.error("Error in laboratorio registration");
             return "laboratorio/registration";
         }
-
         try {
             log.info("Trying to register...");
             registrationService.register(request, "laboratorioDTO");
