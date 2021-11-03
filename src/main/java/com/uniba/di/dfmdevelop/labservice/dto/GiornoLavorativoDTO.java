@@ -3,7 +3,7 @@ package com.uniba.di.dfmdevelop.labservice.dto;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class GiornoLavorativo {
+public class GiornoLavorativoDTO {
     private String aperturaMattina;
     private String chiusuraMattina;
     private String aperturaPomeriggio;
@@ -43,6 +43,10 @@ public class GiornoLavorativo {
 
     @Override
     public String toString() {
+        if(aperturaMattina.length()==0) aperturaMattina = "[Indefinito]";
+        if(chiusuraMattina.length()==0) chiusuraMattina = "[Indefinito]";
+        if(aperturaPomeriggio.length()==0) aperturaPomeriggio = "[Indefinito]";
+        if(chiusuraPomeriggio.length()==0) chiusuraPomeriggio = "[Indefinito]";
         return "Mattina: " + aperturaMattina + " - " + chiusuraMattina +
                 " / Pomeriggio: " + aperturaPomeriggio + " - " + chiusuraPomeriggio;
     }

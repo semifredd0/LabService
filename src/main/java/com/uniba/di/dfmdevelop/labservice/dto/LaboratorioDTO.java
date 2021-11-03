@@ -48,13 +48,13 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private boolean venerdi = false;
     private boolean sabato = false;
     private boolean domenica = false;
-    private GiornoLavorativo orario_lunedi = new GiornoLavorativo();
-    private GiornoLavorativo orario_martedi = new GiornoLavorativo();
-    private GiornoLavorativo orario_mercoledi = new GiornoLavorativo();
-    private GiornoLavorativo orario_giovedi = new GiornoLavorativo();
-    private GiornoLavorativo orario_venerdi = new GiornoLavorativo();
-    private GiornoLavorativo orario_sabato = new GiornoLavorativo();
-    private GiornoLavorativo orario_domenica = new GiornoLavorativo();
+    private GiornoLavorativoDTO orario_lunedi = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_martedi = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_mercoledi = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_giovedi = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_venerdi = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_sabato = new GiornoLavorativoDTO();
+    private GiornoLavorativoDTO orario_domenica = new GiornoLavorativoDTO();
 
     public LaboratorioDTO(String indirizzoEmail,
                           String password,
