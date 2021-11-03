@@ -1,6 +1,5 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,13 +18,6 @@ public class FileDB {
 
     @Lob
     private byte[] data;
-
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            mappedBy = "calendario"
-    )
-    private Laboratorio laboratorio;
 
     public FileDB() {
     }

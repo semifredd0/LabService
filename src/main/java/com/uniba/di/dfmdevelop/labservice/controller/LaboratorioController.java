@@ -80,6 +80,50 @@ public class LaboratorioController {
         return "redirect:/laboratorio/update?success";
     }
 
+    @GetMapping("updateCalendario")
+    public String updateCalendario(@AuthenticationPrincipal UtenteGenerico utente, Model model) {
+        // Ricarico l'utente dal DB, in quanto possono essere state fatte delle modifiche
+        utente = utenteGenericoRepository.getById(utente.getId());
+        // Imposto tutti i campi per l'autocompilazione
+        LaboratorioDTO laboratorioDTO = new LaboratorioDTO();
+        laboratorioDTO.setIndirizzoEmail(utente.getEmail());
+        laboratorioDTO.setPassword(utente.getPassword());
+        laboratorioDTO.setConferma_password(utente.getPassword());
+        laboratorioDTO.setRuolo(utente.getRole());
+        laboratorioDTO.setNomeLaboratorio(utente.getLaboratorio().getNome());
+        laboratorioDTO.setNumeroTelefono(utente.getLaboratorio().getTelefono());
+        laboratorioDTO.setIndirizzoStradale(utente.getLaboratorio().getIndirizzo());
+        laboratorioDTO.setCodiceIban(utente.getLaboratorio().getIBAN());
+        laboratorioDTO.setPartitaIva(utente.getLaboratorio().getPartitaIVA());
+        // Aggiungo il DTO completo al modello
+        model.addAttribute("laboratorioDTO",laboratorioDTO);
+        return "laboratorio/updateCalendario";
+    }
+
+    @PostMapping("updateCalendario")
+    public String updateCalendario(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
+                                @AuthenticationPrincipal UtenteGenerico utente,
+                                BindingResult bindingResult,
+                                Model model) {
+
+        model.addAttribute("laboratorioDTO", request);
+        if (bindingResult.hasErrors()) {
+            log.error("Error in updating laboratorio");
+            return "laboratorio/update";
+        }
+        // Aggiorna i campi del principal nella sessione corrente
+        Laboratorio laboratorio = new Laboratorio();
+        laboratorio.setNome(request.getNomeLaboratorio());
+        laboratorio.setIndirizzo(request.getIndirizzoStradale());
+        laboratorio.setTelefono(request.getNumeroTelefono());
+        laboratorio.setIBAN(request.getCodiceIban());
+        laboratorio.setPartitaIVA(request.getPartitaIva());
+        utente.setLaboratorio(laboratorio);
+        // Carico le modifiche nel database
+        service.updateUser(request,"laboratorioDTO");
+        return "redirect:/laboratorio/updateCalendario?success";
+    }
+
     @PostMapping("registration")
     public String register(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
                            BindingResult bindingResult,

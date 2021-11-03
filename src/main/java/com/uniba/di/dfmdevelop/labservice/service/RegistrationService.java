@@ -6,25 +6,13 @@ import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
-import com.uniba.di.dfmdevelop.labservice.model.FileDB;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
-import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.*;
+import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +23,7 @@ public class RegistrationService {
 
     private final CustomUserDetailService userDetailService;
     private final ConfirmationTokenService confirmationTokenService;
-    private final FileStorageService storageService;
-    private final UtenteGenericoRepository utenteGenericoRepository;
+    private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final EmailSender emailSender;
 
@@ -164,6 +151,69 @@ public class RegistrationService {
                         tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
                 u1.setLaboratorio(l1);
 
+                // Creo calendario e giorni lavorativi
+                Calendario calendario = new Calendario();
+                if(tmp_req.isLunedi()) {
+                    GiornoLavorativo lunedi = new GiornoLavorativo(tmp_req.getOrario_lunedi().getAperturaMattina(),
+                            tmp_req.getOrario_lunedi().getChiusuraMattina(),
+                            tmp_req.getOrario_lunedi().getAperturaPomeriggio(),
+                            tmp_req.getOrario_lunedi().getChiusuraPomeriggio());
+                    calendario.setLunedi(lunedi);
+                    lunedi.setLunedi(calendario);
+                }
+                if(tmp_req.isMartedi()) {
+                    GiornoLavorativo martedi = new GiornoLavorativo(tmp_req.getOrario_martedi().getAperturaMattina(),
+                            tmp_req.getOrario_martedi().getChiusuraMattina(),
+                            tmp_req.getOrario_martedi().getAperturaPomeriggio(),
+                            tmp_req.getOrario_martedi().getChiusuraPomeriggio());
+                    calendario.setMartedi(martedi);
+                    martedi.setMartedi(calendario);
+                }
+                if(tmp_req.isMercoledi()) {
+                    GiornoLavorativo mercoledi = new GiornoLavorativo(tmp_req.getOrario_mercoledi().getAperturaMattina(),
+                            tmp_req.getOrario_mercoledi().getChiusuraMattina(),
+                            tmp_req.getOrario_mercoledi().getAperturaPomeriggio(),
+                            tmp_req.getOrario_mercoledi().getChiusuraPomeriggio());
+                    calendario.setMercoledi(mercoledi);
+                    mercoledi.setMercoledi(calendario);
+                }
+                if(tmp_req.isGiovedi()) {
+                    GiornoLavorativo giovedi = new GiornoLavorativo(tmp_req.getOrario_giovedi().getAperturaMattina(),
+                            tmp_req.getOrario_giovedi().getChiusuraMattina(),
+                            tmp_req.getOrario_giovedi().getAperturaPomeriggio(),
+                            tmp_req.getOrario_giovedi().getChiusuraPomeriggio());
+                    calendario.setGiovedi(giovedi);
+                    giovedi.setGiovedi(calendario);
+                }
+                if(tmp_req.isVenerdi()) {
+                    GiornoLavorativo venerdi = new GiornoLavorativo(tmp_req.getOrario_venerdi().getAperturaMattina(),
+                            tmp_req.getOrario_venerdi().getChiusuraMattina(),
+                            tmp_req.getOrario_venerdi().getAperturaPomeriggio(),
+                            tmp_req.getOrario_venerdi().getChiusuraPomeriggio());
+                    calendario.setVenerdi(venerdi);
+                    venerdi.setVenerdi(calendario);
+                }
+                if(tmp_req.isSabato()) {
+                    GiornoLavorativo sabato = new GiornoLavorativo(tmp_req.getOrario_sabato().getAperturaMattina(),
+                            tmp_req.getOrario_sabato().getChiusuraMattina(),
+                            tmp_req.getOrario_sabato().getAperturaPomeriggio(),
+                            tmp_req.getOrario_sabato().getChiusuraPomeriggio());
+                    calendario.setSabato(sabato);
+                    sabato.setSabato(calendario);
+                }
+                if(tmp_req.isDomenica()) {
+                    GiornoLavorativo domenica = new GiornoLavorativo(tmp_req.getOrario_domenica().getAperturaMattina(),
+                            tmp_req.getOrario_domenica().getChiusuraMattina(),
+                            tmp_req.getOrario_domenica().getAperturaPomeriggio(),
+                            tmp_req.getOrario_domenica().getChiusuraPomeriggio());
+                    calendario.setDomenica(domenica);
+                    domenica.setDomenica(calendario);
+                }
+
+                // Collego calendario e laboratorio
+                l1.setCalendario(calendario);
+                calendario.setLaboratorio(l1);
+
                 // Creo lista tamponi
                 List<LaboratorioTampone> lista = new ArrayList<>();
                 if(tmp_req.isMolecolare())
@@ -188,6 +238,7 @@ public class RegistrationService {
                     lista.add(labTamp);
                 }
 
+                /* ----- Scrittura e salvataggio file nel DB -----
                 // Scrivo su file il calendario
                 Long userID = utenteGenericoRepository.count() +1;
                 try {
@@ -222,9 +273,11 @@ public class RegistrationService {
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
+                --------- */
 
                 // Salvo utente e i relativi tamponi nel DB
                 token = userDetailService.signUpUser(u1);
+                calendarioLaboratorioRepository.save(calendario);
                 laboratorioTamponeRepository.saveAll(lista);
                 return token;
         }

@@ -1,8 +1,8 @@
 package com.uniba.di.dfmdevelop.labservice.model.laboratorio;
 
-import com.uniba.di.dfmdevelop.labservice.model.FileDB;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import lombok.Data;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,13 +58,13 @@ public class Laboratorio {
     private Collection<LaboratorioTampone> listaTamponi = new ArrayList<>();
 
     @OneToOne(
-            fetch = FetchType.LAZY,
+            // fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
     @JoinColumn(
             name = "id_calendario"
     )
-    private FileDB calendario;
+    private Calendario calendario;
 
     @OneToOne(
             fetch = FetchType.LAZY,
