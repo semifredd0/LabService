@@ -11,6 +11,11 @@ body {
 
 .form-control{
     font-size: 15px;
+    z-index: 1;
+}
+
+.input-group{
+    z-index: 1;
 }
 
 img {
