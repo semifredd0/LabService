@@ -19,7 +19,8 @@
     <div style="padding-left: 20px">
         <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
     </div>
-    <div class="menuBtn" style="margin-left: 78%">
+    <ul class="menu" id="menu" />
+    <div class="menuBtn" style="float: right">
         <button class="openbtn" onclick="openNav()">Menu &#9776;</button>
     </div>
 </div>
@@ -29,7 +30,7 @@
     <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
 </div>
 
-<div style="width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+<div style=" width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
     <fieldset>
         <div class="imgcontainer ">
             <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar "
@@ -85,123 +86,137 @@
                     <dl class="record-riga">
                         <hr>
                         <dt>Lunedì:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.lunedi ne null}">
-                                Mattina:
-                                <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina}"/>/
-                                <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina}"/>
-                                Pomeriggio:
-                                <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina}"/>/
-                                <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina}"/>
+                            Mattina:
+                            <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina)} ?
+                            '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaMattina}"/>/
+                            <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.chiusuraMattina)} ?
+                            '--' : ${#authentication.principal.laboratorio.calendario.lunedi.chiusuraMattina}"/><br>
+                            Pomeriggio:
+                            <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.aperturaPomeriggio)} ?
+                            '--' : ${#authentication.principal.laboratorio.calendario.lunedi.aperturaPomeriggio}"/>/
+                            <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.lunedi.chiusuraPomeriggio)} ?
+                            '--' : ${#authentication.principal.laboratorio.calendario.lunedi.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.lunedi ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Martedì:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.martedi ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.martedi.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.martedi.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.martedi.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.chiusuraPomeriggio}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.martedi.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.martedi.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.martedi.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.martedi ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Mercoledì:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.mercoledi ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.mercoledi.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.mercoledi.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.chiusuraMattina}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.mercoledi.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.mercoledi.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.mercoledi.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.mercoledi ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Giovedì:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.giovedi ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.giovedi.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.giovedi.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.giovedi.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.chiusuraMattina}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.giovedi.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.giovedi.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.giovedi.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.giovedi ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Venerdì:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.venerdi ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.venerdi.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.venerdi.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.venerdi.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.chiusuraMattina}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.venerdi.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.venerdi.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.venerdi.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.venerdi ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Sabato:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.sabato ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.sabato.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.sabato.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.sabato.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.chiusuraMattina}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.sabato.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.sabato.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.sabato.chiusuraPomeriggio}"/><br>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.sabato ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <hr>
                         <dt>Domenica:</dt>
+                        <dd>
                             <span th:if="${#authentication.principal.laboratorio.calendario.domenica ne null}">
                                 Mattina:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.domenica.aperturaMattina)} ?
                                 '--' : ${#authentication.principal.laboratorio.calendario.domenica.aperturaMattina}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.domenica.chiusuraMattina)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.chiusuraMattina}"/><br>
                                 Pomeriggio:
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.domenica.aperturaPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.aperturaMattina}"/>/
+                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.aperturaPomeriggio}"/>/
                                 <a th:text="${#strings.isEmpty(#authentication.principal.laboratorio.calendario.domenica.chiusuraPomeriggio)} ?
-                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.aperturaMattina}"/>
+                                '--' : ${#authentication.principal.laboratorio.calendario.domenica.chiusuraPomeriggio}"/>
                             </span>
                             <span th:unless="${#authentication.principal.laboratorio.calendario.domenica ne null}">
                                 Chiuso
                             </span>
+                        </dd>
                         <br>
                     </dl>
                 </div>

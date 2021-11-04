@@ -100,36 +100,55 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="molecolare" id="molecolare"
+                    <table class="table table-secondary table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Check</th>
+                            <th scope="col">Tipologia Tampone</th>
+                            <th scope="col">Euro</th>
+                            <th scope="col">Costo</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="molecolare" id="molecolare"
                                        th:checked="*{molecolare}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text">Tampone Molecolare</span>
-                        <span class="input-group-text">&euro;</span>
-                        <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
-                               class="form-control" th:field="*{prezzo_molecolare}" id="prezzoMolecolare" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="antigenico" id="antigenico"
+                            </th>
+                            <td>Tampone Molecolare</td>
+                            <td>&euro;</td>
+                            <td>
+                                <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
+                                       class="form-control" th:field="*{prezzo_molecolare}" id="prezzoMolecolare" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="antigenico" id="antigenico"
                                        th:checked="*{antigenico}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span style="padding-right : 9px" class="input-group-text" >Tampone Antigenico</span>
-                        <span class="input-group-text">&euro;</span>
-                        <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
-                               class="form-control" th:field="*{prezzo_antigenico}" id="prezzoAntigenico" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="sierologico" id="sierologico"
+                            </th>
+                            <td>Tampone Antigenico</td>
+                            <td>&euro;</td>
+                            <td>
+                                <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
+                                       class="form-control" th:field="*{prezzo_antigenico}" id="prezzoAntigenico" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="sierologico" id="sierologico"
                                        th:checked="*{sierologico}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text">Tampone Sierologico</span>
-                        <span class="input-group-text">&euro;</span>
-                        <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
-                               class="form-control" th:field="*{prezzo_sierologico}" id="prezzoSierologico" disabled>
-                    </div>
+                            </th>
+                            <td>Tampone Sierologico</td>
+                            <td>&euro;</td>
+                            <td>
+                                <input style="padding-left: 5px" type="number" min="0.00" max="10000.00" step="0.01"
+                                       class="form-control" th:field="*{prezzo_sierologico}" id="prezzoSierologico" disabled>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <br>
@@ -138,120 +157,182 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="input-group" style="size: auto">
-                        <span class="input-group-text" style="width: 4%"></span>
-                        <span class="input-group-text" style="width: 13%">Giorno</span>
-                        <input value="Apertura mattina" style="font-size: 13px" type="text" class="form-control" disabled>
-                        <input value="Chiusura mattina" style="font-size: 13px" type="text" class="form-control" disabled>
-                        <input value="Apertura pomeriggio" style="font-size: 11px" type="text" class="form-control" disabled>
-                        <input value="Chiusura pomeriggio" style="font-size: 11px" type="text" class="form-control" disabled>
-                        </div>
+                    <table class="table table-secondary table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Check</th>
+                            <th scope="col">Giorno</th>
+                            <th scope="col">Apertura mattina</th>
+                            <th scope="col">Chiusura mattina</th>
+                            <th scope="col">Apertura pomeriggio</th>
+                            <th scope="col">Chiusura pomeriggio</th>
+                        </tr>
+                        </thead>
 
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="lunedi" id="lunedi"
-                                   th:checked="*{lunedi}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Luned&iacute;</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.aperturaMattina}"
-                               id="aperturaMattina0" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.chiusuraMattina}"
-                               id="chiusuraMattina0" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.aperturaPomeriggio}"
-                               id="aperturaPomeriggio0" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio0" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="martedi" id="martedi"
-                                   th:checked="*{martedi}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Marted&iacute;</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.aperturaMattina}"
-                               id="aperturaMattina1" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.chiusuraMattina}"
-                               id="chiusuraMattina1" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.aperturaPomeriggio}"
-                               id="aperturaPomeriggio1" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio1" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="mercoledi" id="mercoledi"
-                                   th:checked="*{mercoledi}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Mercoled&iacute;</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.aperturaMattina}"
-                               id="aperturaMattina2" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.chiusuraMattina}"
-                               id="chiusuraMattina2" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.aperturaPomeriggio}"
-                               id="aperturaPomeriggio2" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio2" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="giovedi" id="giovedi"
-                                   th:checked="*{giovedi}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Gioved&iacute;</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.aperturaMattina}"
-                               id="aperturaMattina3" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.chiusuraMattina}"
-                               id="chiusuraMattina3" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.aperturaPomeriggio}"
-                               id="aperturaPomeriggio3" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio3" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="venerdi" id="venerdi"
-                                   th:checked="*{venerdi}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Venerd&iacute;</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.aperturaMattina}"
-                               id="aperturaMattina4" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.chiusuraMattina}"
-                               id="chiusuraMattina4" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.aperturaPomeriggio}"
-                               id="aperturaPomeriggio4" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio4" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="sabato" id="sabato"
-                                   th:checked="*{sabato}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Sabato</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.aperturaMattina}"
-                               id="aperturaMattina5" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.chiusuraMattina}"
-                               id="chiusuraMattina5" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.aperturaPomeriggio}"
-                               id="aperturaPomeriggio5" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio5" disabled>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="domenica" id="domenica"
-                                   th:checked="*{domenica}" onclick="abilitaDisabilita(this)">
-                        </div>
-                        <span class="input-group-text" style="width: 13%">Domenica</span>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.aperturaMattina}"
-                               id="aperturaMattina6" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.chiusuraMattina}"
-                               id="chiusuraMattina6" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.aperturaPomeriggio}"
-                               id="aperturaPomeriggio6" disabled>
-                        <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.chiusuraPomeriggio}"
-                               id="chiusuraPomeriggio6" disabled>
-                    </div>
+                        <tbody>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="lunedi" id="lunedi"
+                                       th:checked="*{lunedi}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Lunedi'</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.aperturaMattina}"
+                                       id="aperturaMattina0" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.chiusuraMattina}"
+                                       id="chiusuraMattina0" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio0" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_lunedi.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio0" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="martedi" id="martedi"
+                                       th:checked="*{martedi}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Martedi'</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.aperturaMattina}"
+                                       id="aperturaMattina1" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.chiusuraMattina}"
+                                       id="chiusuraMattina1" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio1" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_martedi.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio1" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="mercoledi" id="mercoledi"
+                                       th:checked="*{mercoledi}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Mercoledi'</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.aperturaMattina}"
+                                       id="aperturaMattina2" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.chiusuraMattina}"
+                                       id="chiusuraMattina2" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio2" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_mercoledi.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio2" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="giovedi" id="giovedi"
+                                       th:checked="*{giovedi}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Giovedi'</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.aperturaMattina}"
+                                       id="aperturaMattina3" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.chiusuraMattina}"
+                                       id="chiusuraMattina3" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio3" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_giovedi.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio3" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="venerdi" id="venerdi"
+                                       th:checked="*{venerdi}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Venerdi'</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.aperturaMattina}"
+                                       id="aperturaMattina4" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.chiusuraMattina}"
+                                       id="chiusuraMattina4" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio4" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_venerdi.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio4" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="sabato" id="sabato"
+                                       th:checked="*{sabato}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Sabato</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.aperturaMattina}"
+                                       id="aperturaMattina5" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.chiusuraMattina}"
+                                       id="chiusuraMattina5" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio5" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_sabato.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio5" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: center">
+                                <input type="checkbox" name="domenica" id="domenica"
+                                       th:checked="*{domenica}" onclick="abilitaDisabilita(this)">
+                            </th>
+                            <td>Domenica</td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.aperturaMattina}"
+                                       id="aperturaMattina6" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.chiusuraMattina}"
+                                       id="chiusuraMattina6" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.aperturaPomeriggio}"
+                                       id="aperturaPomeriggio6" disabled>
+                            </td>
+                            <td>
+                                <input style="padding-left: 5px" type="time" class="form-control" th:field="*{orario_domenica.chiusuraPomeriggio}"
+                                       id="chiusuraPomeriggio6" disabled>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="form-group">
