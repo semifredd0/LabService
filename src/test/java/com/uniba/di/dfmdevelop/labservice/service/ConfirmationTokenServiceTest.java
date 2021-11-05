@@ -40,7 +40,6 @@ public class ConfirmationTokenServiceTest {
         String role = "Laboratorio";
 
         // Dati per token di prova
-        long id = 1;
         String tokenString = "tokenprova";
         LocalDateTime generatedAt = LocalDateTime.now();
         LocalDateTime expiresAt = LocalDateTime.of(2021,11,5,18,30);
@@ -64,19 +63,19 @@ public class ConfirmationTokenServiceTest {
     @Test
     public void gettingToken(){
         log.info("Starting gettingToken test");
-        String token = "";
+
+        String token = "tokenprova";
+
+        ConfirmationToken foundToken = new ConfirmationToken();
+        foundToken.setId(200L);
+        foundToken.setToken(token);
+
+        Mockito.when(confirmationTokenRepository.findByToken(token)).thenReturn(Optional.of(foundToken));
 
         log.info("Getting token");
         Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
 
-        if(tokenResult.isEmpty()){
-            log.info("No token getted");
-            assertFalse(tokenResult.isEmpty());
-            log.info("Ending gettingToken test");
-        }
-
-        log.info("Token getted correctly");
-        assertTrue(!tokenResult.isEmpty());
+        assertTrue("token not found", tokenResult.isPresent());
         log.info("Ending gettingToken test");
     }
 }
