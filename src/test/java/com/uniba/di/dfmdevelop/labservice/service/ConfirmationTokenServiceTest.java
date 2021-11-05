@@ -33,6 +33,7 @@ public class ConfirmationTokenServiceTest {
 
     @Test
     public void saveConfirmationTokenWhenRegisteringOrLoggingIn() {
+        log.info("Starting savingToken test");
         // Dati per utente di prova
         String email = "labo@prova.com";
         String password = "prova";
@@ -55,10 +56,12 @@ public class ConfirmationTokenServiceTest {
         boolean result = confirmationTokenService.saveConfirmationToken(token);
 
         assertTrue(result);
+        log.info("Ending savingToken test");
     }
 
     @Test
     public void gettingToken(){
+        log.info("Starting gettingToken test");
         String token = "tokenprova";
 
         log.info("Getting token");
@@ -67,9 +70,11 @@ public class ConfirmationTokenServiceTest {
         if(tokenResult.isEmpty()){
             log.info("No token getted");
             assertFalse(tokenResult.isEmpty());
+            log.info("Ending gettingToken test");
         }
 
         log.info("Token getted correctly");
         assertTrue(!tokenResult.isEmpty());
+        log.info("Ending gettingToken test");
     }
 }
