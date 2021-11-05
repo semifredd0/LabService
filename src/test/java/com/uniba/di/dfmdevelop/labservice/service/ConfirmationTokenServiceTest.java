@@ -14,8 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -48,10 +50,23 @@ public class ConfirmationTokenServiceTest {
         log.info("Creazione token di prova");
         ConfirmationToken token = new ConfirmationToken(tokenString,generatedAt,expiresAt,utenteGenerico);//EX 2017-01-13T17:09:42.411
 
-        Mockito.when(confirmationTokenRepository.getById(token.getId())).thenReturn(null);
+        Mockito.when(confirmationTokenRepository.getById(token.getId())).thenReturn(token);
 
         boolean result = confirmationTokenService.saveConfirmationToken(token);
 
-        assertFalse(result);
+        assertTrue(result);
+    }
+
+    @Test
+    public void gettingToken(){
+        String token = "tokenprova";
+
+        Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
+
+        if(tokenResult.isEmpty()){
+            assertFalse(tokenResult.isEmpty());
+        }
+
+        assertTrue(!tokenResult.isEmpty());
     }
 }
