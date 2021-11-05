@@ -61,12 +61,15 @@ public class ConfirmationTokenServiceTest {
     public void gettingToken(){
         String token = "tokenprova";
 
+        log.info("Getting token");
         Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
 
         if(tokenResult.isEmpty()){
+            log.info("No token getted");
             assertFalse(tokenResult.isEmpty());
         }
 
+        log.info("Token getted correctly");
         assertTrue(!tokenResult.isEmpty());
     }
 }
