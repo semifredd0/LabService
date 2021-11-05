@@ -55,14 +55,16 @@ public class ConfirmationTokenServiceTest {
 
         boolean result = confirmationTokenService.saveConfirmationToken(token);
 
-        assertTrue(result);
+        log.info(token.toString());
+
+        assertFalse(result);
         log.info("Ending savingToken test");
     }
 
     @Test
     public void gettingToken(){
         log.info("Starting gettingToken test");
-        String token = "tokenprova";
+        String token = "";
 
         log.info("Getting token");
         Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
