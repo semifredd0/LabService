@@ -52,6 +52,12 @@ hr {
     color: white;
 }
 
+.menu {
+    width: 100%;
+    text-align: center;
+    z-index: 0;
+}
+
 .sidenav {
     height: 100%;
     width: 0;
