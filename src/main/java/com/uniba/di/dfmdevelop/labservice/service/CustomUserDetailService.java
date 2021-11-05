@@ -7,6 +7,7 @@ import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +27,15 @@ public class CustomUserDetailService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioRepository laboratorioRepository;
+    private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
-    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
+    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, CalendarioLaboratorioRepository calendarioLaboratorioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
         this.utenteGenericoRepository = utenteGenericoRepository;
         this.laboratorioRepository = laboratorioRepository1;
+        this.calendarioLaboratorioRepository = calendarioLaboratorioRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
         this.emailSender = emailSender;
@@ -84,6 +87,12 @@ public class CustomUserDetailService implements UserDetailsService {
                 laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
                 laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
         }
+    }
+
+    public void updateCalendar(UtenteGenerico utenteGenerico) {
+        // TODO: rimuovere il vecchie istanze di calendario e giorno_lavorativo dal DB
+        calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
+        laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

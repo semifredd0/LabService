@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <form th:action="@{/laboratorio/update}" th:object="${laboratorioDTO}" th:method="post">
+    <form th:action="@{/laboratorio/updateProfile}" th:object="${laboratorioDTO}" th:method="post">
 
         <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
         <input class="form-control" type="hidden"
@@ -49,8 +49,7 @@
                 <div class="breaks3 " id="floating">
                     <div id="containerDettagli" class="breaks3 record">
                         <dl class="record-riga">
-                            <h3 style="color: black; padding-bottom: 6px"> <b>Pagina di Modifica </b></h3>
-                            <p style="color: black; padding-bottom: 3px">In questa pagina viene visualizzato il modulo per la modifica delle informazioni relative al laboratorio.</p>
+                            <h3 style="color: black; padding-bottom: 6px"> <b>Modifica Profilo</b></h3>
                             <dt>Nome Laboratorio</dt>
                             <dd>
                                 <div class="form-group">
