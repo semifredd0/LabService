@@ -56,11 +56,7 @@ public class ConfirmationTokenServiceTest {
         token.setExpiresAt(LocalDateTime.of(2021,11,5,18,30));
         token.setUtenteGenerico(utenteGenerico);
 
-        //Mockito.when(confirmationTokenRepository.getById(token.getId())).thenReturn(token);
-
         boolean result = confirmationTokenService.saveConfirmationToken(token);
-
-        log.info(token.toString());
 
         assertTrue(result);
         log.info("Ending savingToken test");
@@ -75,8 +71,6 @@ public class ConfirmationTokenServiceTest {
         ConfirmationToken foundToken = new ConfirmationToken();
         foundToken.setId(200L);
         foundToken.setToken(token);
-
-        //Mockito.when(confirmationTokenRepository.findByToken(token)).thenReturn(Optional.of(foundToken));
 
         log.info("Getting token");
         Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
@@ -101,9 +95,6 @@ public class ConfirmationTokenServiceTest {
         token.setToken("prova");
         token.setExpiresAt(LocalDateTime.of(2021,11,5,18,30));
         token.setUtenteGenerico(utenteGenerico);
-
-        log.info("Mocking token");
-        //Mockito.when(confirmationTokenRepository.getById(token.getId())).thenReturn(token);
 
         int result = confirmationTokenService.setConfirmedAt(token.getToken());
 
