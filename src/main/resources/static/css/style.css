@@ -123,14 +123,15 @@ img {
 
 .menu {
     width: 100%;
-    text-align: center;
+    text-align: right;
     z-index: 0;
 }
 
 .menu li {
     display: inline-block;
     padding: 10px;
-    margin-left: 40px;
+    margin-top: 5px;
+    margin-right: 20px;
 }
 
 .menu li:hover {
@@ -221,7 +222,9 @@ button:hover {
 }
 
 span.psw {
+    margin-top: 10px;
     float: right;
+    text-align: right;
 }
 
 /* The Close Button (x) */

@@ -82,7 +82,7 @@
                         <tr>
                             <td style="width:8%; text-align: center "><input type="checkbox" class="form-check-input" id="remember-me" name="remember-me"></td>
                             <td>
-                                <label class="form-check-label mb-3" for="remember-me">Remember me?</label>
+                                <label class="form-check-label mb-2" for="remember-me">Remember me</label>
                             </td>
                         </tr>
                     </tbody>
@@ -90,11 +90,11 @@
 
                 <!-- Login Button -->
                 <div class="form-actions mb-3" style="margin-top: 12px;">
-                    <button type="submit " class="button">Accedi</button>
-                    <span class="psw ">
-                        <a th:href="@{/forgot_password}">Hai dimenticato la password?</a>
+                    <button type="submit" class="button">Accedi</button>
+                    <span class="psw">
+                        <span style= "color: black">Hai dimenticato la password?  </span><a th:href="@{/forgot_password}">Recupero password</a>
                         <br>
-                        <span style= "color: black ">Sei un nuovo utente?  </span><a th:href="@{/registration}">Registrati</a>
+                        <span style= "color: black">Sei un nuovo utente?  </span><a th:href="@{/registration}">Registrati</a>
                     </span>
                 </div>
 
