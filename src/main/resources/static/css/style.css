@@ -6,14 +6,15 @@ body {
     font-weight: bold;
 }
 
-a {
-    text-decoration: none;
+a{
     color: #FFFFFF;
+    text-decoration: none;
     margin-top:2px;
 }
 
 a:hover{
-    color:white;
+    color: #FFFFFF;
+    text-decoration: none;
     opacity: 0.8;
 }
 
@@ -125,6 +126,23 @@ img {
     width: 100%;
     text-align: right;
     z-index: 0;
+}
+
+ul.team {
+    list-style: none; /* Remove HTML bullets */
+    padding: 0;
+    margin: 0;
+}
+
+li.team {
+    padding-left: 16px;
+    font-size:22px;
+}
+
+li.team::before {
+    content: "•";
+    padding-right: 8px;
+    color: blue;
 }
 
 .menu li {

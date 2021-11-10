@@ -13,22 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script th:src="@{~/js/index.js}"></script>
-    <style>
-        ul.team {
-            list-style: none; /* Remove HTML bullets */
-            padding: 0;
-            margin: 0;
-        }
-        li.team {
-            padding-left: 16px;
-            font-size:22px;
-        }
-        li.team::before {
-            content: "•";
-            padding-right: 8px;
-            color: blue;
-        }
-    </style>
 </head>
 
 <body>
@@ -91,9 +75,9 @@
                         <span class="card-text text-center" id="testoCard1" style="display: none;">
                             <h1>Team LabService</h1>
                             <ul class="team">
-                              <li class="team">Matteo Costantini</li>
-                              <li class="team">Francesco Brescia</li>
-                              <li class="team">Domenico Degaetano</li>
+                                <li class="team">Francesco Brescia</li>
+                                <li class="team">Matteo Costantini</li>
+                                <li class="team">Domenico Degaetano</li>
                             </ul>
                         </span>
                     </div>

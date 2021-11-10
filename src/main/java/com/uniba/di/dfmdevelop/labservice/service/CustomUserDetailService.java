@@ -74,18 +74,22 @@ public class CustomUserDetailService implements UserDetailsService {
         return utenteGenericoRepository.enableUtenteGenerico(email);
     }
 
-    public void updateUser(UtenteGenericoDTO request, String role) {
-
-        switch(role) {
-            case "laboratorioDTO":
-                LaboratorioDTO tmp_req = (LaboratorioDTO)request;
-                UtenteGenerico utenteGenerico = utenteGenericoRepository.
-                        findByEmail(request.getIndirizzoEmail()).get();
-                laboratorioRepository.updateNome(utenteGenerico, tmp_req.getNomeLaboratorio());
-                laboratorioRepository.updateTelefono(utenteGenerico, tmp_req.getNumeroTelefono());
-                laboratorioRepository.updateIndirizzo(utenteGenerico, tmp_req.getIndirizzoStradale());
-                laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
-                laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
+    public boolean updateUser(UtenteGenericoDTO request, String role) {
+        try {
+            switch (role) {
+                case "laboratorioDTO":
+                    LaboratorioDTO tmp_req = (LaboratorioDTO) request;
+                    UtenteGenerico utenteGenerico = utenteGenericoRepository.
+                            findByEmail(request.getIndirizzoEmail()).get();
+                    laboratorioRepository.updateNome(utenteGenerico, tmp_req.getNomeLaboratorio());
+                    laboratorioRepository.updateTelefono(utenteGenerico, tmp_req.getNumeroTelefono());
+                    laboratorioRepository.updateIndirizzo(utenteGenerico, tmp_req.getIndirizzoStradale());
+                    laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
+                    laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
+            }
+            return true;
+        }catch(Exception e){
+            return false;
         }
     }
 
