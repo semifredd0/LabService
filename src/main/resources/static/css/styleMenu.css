@@ -18,6 +18,7 @@ hr {
     width: 98%;
     color: black;
     margin-left: 10px;
+    clear: both;
 }
 
 .header {
