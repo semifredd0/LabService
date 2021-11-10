@@ -60,9 +60,9 @@ public class LaboratorioController {
 
     @PostMapping("updateProfile")
     public String updateProfile(@Valid @ModelAttribute("laboratorioDTO") LaboratorioDTO request,
-                           @AuthenticationPrincipal UtenteGenerico utente,
-                           BindingResult bindingResult,
-                           Model model) {
+                                BindingResult bindingResult,
+                                @AuthenticationPrincipal UtenteGenerico utente,
+                                Model model) {
 
         model.addAttribute("laboratorioDTO", request);
         if (bindingResult.hasErrors()) {
