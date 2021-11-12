@@ -42,6 +42,18 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     @Override
+    public String toString() {
+        return "CustomUserDetailService{" +
+                "utenteGenericoRepository=" + utenteGenericoRepository +
+                ", laboratorioRepository=" + laboratorioRepository +
+                ", calendarioLaboratorioRepository=" + calendarioLaboratorioRepository +
+                ", bCryptPasswordEncoder=" + bCryptPasswordEncoder +
+                ", confirmationTokenService=" + confirmationTokenService +
+                ", emailSender=" + emailSender +
+                '}';
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return utenteGenericoRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
@@ -74,8 +86,7 @@ public class CustomUserDetailService implements UserDetailsService {
         return utenteGenericoRepository.enableUtenteGenerico(email);
     }
 
-    public boolean updateUser(UtenteGenericoDTO request, String role) {
-        try {
+    public void updateUser(UtenteGenericoDTO request, String role) {
             switch (role) {
                 case "laboratorioDTO":
                     LaboratorioDTO tmp_req = (LaboratorioDTO) request;
@@ -87,16 +98,12 @@ public class CustomUserDetailService implements UserDetailsService {
                     laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
                     laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
             }
-            return true;
-        }catch(Exception e){
-            return false;
-        }
     }
 
     public void updateCalendar(UtenteGenerico utenteGenerico) {
         // TODO: rimuovere il vecchie istanze di calendario e giorno_lavorativo dal DB
-        calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
-        laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
+            calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
+            laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
