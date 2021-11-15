@@ -21,15 +21,15 @@ public class RegistrationServiceTest {
     RegistrationService registrationService;
 
     @Test
-    public void registrationOfAUser() throws CustomException {
-
+    public void registration() throws CustomException {   //ritorna una Authentication failed; nested exception is javax.mail.AuthenticationFailedException: failed to connect, no password specified?
+        //TODO fixare o eliminare questa classe
         UtenteGenericoDTO utenteGenericoDTO = new UtenteGenericoDTO();
         utenteGenericoDTO.setIndirizzoEmail("lab_bari@labservice.it");
         utenteGenericoDTO.setPassword("prova");
         utenteGenericoDTO.setConferma_password("prova");
         utenteGenericoDTO.setRuolo("LABORATORIO");
 
-        String token = registrationService.register(utenteGenericoDTO, utenteGenericoDTO.getRuolo());
+        String token = registrationService.register(utenteGenericoDTO,utenteGenericoDTO.getRuolo());
 
         assertFalse(token.isEmpty());
     }

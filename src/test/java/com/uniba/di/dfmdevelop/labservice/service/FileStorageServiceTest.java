@@ -34,20 +34,6 @@ public class FileStorageServiceTest {
         assertTrue(newFile != null);
     }
 
-    /*@Test
-    public void getRequestedFile() {
-
-        FileDB fileDB = new FileDB();
-
-        fileDB.setName("file.txt");
-        fileDB.setType("text/plain");
-        fileDB.setData((byte[]) null);
-
-        FileDB gotFile = fileStorageService.getFile(fileDB.getId());
-
-        assertTrue(gotFile != null);
-    }*/
-
     @Test
     public void returningAllFilesPresentsInTheDatabase(){
 
