@@ -33,4 +33,10 @@ public class RegistrationServiceTest {
 
         assertFalse(token.isEmpty());
     }
+
+    @Test
+    public void tokenConfirmation() {
+
+        String token = "";
+    }
 }
