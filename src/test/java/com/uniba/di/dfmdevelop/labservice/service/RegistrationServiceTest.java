@@ -35,8 +35,12 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void tokenConfirmation() {
+    public void tokenConfirmation() throws CustomException { //Ritorna exception token non trovato
 
-        String token = "";
+        String token = "prova";
+
+        String confirmToken = registrationService.confirmToken(token);
+
+        assertFalse(confirmToken.isEmpty());
     }
 }
