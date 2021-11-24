@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class PaymentServiceTest {
 
     @Autowired
-    PaymentService paymentService;
+    PaypalService paymentService;
 
     @Test
     public void creatingPayment() throws PayPalRESTException {

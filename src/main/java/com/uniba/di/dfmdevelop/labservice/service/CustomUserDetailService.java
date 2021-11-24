@@ -102,8 +102,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
     public void updateCalendar(UtenteGenerico utenteGenerico) {
         // TODO: rimuovere il vecchie istanze di calendario e giorno_lavorativo dal DB
-            calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
-            laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
+        calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
+        laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

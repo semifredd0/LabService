@@ -9,12 +9,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PaymentDetail {
-
+public class Payment {
     private double price;
     private String currency;
     private String method;
     private String intent;
     private String description;
-
 }
