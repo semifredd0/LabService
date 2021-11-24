@@ -56,23 +56,6 @@ public class LaboratorioDTO extends UtenteGenericoDTO {
     private GiornoLavorativoDTO orario_sabato = new GiornoLavorativoDTO();
     private GiornoLavorativoDTO orario_domenica = new GiornoLavorativoDTO();
 
-    public LaboratorioDTO(String indirizzoEmail,
-                          String password,
-                          String confermaPassword,
-                          String ruolo,
-                          String nomeLaboratorio,
-                          String numeroTelefono,
-                          String indirizzoStradale,
-                          String codiceIban,
-                          String partitaIva) {
-        super(indirizzoEmail,password,ruolo,confermaPassword);
-        this.nomeLaboratorio = nomeLaboratorio;
-        this.numeroTelefono = numeroTelefono;
-        this.indirizzoStradale = indirizzoStradale;
-        this.codiceIban = codiceIban;
-        this.partitaIva = partitaIva;
-    }
-
     public LaboratorioDTO() {
         super();
     }
