@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
+import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @Slf4j
@@ -88,7 +88,7 @@ public class HomeController {
         // Collegamento alla seconda pagina di registrazione
         switch (request.getRuolo()) {
             case "LABORATORIO":
-                log.info("Connecting to the second page of registration");
+                log.info("Connecting to laboratorio registration");
                 LaboratorioDTO laboratorioDTO = new LaboratorioDTO();
                 // Aggiungo le info di UtenteGenericoDTO al modello
                 laboratorioDTO.setIndirizzoEmail(request.getIndirizzoEmail());
@@ -97,8 +97,17 @@ public class HomeController {
                 laboratorioDTO.setRuolo(request.getRuolo());
                 model.addAttribute("laboratorioDTO", laboratorioDTO);
                 return "laboratorio/registration";
+            case "CITTADINO":
+                log.info("Connecting to cittadino registration");
+                CittadinoDTO cittadinoDTO = new CittadinoDTO();
+                // Aggiungo le info di UtenteGenericoDTO al modello
+                cittadinoDTO.setIndirizzoEmail(request.getIndirizzoEmail());
+                cittadinoDTO.setPassword(request.getPassword());
+                cittadinoDTO.setConferma_password(request.getConferma_password());
+                cittadinoDTO.setRuolo(request.getRuolo());
+                model.addAttribute("cittadinoDTO", cittadinoDTO);
+                return "cittadino/registration";
         }
-
         return null; // TOGLIERE INFINE
     }
 

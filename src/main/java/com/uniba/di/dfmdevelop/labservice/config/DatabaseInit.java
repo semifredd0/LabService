@@ -39,6 +39,11 @@ public class DatabaseInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        initLaboratori();
+
+    }
+
+    private void initLaboratori() {
 
         UtenteGenerico utenteGenerico1 = new UtenteGenerico(
                 "lab_lecce@labservice.it",
@@ -52,6 +57,7 @@ public class DatabaseInit implements CommandLineRunner {
         );
         utenteGenerico1.setEnabled(true);
         utenteGenerico2.setEnabled(true);
+
         Laboratorio lab1 = new Laboratorio(
                 "Laboratorio Analisi Lecce",
                 "3768676978",

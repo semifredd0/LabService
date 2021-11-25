@@ -1,12 +1,13 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import lombok.Data;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity(name = "cittadino")
-public class Cittadino extends UtenteGenerico {
+public class Cittadino {
 
     @Id
     @SequenceGenerator(
@@ -40,7 +41,7 @@ public class Cittadino extends UtenteGenerico {
             nullable = false,
             columnDefinition = "DATE"
     )
-    private Date dataNascita;
+    private LocalDate dataNascita;
 
     @Column(
             name = "numero_telefono",
@@ -70,7 +71,7 @@ public class Cittadino extends UtenteGenerico {
 
     public Cittadino(String nome,
                      String cognome,
-                     Date dataNascita,
+                     LocalDate dataNascita,
                      String numeroTelefono,
                      String codFiscale,
                      UtenteGenerico utenteGenerico) {

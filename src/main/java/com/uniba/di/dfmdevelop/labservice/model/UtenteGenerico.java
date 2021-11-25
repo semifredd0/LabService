@@ -70,6 +70,13 @@ public class UtenteGenerico implements UserDetails {
     )
     private Laboratorio laboratorio;
 
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "utenteGenerico"
+    )
+    private Cittadino cittadino;
+
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
