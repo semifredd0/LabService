@@ -71,19 +71,19 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
-                        id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
-                        th:errorClass="is-invalid" required/>
-                    <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
                     <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="dataNascita"> Data di nascita </label> <input
                         id="dataNascita" class="form-control" th:field="*{dataNascita}"
                         th:errorClass="is-invalid" required/>
                     <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
+                    <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
+                        id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
+                        th:errorClass="is-invalid" required/>
+                    <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group">
