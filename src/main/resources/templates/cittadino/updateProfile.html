@@ -21,19 +21,15 @@
 
 <form th:action="@{/cittadino/updateProfile}" th:object="${cittadinoDTO}" th:method="post">
 
-    <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
     <input class="form-control" type="hidden"
            th:attr="value = ${cittadinoDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
 
-    <!--/*@thymesVar id="password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
     <input class="form-control" type="hidden"
            th:attr="value = ${cittadinoDTO.password}" th:field="*{password}"/>
 
-    <!--/*@thymesVar id="conferma_password" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
     <input class="form-control" type="hidden"
            th:attr="value = ${cittadinoDTO.conferma_password}" th:field="*{conferma_password}"/>
 
-    <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
     <input class="form-control" type="hidden"
            th:attr="value = ${cittadinoDTO.ruolo}" th:field="*{ruolo}"/>
 
@@ -53,28 +49,25 @@
                         <dt>Nome</dt>
                         <dd>
                             <div class="form-group">
-                                <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                                <input id="nomeCittadino" class="form-control" th:field="*{nomeCittadino}" th:value="*{nomeCittadino}"
+                                <input id="nome" class="form-control" th:field="*{nome}" th:value="*{nome}"
                                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                                <div th:if="${#fields.hasErrors('nomeCittadino')}" th:errors="*{nomeCittadino}" class="invalid-feedback"></div>
+                                <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="invalid-feedback"></div>
                             </div>
                         </dd>
                         <hr>
                         <dt>Cognome</dt>
                         <dd>
                             <div class="form-group">
-                                <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                                <input id="cognomeCittadino" class="form-control" th:field="*{cognomeCittadino}" th:value="*{cognomeCittadino}"
+                                <input id="cognome" class="form-control" th:field="*{cognome}" th:value="*{cognome}"
                                        th:errorClass="is-invalid" required autofocus="autofocus" />
-                                <div th:if="${#fields.hasErrors('cognomeCittadino')}" th:errors="*{cognomeCittadino}" class="invalid-feedback"></div>
+                                <div th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" class="invalid-feedback"></div>
                             </div>
                         </dd>
                         <hr>
                         <dt>Data di nascita</dt>
                         <dd>
                             <div class="form-group">
-                                <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                                <input id="dataNascita" class="form-control" th:field="*{dataNascita}" th:value="*{dataNascita}"
+                                <input type="date" id="dataNascita" class="form-control" th:field="*{dataNascita}" th:value="*{dataNascita}"
                                        th:errorClass="is-invalid" required autofocus="autofocus" />
                                 <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
                             </div>
@@ -83,7 +76,6 @@
                         <dt>Numero di telefono</dt>
                         <dd>
                             <div class="form-group">
-                                <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                                 <input id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}" th:value="*{numeroTelefono}"
                                        th:errorClass="is-invalid" required autofocus="autofocus" />
                                 <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
@@ -93,7 +85,6 @@
                         <dt>Codice Fiscale</dt>
                         <dd>
                             <div class="form-group">
-                                <!--/*@thymesVar id="partitaIva" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                                 <input id="codiceFiscale" class="form-control" th:field="*{codiceFiscale}" th:value="*{codiceFiscale}"
                                        th:errorClass="is-invalid" required autofocus="autofocus" />
                                 <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
@@ -104,7 +95,7 @@
             </div>
 
             <div class="form-group">
-                <a th:href="@{/laboratorio/index}" type="submit" class="button" style="float: right; background: red; padding-bottom: 14px;">Annulla</a>
+                <a th:href="@{/cittadino/index}" type="submit" class="button" style="float: right; background: red; padding-bottom: 14px;">Annulla</a>
             </div>
 
             <div class="form-group">

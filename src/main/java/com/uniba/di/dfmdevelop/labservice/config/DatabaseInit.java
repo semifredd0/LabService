@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.config;
 
+import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
@@ -12,6 +13,8 @@ import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
 import java.util.List;
 
 // Creo 2 Laboratori e attivo gli account.
@@ -39,11 +42,39 @@ public class DatabaseInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        initLaboratori();
-
+        initLaboratorio();
+        initCittadino();
     }
 
-    private void initLaboratori() {
+    private void initCittadino() {
+
+        UtenteGenerico utenteGenerico1 = new UtenteGenerico(
+                "matteo.costa@labservice.it",
+                passwordEncoder.encode("111111"),
+                "CITTADINO"
+        );
+        UtenteGenerico utenteGenerico2 = new UtenteGenerico(
+                "francesco.brescia@labservice.it",
+                passwordEncoder.encode("111111"),
+                "CITTADINO"
+        );
+        utenteGenerico1.setEnabled(true);
+        utenteGenerico2.setEnabled(true);
+
+        Cittadino cittadino1 = new Cittadino(
+                "Matteo","Costantini", LocalDate.of(2000,1,12),
+                "3339898765","CSTMTT00A12E876T",utenteGenerico1
+        );
+        Cittadino cittadino2 = new Cittadino(
+                "Francesco","Brescia", LocalDate.of(2000,6,29),
+                "3261288654","FRNBRS00F29K012U",utenteGenerico2
+        );
+        utenteGenerico1.setCittadino(cittadino1);
+        utenteGenerico2.setCittadino(cittadino2);
+        utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
+    }
+
+    private void initLaboratorio() {
 
         UtenteGenerico utenteGenerico1 = new UtenteGenerico(
                 "lab_lecce@labservice.it",
