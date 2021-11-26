@@ -14,13 +14,8 @@ public class ConfirmationTokenService {
 
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public boolean saveConfirmationToken(ConfirmationToken token) {
-        try {
+    public void saveConfirmationToken(ConfirmationToken token) {
             confirmationTokenRepository.save(token);
-            return true;
-        }catch(Exception e){
-            return false;
-        }
     }
 
     public Optional<ConfirmationToken> getToken(String token) {

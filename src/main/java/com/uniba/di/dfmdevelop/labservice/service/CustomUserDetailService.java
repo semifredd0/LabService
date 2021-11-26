@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
@@ -8,6 +9,7 @@ import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.CittadinoRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -28,17 +29,17 @@ public class CustomUserDetailService implements UserDetailsService {
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioRepository laboratorioRepository;
     private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
+    private final CittadinoRepository cittadinoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-    private final EmailSender emailSender;
 
-    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, CalendarioLaboratorioRepository calendarioLaboratorioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
+    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, CalendarioLaboratorioRepository calendarioLaboratorioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender, CittadinoRepository cittadinoRepository) {
         this.utenteGenericoRepository = utenteGenericoRepository;
         this.laboratorioRepository = laboratorioRepository1;
         this.calendarioLaboratorioRepository = calendarioLaboratorioRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
-        this.emailSender = emailSender;
+        this.cittadinoRepository = cittadinoRepository;
     }
 
     @Override
@@ -74,23 +75,29 @@ public class CustomUserDetailService implements UserDetailsService {
         return utenteGenericoRepository.enableUtenteGenerico(email);
     }
 
-    public boolean updateUser(UtenteGenericoDTO request, String role) {
-        try {
+    public void updateUser(UtenteGenericoDTO request, String role) {
             switch (role) {
                 case "laboratorioDTO":
-                    LaboratorioDTO tmp_req = (LaboratorioDTO) request;
-                    UtenteGenerico utenteGenerico = utenteGenericoRepository.
+                    LaboratorioDTO tmp_req1 = (LaboratorioDTO) request;
+                    UtenteGenerico utenteGenerico1 = utenteGenericoRepository.
                             findByEmail(request.getIndirizzoEmail()).get();
-                    laboratorioRepository.updateNome(utenteGenerico, tmp_req.getNomeLaboratorio());
-                    laboratorioRepository.updateTelefono(utenteGenerico, tmp_req.getNumeroTelefono());
-                    laboratorioRepository.updateIndirizzo(utenteGenerico, tmp_req.getIndirizzoStradale());
-                    laboratorioRepository.updateIban(utenteGenerico, tmp_req.getCodiceIban());
-                    laboratorioRepository.updatePartitaIva(utenteGenerico, tmp_req.getPartitaIva());
+                    laboratorioRepository.updateNome(utenteGenerico1, tmp_req1.getNomeLaboratorio());
+                    laboratorioRepository.updateTelefono(utenteGenerico1, tmp_req1.getNumeroTelefono());
+                    laboratorioRepository.updateIndirizzo(utenteGenerico1, tmp_req1.getIndirizzoStradale());
+                    laboratorioRepository.updateIban(utenteGenerico1, tmp_req1.getCodiceIban());
+                    laboratorioRepository.updatePartitaIva(utenteGenerico1, tmp_req1.getPartitaIva());
+                    break;
+                case "cittadinoDTO":
+                    CittadinoDTO tmp_req2 = (CittadinoDTO) request;
+                    UtenteGenerico utenteGenerico2 = utenteGenericoRepository.
+                            findByEmail(request.getIndirizzoEmail()).get();
+                    cittadinoRepository.updateNome(utenteGenerico2, tmp_req2.getNome());
+                    cittadinoRepository.updateCognome(utenteGenerico2, tmp_req2.getCognome());
+                    cittadinoRepository.updateDataNascita(utenteGenerico2, tmp_req2.getDataNascita());
+                    cittadinoRepository.updateNumeroTelefono(utenteGenerico2, tmp_req2.getNumeroTelefono());
+                    cittadinoRepository.updateCodiceFiscale(utenteGenerico2, tmp_req2.getCodiceFiscale());
+                    break;
             }
-            return true;
-        }catch(Exception e){
-            return false;
-        }
     }
 
     public void updateCalendar(UtenteGenerico utenteGenerico) {

@@ -1,41 +1,28 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.LabServiceApplication;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.repository.ConfirmationTokenRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Slf4j
-@ExtendWith(MockitoExtension.class)
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LabServiceApplication.class)
 public class ConfirmationTokenServiceTest {
 
-    @Mock
-    private ConfirmationTokenRepository confirmationTokenRepository;
-
-    @InjectMocks
-    private ConfirmationTokenService confirmationTokenService;
-
-    @Before
-    public void setup(){
-        MockitoAnnotations.openMocks(this.confirmationTokenService);
-    }
+    @Autowired
+    ConfirmationTokenService confirmationTokenService;
 
     @Test
     public void saveConfirmationTokenWhenRegisteringOrLoggingIn() {
@@ -56,27 +43,11 @@ public class ConfirmationTokenServiceTest {
         token.setExpiresAt(LocalDateTime.of(2021,11,5,18,30));
         token.setUtenteGenerico(utenteGenerico);
 
-        boolean result = confirmationTokenService.saveConfirmationToken(token);
+        confirmationTokenService.saveConfirmationToken(token);
+        Optional<ConfirmationToken> confirmationToken = confirmationTokenService.getToken("prova");
 
-        assertTrue(result);
+        assertFalse(confirmationToken.isEmpty());
         log.info("Ending savingToken test");
-    }
-
-    @Test
-    public void gettingToken(){
-        log.info("Starting gettingToken test");
-
-        String token = "tokenprova";
-
-        ConfirmationToken foundToken = new ConfirmationToken();
-        foundToken.setId(200L);
-        foundToken.setToken(token);
-
-        log.info("Getting token");
-        Optional<ConfirmationToken> tokenResult = confirmationTokenService.getToken(token);
-
-        assertTrue(tokenResult.isEmpty());
-        log.info("Ending gettingToken test");
     }
 
     @Test
@@ -99,7 +70,7 @@ public class ConfirmationTokenServiceTest {
         int result = confirmationTokenService.setConfirmedAt(token.getToken());
 
 
-        assertFalse(result == 1);
+        assertEquals(result, 0);
 
     }
 }

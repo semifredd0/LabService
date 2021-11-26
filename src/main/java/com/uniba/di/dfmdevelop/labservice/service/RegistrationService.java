@@ -1,10 +1,12 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.*;
@@ -137,106 +139,113 @@ public class RegistrationService {
 
     private String getToken(UtenteGenericoDTO request, String role) throws CustomException {
 
-        String token;
         switch(role) {
-
             case "laboratorioDTO":
-                LaboratorioDTO tmp_req = (LaboratorioDTO) request;
+                return tokenLaboratorio(request);
+            case "cittadinoDTO":
+                return tokenCittadino(request);
+        }
+        return null; // eliminare alla fine
+    }
 
-                // Creo utente e laboratorio
-                UtenteGenerico u1 = new UtenteGenerico(
-                        tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
-                Laboratorio l1 = new Laboratorio(tmp_req.getNomeLaboratorio(),
-                        tmp_req.getNumeroTelefono(), tmp_req.getIndirizzoStradale(),
-                        tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
-                u1.setLaboratorio(l1);
+    private String tokenLaboratorio(UtenteGenericoDTO request) throws CustomException {
+        String token;
+        LaboratorioDTO tmp_req = (LaboratorioDTO) request;
 
-                // Creo calendario e giorni lavorativi
-                Calendario calendario = new Calendario();
-                if(tmp_req.isLunedi()) {
-                    GiornoLavorativo lunedi = new GiornoLavorativo(tmp_req.getOrario_lunedi().getAperturaMattina(),
-                            tmp_req.getOrario_lunedi().getChiusuraMattina(),
-                            tmp_req.getOrario_lunedi().getAperturaPomeriggio(),
-                            tmp_req.getOrario_lunedi().getChiusuraPomeriggio());
-                    calendario.setLunedi(lunedi);
-                    lunedi.setLunedi(calendario);
-                }
-                if(tmp_req.isMartedi()) {
-                    GiornoLavorativo martedi = new GiornoLavorativo(tmp_req.getOrario_martedi().getAperturaMattina(),
-                            tmp_req.getOrario_martedi().getChiusuraMattina(),
-                            tmp_req.getOrario_martedi().getAperturaPomeriggio(),
-                            tmp_req.getOrario_martedi().getChiusuraPomeriggio());
-                    calendario.setMartedi(martedi);
-                    martedi.setMartedi(calendario);
-                }
-                if(tmp_req.isMercoledi()) {
-                    GiornoLavorativo mercoledi = new GiornoLavorativo(tmp_req.getOrario_mercoledi().getAperturaMattina(),
-                            tmp_req.getOrario_mercoledi().getChiusuraMattina(),
-                            tmp_req.getOrario_mercoledi().getAperturaPomeriggio(),
-                            tmp_req.getOrario_mercoledi().getChiusuraPomeriggio());
-                    calendario.setMercoledi(mercoledi);
-                    mercoledi.setMercoledi(calendario);
-                }
-                if(tmp_req.isGiovedi()) {
-                    GiornoLavorativo giovedi = new GiornoLavorativo(tmp_req.getOrario_giovedi().getAperturaMattina(),
-                            tmp_req.getOrario_giovedi().getChiusuraMattina(),
-                            tmp_req.getOrario_giovedi().getAperturaPomeriggio(),
-                            tmp_req.getOrario_giovedi().getChiusuraPomeriggio());
-                    calendario.setGiovedi(giovedi);
-                    giovedi.setGiovedi(calendario);
-                }
-                if(tmp_req.isVenerdi()) {
-                    GiornoLavorativo venerdi = new GiornoLavorativo(tmp_req.getOrario_venerdi().getAperturaMattina(),
-                            tmp_req.getOrario_venerdi().getChiusuraMattina(),
-                            tmp_req.getOrario_venerdi().getAperturaPomeriggio(),
-                            tmp_req.getOrario_venerdi().getChiusuraPomeriggio());
-                    calendario.setVenerdi(venerdi);
-                    venerdi.setVenerdi(calendario);
-                }
-                if(tmp_req.isSabato()) {
-                    GiornoLavorativo sabato = new GiornoLavorativo(tmp_req.getOrario_sabato().getAperturaMattina(),
-                            tmp_req.getOrario_sabato().getChiusuraMattina(),
-                            tmp_req.getOrario_sabato().getAperturaPomeriggio(),
-                            tmp_req.getOrario_sabato().getChiusuraPomeriggio());
-                    calendario.setSabato(sabato);
-                    sabato.setSabato(calendario);
-                }
-                if(tmp_req.isDomenica()) {
-                    GiornoLavorativo domenica = new GiornoLavorativo(tmp_req.getOrario_domenica().getAperturaMattina(),
-                            tmp_req.getOrario_domenica().getChiusuraMattina(),
-                            tmp_req.getOrario_domenica().getAperturaPomeriggio(),
-                            tmp_req.getOrario_domenica().getChiusuraPomeriggio());
-                    calendario.setDomenica(domenica);
-                    domenica.setDomenica(calendario);
-                }
+        // Creo utente e laboratorio
+        UtenteGenerico u1 = new UtenteGenerico(
+                tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
+        Laboratorio l1 = new Laboratorio(tmp_req.getNomeLaboratorio(),
+                tmp_req.getNumeroTelefono(), tmp_req.getIndirizzoStradale(),
+                tmp_req.getCodiceIban(), tmp_req.getPartitaIva(), u1);
+        u1.setLaboratorio(l1);
 
-                // Collego calendario e laboratorio
-                l1.setCalendario(calendario);
-                calendario.setLaboratorio(l1);
+        // Creo calendario e giorni lavorativi
+        Calendario calendario = new Calendario();
+        if(tmp_req.isLunedi()) {
+            GiornoLavorativo lunedi = new GiornoLavorativo(tmp_req.getOrario_lunedi().getAperturaMattina(),
+                    tmp_req.getOrario_lunedi().getChiusuraMattina(),
+                    tmp_req.getOrario_lunedi().getAperturaPomeriggio(),
+                    tmp_req.getOrario_lunedi().getChiusuraPomeriggio());
+            calendario.setLunedi(lunedi);
+            lunedi.setLunedi(calendario);
+        }
+        if(tmp_req.isMartedi()) {
+            GiornoLavorativo martedi = new GiornoLavorativo(tmp_req.getOrario_martedi().getAperturaMattina(),
+                    tmp_req.getOrario_martedi().getChiusuraMattina(),
+                    tmp_req.getOrario_martedi().getAperturaPomeriggio(),
+                    tmp_req.getOrario_martedi().getChiusuraPomeriggio());
+            calendario.setMartedi(martedi);
+            martedi.setMartedi(calendario);
+        }
+        if(tmp_req.isMercoledi()) {
+            GiornoLavorativo mercoledi = new GiornoLavorativo(tmp_req.getOrario_mercoledi().getAperturaMattina(),
+                    tmp_req.getOrario_mercoledi().getChiusuraMattina(),
+                    tmp_req.getOrario_mercoledi().getAperturaPomeriggio(),
+                    tmp_req.getOrario_mercoledi().getChiusuraPomeriggio());
+            calendario.setMercoledi(mercoledi);
+            mercoledi.setMercoledi(calendario);
+        }
+        if(tmp_req.isGiovedi()) {
+            GiornoLavorativo giovedi = new GiornoLavorativo(tmp_req.getOrario_giovedi().getAperturaMattina(),
+                    tmp_req.getOrario_giovedi().getChiusuraMattina(),
+                    tmp_req.getOrario_giovedi().getAperturaPomeriggio(),
+                    tmp_req.getOrario_giovedi().getChiusuraPomeriggio());
+            calendario.setGiovedi(giovedi);
+            giovedi.setGiovedi(calendario);
+        }
+        if(tmp_req.isVenerdi()) {
+            GiornoLavorativo venerdi = new GiornoLavorativo(tmp_req.getOrario_venerdi().getAperturaMattina(),
+                    tmp_req.getOrario_venerdi().getChiusuraMattina(),
+                    tmp_req.getOrario_venerdi().getAperturaPomeriggio(),
+                    tmp_req.getOrario_venerdi().getChiusuraPomeriggio());
+            calendario.setVenerdi(venerdi);
+            venerdi.setVenerdi(calendario);
+        }
+        if(tmp_req.isSabato()) {
+            GiornoLavorativo sabato = new GiornoLavorativo(tmp_req.getOrario_sabato().getAperturaMattina(),
+                    tmp_req.getOrario_sabato().getChiusuraMattina(),
+                    tmp_req.getOrario_sabato().getAperturaPomeriggio(),
+                    tmp_req.getOrario_sabato().getChiusuraPomeriggio());
+            calendario.setSabato(sabato);
+            sabato.setSabato(calendario);
+        }
+        if(tmp_req.isDomenica()) {
+            GiornoLavorativo domenica = new GiornoLavorativo(tmp_req.getOrario_domenica().getAperturaMattina(),
+                    tmp_req.getOrario_domenica().getChiusuraMattina(),
+                    tmp_req.getOrario_domenica().getAperturaPomeriggio(),
+                    tmp_req.getOrario_domenica().getChiusuraPomeriggio());
+            calendario.setDomenica(domenica);
+            domenica.setDomenica(calendario);
+        }
 
-                // Creo lista tamponi
-                List<LaboratorioTampone> lista = new ArrayList<>();
-                if(tmp_req.isMolecolare())
-                {
-                    Tampone tampone = new Tampone();
-                    tampone.setId(Long.valueOf(0));
-                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_molecolare());
-                    lista.add(labTamp);
-                }
-                if(tmp_req.isAntigenico())
-                {
-                    Tampone tampone = new Tampone();
-                    tampone.setId(Long.valueOf(1));
-                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_antigenico());
-                    lista.add(labTamp);
-                }
-                if(tmp_req.isSierologico())
-                {
-                    Tampone tampone = new Tampone();
-                    tampone.setId(Long.valueOf(2));
-                    LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_sierologico());
-                    lista.add(labTamp);
-                }
+        // Collego calendario e laboratorio
+        l1.setCalendario(calendario);
+        calendario.setLaboratorio(l1);
+
+        // Creo lista tamponi
+        List<LaboratorioTampone> lista = new ArrayList<>();
+        if(tmp_req.isMolecolare())
+        {
+            Tampone tampone = new Tampone();
+            tampone.setId(Long.valueOf(0));
+            LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_molecolare());
+            lista.add(labTamp);
+        }
+        if(tmp_req.isAntigenico())
+        {
+            Tampone tampone = new Tampone();
+            tampone.setId(Long.valueOf(1));
+            LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_antigenico());
+            lista.add(labTamp);
+        }
+        if(tmp_req.isSierologico())
+        {
+            Tampone tampone = new Tampone();
+            tampone.setId(Long.valueOf(2));
+            LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_sierologico());
+            lista.add(labTamp);
+        }
 
                 /* ----- Scrittura e salvataggio file nel DB -----
                 // Scrivo su file il calendario
@@ -275,12 +284,27 @@ public class RegistrationService {
                 }
                 --------- */
 
-                // Salvo utente e i relativi tamponi nel DB
-                token = userDetailService.signUpUser(u1);
-                calendarioLaboratorioRepository.save(calendario);
-                laboratorioTamponeRepository.saveAll(lista);
-                return token;
-        }
-        return null; // eliminare alla fine
+        // Salvo utente e i relativi tamponi nel DB
+        token = userDetailService.signUpUser(u1);
+        calendarioLaboratorioRepository.save(calendario);
+        laboratorioTamponeRepository.saveAll(lista);
+        return token;
+    }
+
+    private String tokenCittadino(UtenteGenericoDTO request) throws CustomException {
+        String token;
+        CittadinoDTO tmp_req = (CittadinoDTO) request;
+
+        // Creo utente e laboratorio
+        UtenteGenerico u1 = new UtenteGenerico(
+                tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
+        Cittadino c1 = new Cittadino(tmp_req.getNome(),
+                tmp_req.getCognome(), tmp_req.getDataNascita(),
+                tmp_req.getNumeroTelefono(), tmp_req.getCodiceFiscale(), u1);
+        u1.setCittadino(c1);
+
+        // Salvo utente nel DB
+        token = userDetailService.signUpUser(u1);
+        return token;
     }
 }
