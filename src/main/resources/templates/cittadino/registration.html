@@ -85,10 +85,14 @@
 
                 <!--/* DA MODIFICARE con il campo ASL di apparteneneza
                 <div class="form-group">
-                    @thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"
-                    <label class="control-label" for="codFiscale"> Codice Fiscale </label> <input
-                        id="codFiscale" class="form-control" th:field="*{codFiscale}"
-                        th:errorClass="is-invalid" required />
+                    <label class="control-label" for="asl"> Asl di appartenenza </label>
+
+                    <select class="form-select form-select-sm" id="asl" th:field="*{asl}" required autofocus="autofocus">
+                        <option selected>Seleziona asl di appartenenza</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
                     <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
                 </div>*/-->
 
