@@ -94,6 +94,15 @@
                     <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
                 </div>
 
+                <!--/* DA MODIFICARE con il campo ASL di apparteneneza
+                <div class="form-group">
+                    @thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"
+                    <label class="control-label" for="codFiscale"> Codice Fiscale </label> <input
+                        id="codFiscale" class="form-control" th:field="*{codFiscale}"
+                        th:errorClass="is-invalid" required />
+                    <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
+                </div>*/-->
+
                 <div class="form-group">
                     <button type="submit" class="button">Registati</button>
                     <span >Sei gia' registrato? <a th:href="@{/login}">Conferma</a></span>
