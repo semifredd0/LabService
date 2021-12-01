@@ -3,10 +3,13 @@ package com.uniba.di.dfmdevelop.labservice.controller;
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
+import com.uniba.di.dfmdevelop.labservice.service.GeocodeService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -104,5 +109,60 @@ public class CittadinoController {
         }
         // Successo
         return "redirect:/login?success";
+    }
+
+    //------------
+
+    @GetMapping("ricercaLaboratorio")
+    public String ricercaLaboratorio() {
+        return "cittadino/ricercaLaboratorio";
+    }
+
+    @PostMapping("ricercaLaboratorio")
+    public String ricercaLaboratorio(@ModelAttribute("posizione") String posizione, Model model) {
+        // Trovo latitudine e longitudine della posizione inserita
+        GeocodeService geocode = new GeocodeService();
+        GeocodeResult result;
+        try {
+            result = geocode.getGeocode(posizione);
+        } catch(Exception e) {
+            return "redirect:/cittadino/ricercaLaboratorio?posizione_not_valid";
+        }
+        String latitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude();
+        String longitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude();
+
+        // Prendo tutti i laboratori dal DB e li ordino
+        List<Laboratorio> lista = service.getAllLaboratorio();
+        Collections.sort(lista, (u1, u2) -> {
+            double lat1 = Double.parseDouble(u1.getLatitudine());
+            double lon1 = Double.parseDouble(u1.getLongitudine());
+            double lat2 = Double.parseDouble(u2.getLatitudine());
+            double lon2 = Double.parseDouble(u2.getLongitudine());
+            double lat_pos = Double.parseDouble(latitudine);
+            double lon_pos = Double.parseDouble(longitudine);
+            double lab1 = distanceInKm(lat_pos,lon_pos,lat1,lon1);
+            double lab2 = distanceInKm(lat_pos,lon_pos,lat2,lon2);
+            if(lab1<lab2)
+                return 1;
+            return 0;
+        });
+
+        model.addAttribute("lista",lista);
+        return "cittadino/ricercaLaboratorio";
+    }
+
+    private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {
+        double raggioTerra = 6371;
+        double lat = deg2rad(lat2-lat1);
+        double lon = deg2rad(lon2-lon1);
+        double a = Math.sin(lat/2) * Math.sin(lat/2) + Math.cos(deg2rad(lat1)) *
+                Math.cos(deg2rad(lat2)) * Math.sin(lon/2) * Math.sin(lon/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = raggioTerra * c;
+        return distance;
+    }
+
+    private double deg2rad(double deg) {
+        return deg * (Math.PI/180);
     }
 }

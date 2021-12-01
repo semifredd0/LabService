@@ -9,4 +9,5 @@ public class ErrorMessage {
     public final static String TOKEN_NOT_FOUND = "Token non valido: token non trovato";
     public final static String TOKEN_EXPIRED = "Token non valido: token scaduto";
     public final static String PASSWORD_DOESNT_MATCH = "Errore: le password non coincidono";
+    public final static String ADDRESS_NOT_VALID = "Errore: indirizzo non trovato";
 }

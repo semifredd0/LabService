@@ -42,6 +42,12 @@
                 </div>
             </div>
 
+            <div th:if="${param.address_not_valid}">
+                <div class="alert alert-danger">
+                    Indirizzo stradale non trovato.
+                </div>
+            </div>
+
             <form th:action="@{/registration}" th:object="${utentegenericoDTO}" th:method="post">
                 <h1 style="color: black; padding-bottom: 12px"> <b>Benvenuto su LabService</b></h1>
 

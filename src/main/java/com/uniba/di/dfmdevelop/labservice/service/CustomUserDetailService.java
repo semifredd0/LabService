@@ -8,6 +8,7 @@ import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.CittadinoRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
@@ -18,7 +19,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -104,6 +107,10 @@ public class CustomUserDetailService implements UserDetailsService {
         // TODO: rimuovere il vecchie istanze di calendario e giorno_lavorativo dal DB
         calendarioLaboratorioRepository.save(utenteGenerico.getLaboratorio().getCalendario());
         laboratorioRepository.updateCalendario(utenteGenerico, utenteGenerico.getLaboratorio().getCalendario());
+    }
+
+    public List<Laboratorio> getAllLaboratorio() {
+        return laboratorioRepository.getAllLaboratorio();
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

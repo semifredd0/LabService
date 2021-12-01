@@ -92,7 +92,7 @@ public class DatabaseInit implements CommandLineRunner {
         Laboratorio lab1 = new Laboratorio(
                 "Laboratorio Analisi Lecce",
                 "3768676978",
-                "Via E. Fermi, 22",
+                "Via Fermi, 22",
                 "IT07O0300203280722787714851",
                 "31805080079",
                 utenteGenerico1
@@ -100,11 +100,15 @@ public class DatabaseInit implements CommandLineRunner {
         Laboratorio lab2 = new Laboratorio(
                 "Laboratorio Analisi Bari",
                 "3342977722",
-                "Via E. Fermi, 22",
+                "Via Padova, 22",
                 "IT16R0300203280345696191345",
                 "76013160171",
                 utenteGenerico2
         );
+        lab1.setLatitudine("40.34818303128154");
+        lab1.setLongitudine("18.151186807179084");
+        lab2.setLatitudine("41.07719123279765");
+        lab2.setLongitudine("16.869093870056368");
 
         utenteGenerico1.setLaboratorio(lab1);
         utenteGenerico2.setLaboratorio(lab2);

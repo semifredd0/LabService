@@ -8,10 +8,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface LaboratorioRepository extends JpaRepository<Laboratorio, Long> {
 
     @Query("SELECT l FROM laboratorio l WHERE l.utenteGenerico = ?1")
     Laboratorio getByIdUtente(UtenteGenerico utenteGenerico);
+
+    @Query("SELECT l FROM laboratorio l")
+    List<Laboratorio> getAllLaboratorio();
 
     @Transactional
     @Modifying

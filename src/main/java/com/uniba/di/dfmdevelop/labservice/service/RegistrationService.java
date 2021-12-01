@@ -6,6 +6,7 @@ import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
@@ -15,6 +16,7 @@ import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepositor
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -246,6 +248,17 @@ public class RegistrationService {
             LaboratorioTampone labTamp = new LaboratorioTampone(l1,tampone, tmp_req.getPrezzo_sierologico());
             lista.add(labTamp);
         }
+
+        // Trovo latitudine e longitudine
+        GeocodeService geocode = new GeocodeService();
+        GeocodeResult result;
+        try {
+            result = geocode.getGeocode(tmp_req.getIndirizzoStradale());
+        } catch(Exception e) {
+            throw new CustomException(ErrorMessage.ADDRESS_NOT_VALID);
+        }
+        l1.setLatitudine(result.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude());
+        l1.setLongitudine(result.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
 
                 /* ----- Scrittura e salvataggio file nel DB -----
                 // Scrivo su file il calendario

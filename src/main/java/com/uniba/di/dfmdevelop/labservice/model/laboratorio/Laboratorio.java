@@ -43,6 +43,18 @@ public class Laboratorio {
     private String indirizzo;
 
     @Column(
+            name = "latitudine",
+            nullable = false,
+            columnDefinition = "TEXT" )
+    private String latitudine;
+
+    @Column(
+            name = "longitudine",
+            nullable = false,
+            columnDefinition = "TEXT" )
+    private String longitudine;
+
+    @Column(
             name = "codice_iban",
             nullable = false,
             columnDefinition = "TEXT" )

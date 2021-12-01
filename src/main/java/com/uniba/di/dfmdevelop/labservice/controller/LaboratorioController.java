@@ -199,6 +199,8 @@ public class LaboratorioController {
                     return "redirect:/registration?already_taken";
                 case ErrorMessage.EMAIL_FAIL_SEND:
                     return "redirect:/registration?fail_send";
+                case ErrorMessage.ADDRESS_NOT_VALID:
+                    return "redirect:/registration?address_not_valid";
             }
         }
         // Successo
