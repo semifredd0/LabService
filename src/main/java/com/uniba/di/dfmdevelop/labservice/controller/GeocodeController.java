@@ -1,19 +1,22 @@
-package com.uniba.di.dfmdevelop.labservice.service;
+package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
-import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-@Service
-public class GeocodeService {
+@RestController
+public class GeocodeController {
 
-    public GeocodeResult getGeocode(String address) throws IOException {
+    @RequestMapping(path = "/geocode", method = RequestMethod.GET )
+    public GeocodeResult getGeocode(@RequestParam String address) throws IOException {
         OkHttpClient client = new OkHttpClient();
         String encodedAddress = URLEncoder.encode(address, "UTF-8");
         Request request = new Request.Builder()

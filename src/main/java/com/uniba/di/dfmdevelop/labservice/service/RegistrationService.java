@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.service;
 
+import com.uniba.di.dfmdevelop.labservice.controller.GeocodeController;
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
@@ -250,7 +251,7 @@ public class RegistrationService {
         }
 
         // Trovo latitudine e longitudine
-        GeocodeService geocode = new GeocodeService();
+        GeocodeController geocode = new GeocodeController();
         GeocodeResult result;
         try {
             result = geocode.getGeocode(tmp_req.getIndirizzoStradale());

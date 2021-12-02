@@ -3,13 +3,14 @@ package com.uniba.di.dfmdevelop.labservice.controller;
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
+import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
-import com.uniba.di.dfmdevelop.labservice.service.GeocodeService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,9 +34,11 @@ public class CittadinoController {
     private final RegistrationService registrationService;
     private final CustomUserDetailService service;
     private final UtenteGenericoRepository utenteGenericoRepository;
+    private final GeocodeController geocode;
 
     @GetMapping("index")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("posizione",null);
         return "cittadino/index";
     }
 
@@ -113,42 +114,38 @@ public class CittadinoController {
 
     //------------
 
-    @GetMapping("ricercaLaboratorio")
-    public String ricercaLaboratorio() {
-        return "cittadino/ricercaLaboratorio";
-    }
-
     @PostMapping("ricercaLaboratorio")
-    public String ricercaLaboratorio(@ModelAttribute("posizione") String posizione, Model model) {
+    public String ricercaLaboratorio(@RequestParam String posizione, Model model) {
         // Trovo latitudine e longitudine della posizione inserita
-        GeocodeService geocode = new GeocodeService();
         GeocodeResult result;
         try {
             result = geocode.getGeocode(posizione);
+            if(result.getResults().isEmpty())
+                throw new Exception();
         } catch(Exception e) {
-            return "redirect:/cittadino/ricercaLaboratorio?posizione_not_valid";
+            return "redirect:/cittadino/index?posizione_not_valid";
         }
         String latitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude();
         String longitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude();
 
-        // Prendo tutti i laboratori dal DB e li ordino
-        List<Laboratorio> lista = service.getAllLaboratorio();
-        Collections.sort(lista, (u1, u2) -> {
-            double lat1 = Double.parseDouble(u1.getLatitudine());
-            double lon1 = Double.parseDouble(u1.getLongitudine());
-            double lat2 = Double.parseDouble(u2.getLatitudine());
-            double lon2 = Double.parseDouble(u2.getLongitudine());
-            double lat_pos = Double.parseDouble(latitudine);
-            double lon_pos = Double.parseDouble(longitudine);
-            double lab1 = distanceInKm(lat_pos,lon_pos,lat1,lon1);
-            double lab2 = distanceInKm(lat_pos,lon_pos,lat2,lon2);
-            if(lab1<lab2)
-                return 1;
-            return 0;
-        });
+        // Prendo tutti i laboratori dal DB e trovo le distanze
+        List<Laboratorio> laboratori = service.getAllLaboratorio();
+        List<LaboratorioDistanza> lista = new ArrayList<>();
+        for(Laboratorio lab : laboratori) {
+            double lat1 = Double.parseDouble(lab.getLatitudine());
+            double lon1 = Double.parseDouble(lab.getLongitudine());
+            double lat2 = Double.parseDouble(latitudine);
+            double lon2 = Double.parseDouble(longitudine);
+            LaboratorioDistanza temp = new LaboratorioDistanza(lab,distanceInKm(lat1,lon1,lat2,lon2));
+            lista.add(temp);
+        }
+        // Ordino la lista
+        Collections.sort(lista, new DistanceSorter());
+        Collections.reverse(lista);
 
+        model.addAttribute("posizione",result.getResults().get(0).getFormattedAddress());
         model.addAttribute("lista",lista);
-        return "cittadino/ricercaLaboratorio";
+        return "cittadino/listaLaboratori";
     }
 
     private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {

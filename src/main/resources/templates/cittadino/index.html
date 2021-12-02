@@ -84,17 +84,24 @@
             </div>
 
             <div class="breaks3 " id="floating1">
-                <form th:action="@{/searchLaboratorio}" method="post">
+                <form th:action="@{/cittadino/ricercaLaboratorio}" method="post">
                     <div id="containerCalendario" class="breaks3 record">
                         <h3 class="record-h2">Cerca Laboratorio</h3>
-                        <p style="color: black; padding-left: 10px">Inserisci l'indirizzo rispetto al quale si vuole effettuare la ricerca</p>
+                        <p style="color: black; padding-left: 10px">Inserisci la posizione di partenza</p>
                         <fieldset style="padding-left: 10px; padding-right: 10px">
-                            <input type="text" class="form-control " id="indirizzoRicerca" name="indirizzoRicerca" placeholder="Indirizzo" required>
+                            <input type="text" id="posizione" class="form-control" placeholder="Indirizzo"
+                                   th:value="${posizione}" name="posizione" required autofocus="autofocus" />
+                            <div th:if="${param.posizione_not_valid}">
+                                <br>
+                                <div class="alert alert-danger">
+                                    Indirizzo specificato non trovato.
+                                </div>
+                            </div>
                         </fieldset>
-                        <br><br><br><br><br><br>
+                        <br>
                     </div>
                     <div class="form-group" style="float: right">
-                        <button thtype="submit" class="openbtn"> Cerca Laboratorio </button>
+                        <button type="submit" class="openbtn"> Cerca Laboratorio </button>
                     </div>
                 </form>
             </div>

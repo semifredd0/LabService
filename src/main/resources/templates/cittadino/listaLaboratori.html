@@ -22,28 +22,29 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row">
         <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
-            <h3 style="color: black; padding-bottom: 8px"> <b>Lista Laboratorio</b></h3>
-            <p style="color: black; padding-bottom: 5px">Una volta scelto il laboratorio presso cui effetturare il tampone, cliccare sul nome per essere reindirizzato alla sua pagina corrispondente</p>
+            <h2 style="color: black; padding-bottom: 8px"> Lista Laboratori</h2>
+            <p th:text="'Posizione inserita: '+ ${posizione}" style="color: black; padding-bottom: 5px"></p>
+            <p style="color: black; padding-bottom: 5px">Selezionare il laboratorio presso cui si vuole prenotare un tampone.</p>
             <table class="table table-secondary table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nome Laboratorio</th>
                     <th scope="col">Indirizzo Laboratorio</th>
-                    <th scope="col">Distanza dal Laboratorio [KM]</th>
+                    <th scope="col">Distanza dal Laboratorio</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="lab,iterationStatus : ${laboratori}">
+                <tr th:each="element,iterationStatus : ${lista}">
                     <td th:text="${iterationStatus.count}" style="width: 10px"></td>
-                    <td th:text="${lab.nomeLaboratorio}">
-                        <form th:action = "@{/index}" th:object="${lab}" method = "GET">
+                    <td th:text="${element.laboratorio.nome}">
+                        <!--<form th:action = "@{/index}" th:object="${lab}" method = "GET">
                             <button type="submit" class="btn btn-link"></button>
-                        </form>
+                        </form>-->
                     </td>
-                    <td th:text="${lab.indirizzoStradale}"></td>
-                    <td th:text=""></td><!-- qui è da inserire il campo distanza ma non so come vuoi passarlo-->
+                    <td th:text="${element.laboratorio.indirizzo}"></td>
+                    <td th:text="${#numbers.formatDecimal(element.distanza,1,2,'POINT')} +' km'"></td>
                 </tr>
                 </tbody>
             </table>
