@@ -9,6 +9,7 @@ import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
+import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
@@ -34,6 +35,7 @@ public class CittadinoController {
     private final RegistrationService registrationService;
     private final CustomUserDetailService service;
     private final UtenteGenericoRepository utenteGenericoRepository;
+    private final LaboratorioRepository laboratorioRepository;
     private final GeocodeController geocode;
 
     @GetMapping("index")
@@ -146,6 +148,14 @@ public class CittadinoController {
         model.addAttribute("posizione",result.getResults().get(0).getFormattedAddress());
         model.addAttribute("lista",lista);
         return "cittadino/listaLaboratori";
+    }
+
+    @GetMapping("/{id}")
+    public String laboratorioSelezionato(@PathVariable("id") Long id, Model model) {
+        System.out.println(id);
+        Laboratorio lab1 = laboratorioRepository.getById(id);
+        model.addAttribute("laboratorio",lab1);
+        return "laboratorio/indexForUtente";
     }
 
     private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {

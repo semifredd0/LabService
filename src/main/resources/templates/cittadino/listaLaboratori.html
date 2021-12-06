@@ -26,7 +26,6 @@
             <p th:text="'Posizione inserita: '+ ${posizione}" style="color: black; padding-bottom: 5px"></p>
             <p style="color: black; padding-bottom: 5px">Selezionare il laboratorio presso cui si vuole prenotare un tampone.</p>
 
-            <form th:action = "@{/index}" method = "GET">
                 <table class="table table-secondary table-bordered">
                     <thead>
                     <tr>
@@ -34,22 +33,22 @@
                         <th scope="col">Nome Laboratorio</th>
                         <th scope="col">Indirizzo Laboratorio</th>
                         <th scope="col">Distanza dal Laboratorio</th>
+                        <th scope="col">Dettagli</th>
                     </tr>
                     </thead>
-
 
                     <tbody>
                     <tr th:each="element,iterationStatus : ${lista}">
                         <td th:text="${iterationStatus.count}" style="width: 10px"></td>
-                        <td>
-                            <input type="submit" class="btn btn-link" th:value="${element.laboratorio.nome}"></input>
-                        </td>
+                        <td th:text="${element.laboratorio.nome}"></td>
                         <td th:text="${element.laboratorio.indirizzo}"></td>
                         <td th:text="${#numbers.formatDecimal(element.distanza,1,2,'POINT')} +' km'"></td>
+                        <td>
+                            <a th:href="@{/cittadino/{id}(id=${element.laboratorio.id})}" th:text="Visualizza"></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
-            </form>
         </div>
     </div>
 </div>
