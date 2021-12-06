@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Laboratorio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="header">
+    <div style="padding-left: 20px">
+        <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
+    </div>
+</div>
+
+<div style=" width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+    <fieldset>
+        <div class="imgcontainer ">
+            <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar "
+                 style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
+        </div>
+
+        <div class="colonne" th:object="${laboratorioDTO}">
+            <div class="breaks3 " id="floating" style="margin-right: 23px">
+                <div id="containerDettagli" class="breaks3 record">
+                    <h3 class="record-h2">Informazioni Laboratorio</h3>
+                    <dl style="padding-right: 10px" class="record-riga">
+                        <hr>
+                        <dt>Indirizzo e-mail:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.indirizzoEmail}"></span>
+                        </dd>
+                        <hr>
+                        <dt>Nome laboratorio:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.nomeLaboratorio}"></span>
+                        </dd>
+                        <hr>
+                        <dt>Numero di telefono:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.numeroTelefono}"></span>
+                        </dd>
+                        <hr>
+                        <dt>Indirizzo sede:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.indirizzoStradale}"></span>
+                        </dd>
+                        <hr>
+                        <dt>Codice IBAN:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.codiceIban}"></span>
+                        </dd>
+                        <hr>
+                        <dt>Partita IVA:</dt>
+                        <dd>
+                            <span th:text="${laboratorioDTO.partitaIva}"></span>
+                        </dd>
+                        <br><br><br>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="breaks3 " id="floating1">
+                <div id="containerCalendario" class="breaks3 record">
+                    <h3 class="record-h2">Calendario Laboratorio</h3>
+                    <dl style="padding-right: 10px" class="record-riga">
+                        <hr>
+                        <dt>Lunedì:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.lunedi ne null}">
+                            Mattina:
+                            <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.lunedi.aperturaMattina)} ?
+                            '--' : ${laboratorioDTO.calendario.lunedi.aperturaMattina}"/>/
+                            <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.lunedi.chiusuraMattina)} ?
+                            '--' : ${laboratorioDTO.calendario.lunedi.chiusuraMattina}"/><br>
+                            Pomeriggio:
+                            <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.lunedi.aperturaPomeriggio)} ?
+                            '--' : ${laboratorioDTO.calendario.lunedi.aperturaPomeriggio}"/>/
+                            <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.lunedi.chiusuraPomeriggio)} ?
+                            '--' : ${laboratorioDTO.calendario.lunedi.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.lunedi ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Martedì:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.martedi ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.martedi.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.martedi.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.martedi.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.martedi.chiusuraPomeriggio}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.martedi.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.martedi.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.martedi.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.martedi.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.martedi ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Mercoledì:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.mercoledi ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.mercoledi.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.mercoledi.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.mercoledi.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.mercoledi.chiusuraMattina}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.mercoledi.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.mercoledi.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.mercoledi.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.mercoledi.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.mercoledi ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Giovedì:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.giovedi ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.giovedi.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.giovedi.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.giovedi.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.giovedi.chiusuraMattina}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.giovedi.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.giovedi.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.giovedi.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.giovedi.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.giovedi ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Venerdì:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.venerdi ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.venerdi.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.venerdi.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.venerdi.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.venerdi.chiusuraMattina}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.venerdi.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.venerdi.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.venerdi.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.venerdi.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.venerdi ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Sabato:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.sabato ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.sabato.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.sabato.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.sabato.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.sabato.chiusuraMattina}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.sabato.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.sabato.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.sabato.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.sabato.chiusuraPomeriggio}"/><br>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.sabato ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <hr>
+                        <dt>Domenica:</dt>
+                        <dd>
+                            <span th:if="${laboratorioDTO.calendario.domenica ne null}">
+                                Mattina:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.domenica.aperturaMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.domenica.aperturaMattina}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.domenica.chiusuraMattina)} ?
+                                '--' : ${laboratorioDTO.calendario.domenica.chiusuraMattina}"/><br>
+                                Pomeriggio:
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.domenica.aperturaPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.domenica.aperturaPomeriggio}"/>/
+                                <a th:text="${#strings.isEmpty(laboratorioDTO.calendario.domenica.chiusuraPomeriggio)} ?
+                                '--' : ${laboratorioDTO.calendario.domenica.chiusuraPomeriggio}"/>
+                            </span>
+                            <span th:unless="${laboratorioDTO.calendario.domenica ne null}">
+                                Chiuso
+                            </span>
+                        </dd>
+                        <br>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+</body>
+</html>
