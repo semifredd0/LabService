@@ -41,7 +41,7 @@
         </div>
 
         <div class="colonne">
-            <div class="breaks3 " id="floating" style="margin-right: 25px">
+            <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
                     <h3 class="record-h2">Informazioni sul cittadino</h3>
                     <dl style="padding-right: 10px" class="record-riga">
@@ -75,7 +75,6 @@
                         <dd>
                             <span sec:authentication="principal.cittadino.codFiscale"></span>
                         </dd>
-                        <br><br><br>
                     </dl>
                 </div>
                 <div class="form-group" style="float: right">
@@ -83,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="breaks3 " id="floating1">
+            <div class="breaks2 " id="floating1">
                 <form th:action="@{/cittadino/ricercaLaboratorio}" method="post">
                     <div id="containerCalendario" class="breaks3 record">
                         <h3 class="record-h2">Cerca Laboratorio</h3>

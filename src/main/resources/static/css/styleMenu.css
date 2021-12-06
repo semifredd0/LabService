@@ -8,6 +8,12 @@ div.colonne div{
     float: left;
 }
 
+a{
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-top:2px;
+}
+
 .logo {
     border-radius: 8px
 }
@@ -36,6 +42,14 @@ hr {
     float:right;
 }
 
+.breaks3{
+    width: 30%;
+}
+
+.breaks2{
+    width: 48%;
+}
+
 .openbtn {
     cursor: pointer;
     background-color: #0e1f75;
@@ -46,6 +60,17 @@ hr {
     border-radius: 8px;
     font-weight: bold;
     text-decoration: none;
+}
+
+.closeButton {
+    padding: 10px 25px;
+    background: red;
+    color: #fff;
+    display: inline-block;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 5px;
+    cursor: pointer;
 }
 
 .openbtn:hover {
@@ -95,21 +120,21 @@ hr {
 
 dt {
     float: left;
-    width: 50%;
+    width: 41%;
     padding-left: 10px;
     margin: 0;
     color: #2d2d2d;
 }
+
 dd {
     float: left;
-    width: 50%;
+    width: 55%;
     padding: 0;
     margin: 0
 }
 
-
 .record-riga {
-    width: 100%;
+    width: 98%;
     margin-top: -10px;
     padding: 0;
 }
@@ -117,8 +142,6 @@ dd {
 span{
     color: #000000;
 }
-
-
 
 .record {
     background-color: #fff;

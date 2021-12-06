@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home Laboratorio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
-  <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Laboratorio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -20,14 +20,14 @@
     </div>
 </div>
 
-<div style=" width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+<div style=" width:1500px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
     <fieldset>
         <div class="imgcontainer ">
             <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar "
                  style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
         </div>
 
-        <div class="colonne" th:object="${laboratorio}">
+        <div class="colonne">
             <div class="breaks3 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
                     <h3 class="record-h2">Informazioni Laboratorio</h3>
@@ -62,12 +62,12 @@
                         <dd>
                             <span th:text="${laboratorio.partitaIVA}"></span>
                         </dd>
-                        <br><br><br>
+                        <br><br>
                     </dl>
                 </div>
             </div>
 
-            <div class="breaks3 " id="floating1">
+            <div class="breaks3 " id="floating1" style="margin-right: 23px">
                 <div id="containerCalendario" class="breaks3 record">
                     <h3 class="record-h2">Calendario Laboratorio</h3>
                     <dl style="padding-right: 10px" class="record-riga">
@@ -206,6 +206,43 @@
                         </dd>
                         <br>
                     </dl>
+                </div>
+            </div>
+
+            <div class="breaks3 " id="floating2" >
+                <div id="containerTamponi" class="breaks3 record">
+                    <h3 class="record-h2">Seleziona Tampone</h3>
+                    <dl style="padding-right: 10px" class="record-riga">
+                        <hr>
+                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="molecolare" checked> </div>
+                        <dt>Tampone molecolare:</dt>
+                        <dd>
+                            <!--Modificare i campi con i prezzi relativi a ciascun tampone-->
+                            <span th:text="${laboratorio.nome}"></span>
+                        </dd>
+                        <hr>
+                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="antigenico"></div>
+                        <dt>Tampone Antigenico:</dt>
+                        <dd>
+                            <span th:text="${laboratorio.nome}"></span>
+                        </dd>
+                        <hr>
+                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="sierologico"></div>
+                        <dt>Tampone Sierologico:</dt>
+                        <dd>
+                            <span th:text="${laboratorio.nome}"></span>
+                        </dd>
+                    </dl>
+                </div>
+
+                <div style="float: right">
+                    <div class="form-group" style="margin-left: -3%">
+                        <a th:href="@{/cittadino/index}" type="submit" class="closeButton" style="float: right; padding-bottom: 14px;">Annulla</a>
+                    </div>
+
+                    <div class="form-group" style="margin-left: 2%">
+                        <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Prenota</button>
+                    </div>
                 </div>
             </div>
         </div>

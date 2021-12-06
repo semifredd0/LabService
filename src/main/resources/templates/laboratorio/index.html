@@ -30,7 +30,7 @@
     <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
 </div>
 
-<div style=" width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+<div style=" width:1500px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
     <fieldset>
         <div class="imgcontainer ">
             <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar "
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="breaks3 " id="floating1">
+            <div class="breaks3 " id="floating1" style="margin-right: 23px">
                 <div id="containerCalendario" class="breaks3 record">
                     <h3 class="record-h2">Calendario Laboratorio</h3>
                     <dl style="padding-right: 10px" class="record-riga">
@@ -223,6 +223,30 @@
 
                 <div class="form-group" style="float: right">
                     <a th:href="@{/laboratorio/updateCalendar}" class="openbtn">Nuovo Calendario</a>
+                </div>
+            </div>
+
+            <div class="breaks3 " id="floating2" >
+                <div id="containerTamponi" class="breaks3 record">
+                    <h3 class="record-h2">Tamponi</h3>
+                    <dl style="padding-right: 10px" class="record-riga">
+                        <hr>
+                        <dt>Tampone molecolare:</dt>
+                        <dd>
+                            <!--Modificare il contenuto della tabella contenente i tamponi -->
+                            <span sec:authentication="principal.laboratorio.nome"></span>
+                        </dd>
+                        <hr>
+                        <dt>Tampone Antigenico:</dt>
+                        <dd>
+                            <span sec:authentication="principal.laboratorio.nome"></span>
+                        </dd>
+                        <hr>
+                        <dt>Tampone Sierologico:</dt>
+                        <dd>
+                            <span sec:authentication="principal.laboratorio.nome"></span>
+                        </dd>
+                    </dl>
                 </div>
             </div>
         </div>
