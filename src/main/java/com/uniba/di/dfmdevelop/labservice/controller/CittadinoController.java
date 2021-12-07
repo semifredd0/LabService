@@ -9,6 +9,7 @@ import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
@@ -152,10 +153,22 @@ public class CittadinoController {
 
     @GetMapping("/{id}")
     public String laboratorioSelezionato(@PathVariable("id") Long id, Model model) {
-        System.out.println(id);
         Laboratorio lab1 = laboratorioRepository.getById(id);
+        List<LaboratorioTampone> lista = service.getListTampone(lab1);
+        LaboratorioTampone laboratorioTampone = new LaboratorioTampone();
+        laboratorioTampone.setLaboratorio(lab1);
+
         model.addAttribute("laboratorio",lab1);
+        model.addAttribute("tamponi",lista);
+        model.addAttribute("tampone",laboratorioTampone);
         return "laboratorio/indexForUtente";
+    }
+
+    @PostMapping("/bookTampone")
+    public String prenotaTampone(@ModelAttribute("tampone") LaboratorioTampone tampone, Model model) {
+        // LabID: tampone.getLaboratorio().getId();
+        // TamponeID: tampone.getTampone().getId();
+        return null;
     }
 
     private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {

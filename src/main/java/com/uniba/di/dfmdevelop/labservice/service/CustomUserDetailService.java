@@ -3,16 +3,13 @@ package com.uniba.di.dfmdevelop.labservice.service;
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
-import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
-import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.CittadinoRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
+import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
+import com.uniba.di.dfmdevelop.labservice.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,14 +29,25 @@ public class CustomUserDetailService implements UserDetailsService {
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioRepository laboratorioRepository;
     private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
+    private final LaboratorioTamponeRepository laboratorioTamponeRepository;
+    private final TamponeRepository tamponeRepository;
     private final CittadinoRepository cittadinoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository, LaboratorioRepository laboratorioRepository, LaboratorioRepository laboratorioRepository1, CalendarioLaboratorioRepository calendarioLaboratorioRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, EmailSender emailSender, CittadinoRepository cittadinoRepository) {
+    public CustomUserDetailService(UtenteGenericoRepository utenteGenericoRepository,
+                                   LaboratorioRepository laboratorioRepository,
+                                   CalendarioLaboratorioRepository calendarioLaboratorioRepository,
+                                   LaboratorioTamponeRepository laboratorioTamponeRepository,
+                                   TamponeRepository tamponeRepository,
+                                   BCryptPasswordEncoder bCryptPasswordEncoder,
+                                   ConfirmationTokenService confirmationTokenService,
+                                   CittadinoRepository cittadinoRepository) {
         this.utenteGenericoRepository = utenteGenericoRepository;
-        this.laboratorioRepository = laboratorioRepository1;
+        this.laboratorioRepository = laboratorioRepository;
         this.calendarioLaboratorioRepository = calendarioLaboratorioRepository;
+        this.laboratorioTamponeRepository = laboratorioTamponeRepository;
+        this.tamponeRepository = tamponeRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
         this.cittadinoRepository = cittadinoRepository;
@@ -111,6 +119,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     public List<Laboratorio> getAllLaboratorio() {
         return laboratorioRepository.getAllLaboratorio();
+    }
+
+    public List<LaboratorioTampone> getListTampone(Laboratorio laboratorio) {
+        return laboratorioTamponeRepository.getByLaboratorio(laboratorio);
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

@@ -1,15 +1,13 @@
 package com.uniba.di.dfmdevelop.labservice.config;
 
 import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
+import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Tampone;
-import com.uniba.di.dfmdevelop.labservice.repository.CalendarioLaboratorioRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioTamponeRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,17 +22,20 @@ public class DatabaseInit implements CommandLineRunner {
 
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final TamponeRepository tamponeRepository;
+    private final PrenotazioneRepository prenotazioneRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DatabaseInit(UtenteGenericoRepository utenteGenericoRepository,
                         TamponeRepository tamponeRepository,
+                        PrenotazioneRepository prenotazioneRepository,
                         LaboratorioTamponeRepository laboratorioTamponeRepository,
                         CalendarioLaboratorioRepository calendarioLaboratorioRepository,
                         PasswordEncoder passwordEncoder) {
         this.utenteGenericoRepository = utenteGenericoRepository;
         this.tamponeRepository = tamponeRepository;
+        this.prenotazioneRepository = prenotazioneRepository;
         this.laboratorioTamponeRepository = laboratorioTamponeRepository;
         this.calendarioLaboratorioRepository = calendarioLaboratorioRepository;
         this.passwordEncoder = passwordEncoder;
@@ -144,6 +145,16 @@ public class DatabaseInit implements CommandLineRunner {
         LaboratorioTampone laboratorioTampone6 = new LaboratorioTampone(
                 lab2,sierologico,32.00);
 
+        // Aggiungo le prenotazioni tra i vari utenti e laboratori
+        Prenotazione p1 = new Prenotazione();
+        p1.setUtenteGenerico(utenteGenerico1);
+        p1.setLaboratorioTampone(laboratorioTampone1);
+        p1.setDataPrenotazione(LocalDate.of(2021,10,12));
+        Prenotazione p2 = new Prenotazione();
+        p2.setUtenteGenerico(utenteGenerico2);
+        p2.setLaboratorioTampone(laboratorioTampone2);
+        p2.setDataPrenotazione(LocalDate.of(2021,11,12));
+
         // Aggiungo un calendario vuoto ai vari laboratori
         Calendario cal1 = new Calendario();
         Calendario cal2 = new Calendario();
@@ -158,5 +169,6 @@ public class DatabaseInit implements CommandLineRunner {
                 laboratorioTampone1,laboratorioTampone2,
                 laboratorioTampone3,laboratorioTampone4,
                 laboratorioTampone5,laboratorioTampone6));
+        prenotazioneRepository.saveAll(List.of(p1,p2));
     }
 }

@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
 /src/main/resources/application.properties
+/src/main/java/com/uniba/di/dfmdevelop/labservice/controller/GeocodeController.java

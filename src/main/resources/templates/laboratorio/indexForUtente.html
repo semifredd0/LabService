@@ -209,42 +209,30 @@
                 </div>
             </div>
 
-            <div class="breaks3 " id="floating2" >
-                <div id="containerTamponi" class="breaks3 record">
-                    <h3 class="record-h2">Seleziona Tampone</h3>
-                    <dl style="padding-right: 10px" class="record-riga">
-                        <hr>
-                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="molecolare" checked> </div>
-                        <dt>Tampone molecolare:</dt>
-                        <dd>
-                            <!--Modificare i campi con i prezzi relativi a ciascun tampone-->
-                            <span th:text="${laboratorio.nome}"></span>
-                        </dd>
-                        <hr>
-                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="antigenico"></div>
-                        <dt>Tampone Antigenico:</dt>
-                        <dd>
-                            <span th:text="${laboratorio.nome}"></span>
-                        </dd>
-                        <hr>
-                        <div style="margin-left: 1%"><input type="radio" name="tampone" id="sierologico"></div>
-                        <dt>Tampone Sierologico:</dt>
-                        <dd>
-                            <span th:text="${laboratorio.nome}"></span>
-                        </dd>
-                    </dl>
-                </div>
+            <form th:action="@{/cittadino/bookTampone}" th:object="${tampone}" th:method="post">
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${tampone.laboratorio.id}" th:field="*{laboratorio.id}"/>
 
-                <div style="float: right">
-                    <div class="form-group" style="margin-left: -3%">
-                        <a th:href="@{/cittadino/index}" type="submit" class="closeButton" style="float: right; padding-bottom: 14px;">Annulla</a>
+                <div class="breaks3 " id="floating2">
+                    <div id="containerTamponi" class="breaks3 record">
+                        <h3 class="record-h2">Seleziona Tampone</h3>
+                        <dl th:each="element : ${tamponi}" style="padding-right: 10px" class="record-riga">
+                            <hr>
+                            <div style="margin-left: 1%">
+                                <input type="radio" th:field="${tampone.tampone.id}" th:value="${element.tampone.id}">
+                            </div>
+                            <dt th:text="${element.tampone.nome}"></dt>
+                            <dd th:text="${element.prezzo}"></dd>
+                        </dl>
                     </div>
 
-                    <div class="form-group" style="margin-left: 2%">
-                        <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Prenota</button>
+                    <div style="float: right">
+                        <div class="form-group" style="margin-left: 2%">
+                            <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Prenota</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </fieldset>
 </div>
