@@ -222,7 +222,7 @@
                                 <input type="radio" th:field="${tampone.tampone.id}" th:value="${element.tampone.id}">
                             </div>
                             <dt th:text="${element.tampone.nome}"></dt>
-                            <dd th:text="${element.prezzo}"></dd>
+                            <dd th:text="${#numbers.formatDecimal(element.prezzo,1,2,'POINT')} +' €'"></dd>
                         </dl>
                     </div>
 

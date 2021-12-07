@@ -122,7 +122,7 @@ public class DatabaseInit implements CommandLineRunner {
         // Tampone antigenico
         Tampone antigenico = new Tampone();
         antigenico.setId(Long.valueOf(1));
-        antigenico.setNome("Test Antigenico (Rapido)");
+        antigenico.setNome("Test Antigenico");
 
         // Tampone sierologico
         Tampone sierologico = new Tampone();
