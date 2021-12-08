@@ -28,14 +28,21 @@
         <div class="col-md-6 col-md-offset-3">
             <br><br>
 
-            <form th:action="@{/cittadino/bookTampone}" th:object="${cittadinoDTO}" th:method="post">
+            <form th:action="@{/cittadino/bookTampone}" th:object="${cittadinoDTO}" th:method="post">\
 
-                <div class="form-group">
-                    <label class="control-label" for="email"> Email </label> <input
-                        id="email" class="form-control" th:field="*{email}"
-                        th:errorClass="is-invalid" required />
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
-                </div>
+                <!--/*
+                NON LI HO CANCELLATI ANCORA TI SEVONO, IN CASO CONTRARIO PUOI ELIMINARLI A ME NON SERVONO
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${cittadinoDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
+
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${cittadinoDTO.password}" th:field="*{password}"/>
+
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${cittadinoDTO.conferma_password}" th:field="*{conferma_password}"/>
+
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${cittadinoDTO.ruolo}" th:field="*{ruolo}"/>*/-->
 
                 <div class="form-group">
                     <label class="control-label" for="nome"> Nome </label> <input
@@ -70,6 +77,13 @@
                         id="codiceFiscale" class="form-control" th:field="*{codiceFiscale}"
                         th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="email"> Email </label> <input
+                        id="email" class="form-control" th:field="*{email}"
+                        th:errorClass="is-invalid" required />
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                 </div>
 
                 <!--/* DA MODIFICARE con il campo ASL di apparteneneza
