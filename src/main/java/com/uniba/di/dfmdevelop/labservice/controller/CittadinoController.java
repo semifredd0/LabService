@@ -1,6 +1,7 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneCittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
@@ -11,6 +12,7 @@ import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
@@ -23,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +40,7 @@ public class CittadinoController {
     private final CustomUserDetailService service;
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioRepository laboratorioRepository;
+    private final TamponeRepository tamponeRepository;
     private final GeocodeController geocode;
 
     @GetMapping("index")
@@ -165,10 +169,27 @@ public class CittadinoController {
     }
 
     @PostMapping("/bookTampone")
-    public String prenotaTampone(@ModelAttribute("tampone") LaboratorioTampone tampone, Model model) {
+    public String prenotaTampone(@ModelAttribute("tampone") LaboratorioTampone tampone,
+                                 @AuthenticationPrincipal UtenteGenerico utente,
+                                 Model model) {
         // LabID: tampone.getLaboratorio().getId();
         // TamponeID: tampone.getTampone().getId();
-        return null;
+        LocalDate date = LocalDate.now();
+
+        // Imposto tutti i campi per l'autocompilazione
+        PrenotazioneCittadinoDTO prenotazioneCittadinoDTO = new PrenotazioneCittadinoDTO();
+        prenotazioneCittadinoDTO.setIndirizzoEmail(utente.getEmail());
+        prenotazioneCittadinoDTO.setNome(utente.getCittadino().getNome());
+        prenotazioneCittadinoDTO.setCognome(utente.getCittadino().getCognome());
+        prenotazioneCittadinoDTO.setDataNascita(utente.getCittadino().getDataNascita());
+        prenotazioneCittadinoDTO.setNumeroTelefono(utente.getCittadino().getNumeroTelefono());
+        prenotazioneCittadinoDTO.setCodiceFiscale(utente.getCittadino().getCodFiscale());
+        prenotazioneCittadinoDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
+        prenotazioneCittadinoDTO.setIdTampone(tampone.getTampone().getId());
+        prenotazioneCittadinoDTO.setDataPrenotazione(date);
+
+        model.addAttribute("prenotazione",prenotazioneCittadinoDTO);
+        return "cittadino/bookTampone";
     }
 
     private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {
