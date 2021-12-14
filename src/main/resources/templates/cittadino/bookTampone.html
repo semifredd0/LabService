@@ -27,7 +27,11 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <br><br>
-            <form th:action="@{/cittadino/bookTampone}" th:object="${prenotazione}" th:method="post">
+            <h3 style="color: black; padding-bottom: 6px"><b>Prenotazione tampone</b></h3>
+            <p style="color: black; padding-bottom: 5px">&Eacute; possibile effettuare la prenotazione anche per utenti esterni al sistema,</p>
+            <p style="color: black; padding-bottom: 5px">compilando i campi con i dati relativi alla persona per cui prenotare.</p>
+
+            <form th:action="@{/cittadino/payment}" th:object="${prenotazione}" th:method="post">
 
                 <input class="form-control" type="hidden"
                        th:attr="value = ${prenotazione.prezzo}" th:field="*{prezzo}"/>
@@ -84,7 +88,7 @@
                 </div>
 
                 <div>
-                    Seleziona la modalita' di pagamento:
+                    Seleziona la modalit&aacute; di pagamento:
                     <input type="radio" th:field="${prenotazione.pagamento}" th:value="0" checked>Pagamento in sede</input>
                     <input type="radio" th:field="${prenotazione.pagamento}" th:value="1">Pagamento PayPal</input>
                 </div>

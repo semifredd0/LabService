@@ -17,11 +17,16 @@ public class PaypalController {
     @Autowired
     PaypalService paymentService;
     
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL = "pay/cancel";
+    public static final String SUCCESS_URL = "payment/success";
+    public static final String CANCEL_URL = "payment/cancel";
 
     @PostMapping("/pay")
     public String payment(@ModelAttribute("payment") Payment p_payment) {
+        p_payment.setCurrency("EUR");
+        p_payment.setMethod("paypal");
+        p_payment.setIntent("SALE");
+        p_payment.setDescription("Prenotazione tampone");
+
         try {
             com.paypal.api.payments.Payment payment = paymentService.createPayment(
                     p_payment.getPrice(),
@@ -40,12 +45,12 @@ public class PaypalController {
         } catch(PayPalRESTException e) {
             e.printStackTrace();
         }
-        return "redirect:/index"; // Modificare il link
+        return "redirect:/payment/index";
     }
 
     @GetMapping(value = CANCEL_URL) // Implementare pagina cancel
     public String cancelPay() {
-        return "cancel";
+        return CANCEL_URL;
     }
 
     @GetMapping(value = SUCCESS_URL) // Implementare pagina success
@@ -54,11 +59,11 @@ public class PaypalController {
             com.paypal.api.payments.Payment payment = paymentService.executePayment(paymentId, payerId);
             System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
-                return "success";
+                return SUCCESS_URL;
             }
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/index"; // Modificare il link
+        return "redirect:/payment/index";
     }
 }

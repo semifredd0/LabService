@@ -7,13 +7,10 @@ import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
-import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
-import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
+import com.uniba.di.dfmdevelop.labservice.model.*;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
-import com.uniba.di.dfmdevelop.labservice.repository.LaboratorioRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.TamponeRepository;
-import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
+import com.uniba.di.dfmdevelop.labservice.repository.*;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
@@ -41,6 +38,8 @@ public class CittadinoController {
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final LaboratorioRepository laboratorioRepository;
     private final TamponeRepository tamponeRepository;
+    private final LaboratorioTamponeRepository laboratorioTamponeRepository;
+    private final PrenotazioneRepository prenotazioneRepository;
     private final GeocodeController geocode;
 
     @GetMapping("index")
@@ -190,6 +189,57 @@ public class CittadinoController {
 
         model.addAttribute("prenotazione",prenotazioneCittadinoDTO);
         return "cittadino/bookTampone";
+    }
+
+    @PostMapping("/payment")
+    public String prenotaTampone(@ModelAttribute("prenotazione") PrenotazioneCittadinoDTO prenotazione,
+                                 @AuthenticationPrincipal UtenteGenerico utente,
+                                 Model model) {
+        Prenotazione prenotazione_obj = new Prenotazione();
+        LaboratorioTampone laboratorioTampone = laboratorioTamponeRepository.getItem(
+                laboratorioRepository.getById(prenotazione.getIdLaboratorio()),
+                tamponeRepository.getById(prenotazione.getIdTampone())
+        );
+
+        if(prenotazione.getIndirizzoEmail().equals(utente.getEmail())) {
+            // Prenota per se stesso
+            prenotazione_obj.setUtenteGenerico(utente);
+            prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
+            prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
+            prenotazione_obj.setUtenteEsterno(null);
+        }
+        else {
+            // Prenota per cittadino esterno
+            UtenteEsterno utenteEsterno = new UtenteEsterno();
+            utenteEsterno.setNome(prenotazione.getNome());
+            utenteEsterno.setCognome(prenotazione.getCognome());
+            utenteEsterno.setDataNascita(prenotazione.getDataNascita());
+            utenteEsterno.setCodFiscale(prenotazione.getCodiceFiscale());
+            utenteEsterno.setNumeroTelefono(prenotazione.getNumeroTelefono());
+
+            prenotazione_obj.setUtenteGenerico(utente);
+            prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
+            prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
+            prenotazione_obj.setUtenteEsterno(utenteEsterno);
+        }
+
+        if(!prenotazione.isPagamento()) {
+            // Pagamento in sede
+            // mandare la mail conferma con ticket
+            prenotazioneRepository.save(prenotazione_obj);
+            return "payment/bookingMade?lab";
+        }
+        else {
+            // Pagamento online
+            // mandare la mail conferma
+            prenotazioneRepository.save(prenotazione_obj);
+
+            Payment payment = new Payment();
+            payment.setPrice(prenotazione_obj.getLaboratorioTampone().getPrezzo());
+            model.addAttribute("payment",payment);
+            model.addAttribute("prenotazione",prenotazione);
+            return "payment/index";
+        }
     }
 
     private double distanceInKm(double lat1, double lon1, double lat2, double lon2) {
