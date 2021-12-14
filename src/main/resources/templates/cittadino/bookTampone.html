@@ -89,8 +89,10 @@
 
                 <div>
                     Seleziona la modalit&aacute; di pagamento:
-                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="0" checked>Pagamento in sede</input>
-                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="1">Pagamento PayPal</input>
+                    <br>
+                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="0" checked style="margin-right: 5px">   Pagamento in sede</input>
+                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="1">   Pagamento PayPal</input>
+                    <br>
                 </div>
                 <!--
                 <div class="form-group">
@@ -107,7 +109,7 @@
 
                 <div style="float: right">
                     <div class="form-group" style="padding-right: 2%">
-                        <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Conferma</button>
+                        <button type="submit" class="button" style="float: right; margin-right: 5px">Conferma</button>
                     </div>
                 </div>
             </form>
