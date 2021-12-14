@@ -49,6 +49,10 @@
                         </dd>
                         <dt>Numero di telefono:</dt>
                         <dd>
+                            <span th:text="${prenotazione.numeroTelefono}"></span>
+                        </dd>
+                        <dt>Prezzo tampone:</dt>
+                        <dd>
                             <span th:text="${payment.price}"></span>
                         </dd>
                     </dl>
@@ -57,33 +61,8 @@
                 <input class="form-control" type="hidden"
                        th:attr="value = ${payment.price}" th:field="*{price}"/>
 
-            <div style="float: right">
-                <input type="submit" value="Conferma pagamento" class="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Pagamento</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div th:if="${param.success}">
-                                <div class="alert alert-success">
-                                    Pagamento riuscito correttamente
-                                </div>
-                            </div>
-
-                            <div th:if="${param.cancel}" class="alert alert-danger">
-                                Pagamento rifiutato.
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <a th:href="@{/cittadino/index}"><button type="button" class="button">Chiudi</button></a>
-                        </div>
-                    </div>
+                <div style="float: right">
+                    <input type="submit" value="Conferma pagamento" class="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 </div>
             </div>
         </form>

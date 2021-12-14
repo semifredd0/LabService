@@ -88,24 +88,12 @@
                 </div>
 
                 <div>
-                    Seleziona la modalit&aacute; di pagamento:
+                    Seleziona la modalit&agrave; di pagamento:
                     <br>
                     <input type="radio" th:field="${prenotazione.pagamento}" th:value="0" checked style="margin-right: 5px">   Pagamento in sede</input>
                     <input type="radio" th:field="${prenotazione.pagamento}" th:value="1">   Pagamento PayPal</input>
                     <br>
                 </div>
-                <!--
-                <div class="form-group">
-                    <label class="control-label" for="asl"> Asl di appartenenza </label>
-                    <select class="form-select form-select-sm" id="asl" th:field="*{asl}" required autofocus="autofocus">
-                        <option selected>Seleziona asl di appartenenza</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
-                </div>
-                -->
 
                 <div style="float: right">
                     <div class="form-group" style="padding-right: 2%">

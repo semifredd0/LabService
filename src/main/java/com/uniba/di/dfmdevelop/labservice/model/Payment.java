@@ -15,4 +15,5 @@ public class Payment {
     private String method;
     private String intent;
     private String description;
+    private String user;
 }

@@ -34,8 +34,8 @@ public class PaypalController {
                     p_payment.getMethod(),
                     p_payment.getIntent(),
                     p_payment.getDescription(),
-                    "http://localhost:8443/" + CANCEL_URL,
-                    "http://localhost:8443/" + SUCCESS_URL);
+                    "https://localhost:8443/" + CANCEL_URL,
+                    "https://localhost:8443/" + SUCCESS_URL);
 
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
@@ -45,15 +45,15 @@ public class PaypalController {
         } catch(PayPalRESTException e) {
             e.printStackTrace();
         }
-        return "redirect:/payment/index";
+        return "redirect:/"+CANCEL_URL;
     }
 
-    @GetMapping(value = CANCEL_URL) // Implementare pagina cancel
+    @GetMapping(value = CANCEL_URL)
     public String cancelPay() {
         return CANCEL_URL;
     }
 
-    @GetMapping(value = SUCCESS_URL) // Implementare pagina success
+    @GetMapping(value = SUCCESS_URL)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
         try {
             com.paypal.api.payments.Payment payment = paymentService.executePayment(paymentId, payerId);
@@ -64,6 +64,6 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/payment/index";
+        return "redirect:/"+CANCEL_URL;
     }
 }
