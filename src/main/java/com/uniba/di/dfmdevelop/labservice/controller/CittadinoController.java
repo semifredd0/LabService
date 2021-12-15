@@ -23,7 +23,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -175,7 +174,7 @@ public class CittadinoController {
                                  Model model) {
         // LabID: tampone.getLaboratorio().getId();
         // TamponeID: tampone.getTampone().getId();
-        LocalDate date = LocalDate.now();
+        // LocalDate date = LocalDate.now();
 
         // Imposto tutti i campi per l'autocompilazione
         PrenotazioneCittadinoDTO prenotazioneCittadinoDTO = new PrenotazioneCittadinoDTO();
@@ -187,7 +186,6 @@ public class CittadinoController {
         prenotazioneCittadinoDTO.setCodiceFiscale(utente.getCittadino().getCodFiscale());
         prenotazioneCittadinoDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
         prenotazioneCittadinoDTO.setIdTampone(tampone.getTampone().getId());
-        prenotazioneCittadinoDTO.setDataPrenotazione(date);
 
         model.addAttribute("prenotazione",prenotazioneCittadinoDTO);
         return "cittadino/bookTampone";
@@ -197,6 +195,7 @@ public class CittadinoController {
     public String prenotaTampone(@ModelAttribute("prenotazione") PrenotazioneCittadinoDTO prenotazione,
                                  @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) throws CustomException {
+
         Prenotazione prenotazione_obj = new Prenotazione();
         LaboratorioTampone laboratorioTampone = laboratorioTamponeRepository.getItem(
                 laboratorioRepository.getById(prenotazione.getIdLaboratorio()),
@@ -231,7 +230,8 @@ public class CittadinoController {
             String nomeLab = laboratorioRepository.getById(prenotazione.getIdLaboratorio()).getNome();
             emailSender.send(
                     prenotazione.getIndirizzoEmail(),
-                    prenotazioneInSede(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab,Double.toString(prenotazione_obj.getLaboratorioTampone().getPrezzo())),
+                    prenotazioneInSede(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab,
+                            String.format("%.2f",prenotazione_obj.getLaboratorioTampone().getPrezzo())),
                     "Prenotazione tampone");
 
             prenotazioneRepository.save(prenotazione_obj);
@@ -400,7 +400,7 @@ public class CittadinoController {
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "            La sua prenotazione è avvenuta con successo!<br>" +
                 "            Si presenti il giorno " + date +" per effettuare un tampone presso il laboratorio: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + lab + " </p></blockquote>\n" +
-                "            Prima di effettuare il tampone bisogna effettuare il pagamento in contanti.<br>Prezzo del tampone prenotato: " + price + "\n<p>A presto!</p>" +
+                "            Prima di effettuare il tampone bisogna effettuare il pagamento in contanti.<br>Prezzo del tampone prenotato: € " + price + "\n<p>A presto!</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

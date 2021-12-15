@@ -41,7 +41,10 @@ public class PrenotazioneCittadinoDTO {
     private double prezzo;
     private Long idLaboratorio;
     private Long idTampone;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataPrenotazione;
+
     private boolean pagamento; // 0-Sede 1-Paypal
 
     public PrenotazioneCittadinoDTO() {}
