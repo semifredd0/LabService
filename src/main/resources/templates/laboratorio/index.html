@@ -225,33 +225,8 @@
                     <a th:href="@{/laboratorio/updateCalendar}" class="openbtn">Nuovo Calendario</a>
                 </div>
             </div>
-
-            <div class="breaks3 " id="floating2" >
-                <div id="containerTamponi" class="breaks3 record">
-                    <h3 class="record-h2">Tamponi</h3>
-                    <dl style="padding-right: 10px" class="record-riga">
-                        <hr>
-                        <dt>Tampone molecolare:</dt>
-                        <dd>
-                            <!--Modificare il contenuto della tabella contenente i tamponi -->
-                            <span sec:authentication="principal.laboratorio.nome"></span>
-                        </dd>
-                        <hr>
-                        <dt>Tampone Antigenico:</dt>
-                        <dd>
-                            <span sec:authentication="principal.laboratorio.nome"></span>
-                        </dd>
-                        <hr>
-                        <dt>Tampone Sierologico:</dt>
-                        <dd>
-                            <span sec:authentication="principal.laboratorio.nome"></span>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
         </div>
     </fieldset>
 </div>
-
 </body>
 </html>

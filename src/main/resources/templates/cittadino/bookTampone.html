@@ -28,8 +28,11 @@
         <div class="col-md-6 col-md-offset-3">
             <br><br>
             <h3 style="color: black; padding-bottom: 6px"><b>Prenotazione tampone</b></h3>
-            <p style="color: black; padding-bottom: 5px">&Eacute; possibile effettuare la prenotazione anche per utenti esterni al sistema,</p>
-            <p style="color: black; padding-bottom: 5px">compilando i campi con i dati relativi alla persona per cui prenotare.</p>
+            <p style="color: black; padding-bottom: 5px">&Eacute; possibile effettuare la prenotazione anche per utenti esterni al sistema,
+            compilando i campi con i dati relativi alla persona per cui prenotare.</p>
+            <p style="color: black; padding-bottom: 5px">Nota: si prega di prenotarsi solo nei giorni in cui il laboratorio &eacute; aperto.
+            Le prenotazioni in cui il laboratorio &eacute; chiuso non verranno prese in considerazione.</p>
+            <p style="color: black; padding-bottom: 5px">Nota: &eacute; sufficiente effettuare la prenotazione e presentarsi in laboratorio durante l'orario lavorativo.</p>
 
             <form th:action="@{/cittadino/payment}" th:object="${prenotazione}" th:method="post">
 
