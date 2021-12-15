@@ -87,6 +87,13 @@
                     <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label" for="dataPrenotazione"> Data di prenotazione tampone </label>
+                    <input type="date" id="dataPrenotazione" class="form-control" th:field="*{dataPrenotazione}"
+                           th:errorClass="is-invalid" required/>
+                    <div th:if="${#fields.hasErrors('dataPrenotazione')}" th:errors="*{dataPrenotazione}" class="invalid-feedback"></div>
+                </div>
+
                 <div>
                     Seleziona la modalit&agrave; di pagamento:
                     <br>
