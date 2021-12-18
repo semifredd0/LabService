@@ -9,6 +9,8 @@ import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.*;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.UtenteEsterno;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import com.uniba.di.dfmdevelop.labservice.repository.*;
@@ -187,14 +189,20 @@ public class CittadinoController {
         prenotazioneCittadinoDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
         prenotazioneCittadinoDTO.setIdTampone(tampone.getTampone().getId());
 
-        model.addAttribute("prenotazione",prenotazioneCittadinoDTO);
+        model.addAttribute("prenotazioneDTO",prenotazioneCittadinoDTO);
         return "cittadino/bookTampone";
     }
 
     @PostMapping("/payment")
-    public String prenotaTampone(@ModelAttribute("prenotazione") PrenotazioneCittadinoDTO prenotazione,
+    public String prenotaTampone(@Valid @ModelAttribute("prenotazioneDTO") PrenotazioneCittadinoDTO prenotazione,
+                                 BindingResult bindingResult,
                                  @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) throws CustomException {
+
+        if (bindingResult.hasErrors()) {
+            log.error("Error in booking tampone");
+            return "cittadino/bookTampone";
+        }
 
         Prenotazione prenotazione_obj = new Prenotazione();
         LaboratorioTampone laboratorioTampone = laboratorioTamponeRepository.getItem(

@@ -34,16 +34,16 @@
             Le prenotazioni in cui il laboratorio &eacute; chiuso non verranno prese in considerazione.</p>
             <p style="color: black; padding-bottom: 5px">Nota: &eacute; sufficiente effettuare la prenotazione e presentarsi in laboratorio durante l'orario lavorativo.</p>
 
-            <form th:action="@{/cittadino/payment}" th:object="${prenotazione}" th:method="post">
+            <form th:action="@{/cittadino/payment}" th:object="${prenotazioneDTO}" th:method="post">
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${prenotazione.prezzo}" th:field="*{prezzo}"/>
+                       th:attr="value = ${prenotazioneDTO.prezzo}" th:field="*{prezzo}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${prenotazione.idLaboratorio}" th:field="*{idLaboratorio}"/>
+                       th:attr="value = ${prenotazioneDTO.idLaboratorio}" th:field="*{idLaboratorio}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${prenotazione.idTampone}" th:field="*{idTampone}"/>
+                       th:attr="value = ${prenotazioneDTO.idTampone}" th:field="*{idTampone}"/>
 
                 <div class="form-group">
                     <label class="control-label" for="email"> Indirizzo Email </label> <input
@@ -97,8 +97,8 @@
                 <div>
                     Seleziona la modalit&agrave; di pagamento:
                     <br>
-                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="0" checked>  Pagamento in sede</input><br>
-                    <input type="radio" th:field="${prenotazione.pagamento}" th:value="1">  Pagamento PayPal</input>
+                    <input type="radio" th:field="${prenotazioneDTO.pagamento}" th:value="0" checked>  Pagamento in sede</input><br>
+                    <input type="radio" th:field="${prenotazioneDTO.pagamento}" th:value="1">  Pagamento PayPal</input>
                     <br>
                 </div>
 

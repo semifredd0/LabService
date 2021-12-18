@@ -1,6 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.config;
 
-import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;

@@ -1,4 +1,4 @@
-package com.uniba.di.dfmdevelop.labservice.model;
+package com.uniba.di.dfmdevelop.labservice.model.cittadino;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.repository;
 
-import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
