@@ -1,6 +1,7 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.UtenteEsterno;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
 import lombok.Data;
 import lombok.NoArgsConstructor;

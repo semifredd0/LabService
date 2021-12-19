@@ -8,7 +8,7 @@ import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
-import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
+import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.*;
