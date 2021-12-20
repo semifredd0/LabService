@@ -1,12 +1,15 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneListaDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.GiornoLavorativo;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
+import com.uniba.di.dfmdevelop.labservice.repository.PrenotazioneRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
@@ -16,11 +19,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -31,6 +34,7 @@ public class LaboratorioController {
     private final RegistrationService registrationService;
     private final CustomUserDetailService service;
     private final UtenteGenericoRepository utenteGenericoRepository;
+    private final PrenotazioneRepository prenotazioneRepository;
 
     @GetMapping("index")
     public String index() {
@@ -205,5 +209,33 @@ public class LaboratorioController {
         }
         // Successo
         return "redirect:/login?success";
+    }
+
+    @GetMapping("lista")
+    public String listaPrenotazioni(@AuthenticationPrincipal UtenteGenerico utente, Model model) {
+        List<Prenotazione> lista_prenotazioni = prenotazioneRepository
+                .findPrenotazioneByLaboratorioTampone_Laboratorio(utente.getLaboratorio());
+        List<PrenotazioneListaDTO> lista = new ArrayList<>();
+
+        for(Prenotazione prenotazione : lista_prenotazioni) {
+            PrenotazioneListaDTO temp = new PrenotazioneListaDTO();
+            temp.setPrenotazione(prenotazione);
+            if(prenotazione.getUtenteEsterno() == null)
+                temp.setCodiceFiscale(prenotazione.getUtenteGenerico().getCittadino().getCodFiscale());
+            else
+                temp.setCodiceFiscale(prenotazione.getUtenteEsterno().getCodFiscale());
+            lista.add(temp);
+        }
+        model.addAttribute("lista",lista);
+        return "laboratorio/listaPrenotazioni";
+    }
+
+    @GetMapping("/{id}")
+    public String prenotazioneSelezionata(@PathVariable("id") Long id, Model model) {
+        Prenotazione prenotazione = prenotazioneRepository.getById(id);
+        // Aggiungere i file
+
+        model.addAttribute("prenotazione",prenotazione);
+        return "laboratorio/dettagliPrenotazione";
     }
 }
