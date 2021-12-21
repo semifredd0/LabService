@@ -34,23 +34,47 @@
                         <hr>
                         <dt>Questionario Anamnesi:</dt>
                         <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                            <div class="new-form">
+                                <form  th:method="post">
+                                    <input type="file" id="myfile" style="display:none;">
+                                    <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                                </form>
+                            </div>
+                            <div class="new-form">
+                                <form th:method="get">
+                                    <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                                </form>
+                            </div>
                         </dd>
                         <hr>
                         <dt>Consenso Informato:</dt>
                         <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                            <div class="new-form">
+                                <form  th:method="post">
+                                    <input type="file" id="myfile" style="display:none;">
+                                    <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                                </form>
+                            </div>
+                            <div class="new-form">
+                                <form th:method="get">
+                                    <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                                </form>
+                            </div>
                         </dd>
                         <hr>
                         <dt>Esito Tampone:</dt>
                         <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                            <div class="new-form">
+                                <form  th:method="post">
+                                    <input type="file" id="myfile" style="display:none;">
+                                    <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                                </form>
+                            </div>
+                            <div class="new-form">
+                                <form th:method="get">
+                                    <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                                </form>
+                            </div>
                         </dd>
                     </dl>
                 </div>
@@ -75,11 +99,11 @@
                     </div>
                 </form>
             </div>
+            <div class="form-group" style="float: right">
+                <a th:href="@{/laboratorio/listaPrenotazioni}" type="submit" class="openbtn">Chiudi</a>
+            </div>
         </div>
 
-        <div class="form-group">
-            <a th:href="@{/laboratorio/listaPrenotazioni}" type="submit" class="openbtn">Chiudi</a>
-        </div>
     </fieldset>
 </div>
 
