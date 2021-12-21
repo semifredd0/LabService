@@ -16,7 +16,7 @@
 
 <div class="header">
     <div style="padding-left: 20px">
-        <a th:href="@{/cittadino/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
+        <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
     </div>
 </div>
 
@@ -33,24 +33,24 @@
                     <dl style="padding-right: 10px" class="record-riga">
                         <hr>
                         <dt>Questionario Anamnesi:</dt>
-                        <dd>
+                        <dd style="margin-left: 15px; margin-bottom: 5px">
                             <input type="file" id="myfile" style="display:none;">
-                            <button onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <input type="button" class="button"><i class="fa fa-download"></i> Scarica</input>
+                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
                         </dd>
                         <hr>
                         <dt>Consenso Informato:</dt>
-                        <dd>
+                        <dd style="margin-left: 15px; margin-bottom: 5px">
                             <input type="file" id="myfile" style="display:none;">
-                            <button onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <input type="button" class="button"><i class="fa fa-download"></i> Scarica</input>
+                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
                         </dd>
                         <hr>
                         <dt>Esito Tampone:</dt>
-                        <dd>
+                        <dd style="margin-left: 15px; margin-bottom: 5px">
                             <input type="file" id="myfile" style="display:none;">
-                            <button onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <input type="button" class="button"><i class="fa fa-download"></i> Scarica</input>
+                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
+                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
                         </dd>
                     </dl>
                 </div>
@@ -62,7 +62,7 @@
                         <h3 class="record-h2">Informazioni Pagamento</h3>
                         <hr>
                         <dt>Modalità pagamento:</dt>
-                        <dd>
+                        <dd style="margin-bottom: 10px">
                             <span sec:authentication="principal.email"></span>
                         </dd>
                         <hr>
