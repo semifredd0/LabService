@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -36,27 +36,32 @@
                     <dl style="padding-right: 10px" class="record-riga">
                         <hr>
                         <dt>Caricare i seguenti file in formato PDF:</dt>
-                        <ul>
-                            <li>Questionario Anamnesi</li>
-                            <li>Consenso informato</li>
-                            <li>Esito tampone</li>
-                        </ul>
-                        <dd style="margin-left: 15px; margin-bottom: 5px">
+                        <dd>
+                            <ul>
+                                <li>Questionario Anamnesi</li>
+                                <li>Consenso informato</li>
+                                <li>Esito tampone</li>
+                            </ul>
+                        </dd>
+                        <dd style="margin-left: 15px; margin-bottom: 5px; width: 95%">
                             <form th:action="@{/laboratorio/upload}" method="post" th:object="${prenotazione}"
                                   enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto">
+
                                 <input class="form-control" type="hidden" th:attr="value = ${prenotazione.id}" th:field="*{id}"/>
-                                <input type="file" name="document" required />
-                                <input type="submit" value="Carica" class="btn btn-primary">
+                                <input type="file" name="document" class="form-control" required/>
+                                <input type="submit" value="Carica" class="openbtn">
                             </form>
                         </dd>
                         <hr>
                         <dt>File caricati: </dt>
-                        <dd th:each="doc : ${listDocs}" class="row border rounded">
+                        <dd th:each="doc : ${listDocs}">
                             <div>
-                                <img th:src="@{/img/document.png}" width="50" />
-                            </div>
-                            <div>
-                                <a th:href="@{'/laboratorio/download?id='+${doc.id}}">[[${doc.name}]]</a>
+                                <ul>
+                                    <li>
+                                        <img th:src="@{/img/document.png}" style="width:85px; height: 75px "  /><br>
+                                        <a class="a1" th:href="@{'/laboratorio/download?id='+${doc.id}}">[[${doc.name}]]</a>
+                                    </li>
+                                </ul>
                             </div>
                         </dd>
                     </dl>
@@ -81,11 +86,10 @@
                         <br><br>
                     </div>
                 </form>
+                <div class="form-group" style="float: right">
+                    <a th:href="@{/laboratorio/lista}" type="submit" class="openbtn" style="background: red">Chiudi & Salva</a>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <a th:href="@{/laboratorio/lista}" type="submit" class="openbtn">Chiudi</a>
         </div>
     </fieldset>
 </div>
