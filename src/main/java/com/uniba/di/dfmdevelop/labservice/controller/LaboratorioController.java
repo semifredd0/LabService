@@ -17,6 +17,7 @@ import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +27,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -240,23 +244,45 @@ public class LaboratorioController {
     @GetMapping("/{id}")
     public String prenotazioneSelezionata(@PathVariable("id") Long id, Model model) {
         Prenotazione prenotazione = prenotazioneRepository.getById(id);
-        // Aggiungere i file
-
+        List<FileDB> listDocs = fileDBRepository.findFileDBByPrenotazione(prenotazione);
+        model.addAttribute("listDocs",listDocs);
         model.addAttribute("prenotazione",prenotazione);
         return "laboratorio/dettagliPrenotazione";
     }
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("document") MultipartFile file,
+                             @Valid Prenotazione prenotazione,
                              RedirectAttributes attributes) throws IOException {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB();
         fileDB.setName(filename);
         fileDB.setData(file.getBytes());
         fileDB.setSize(file.getSize());
+
+        Prenotazione prenotazione_full = prenotazioneRepository.getById(prenotazione.getId());
+        fileDB.setPrenotazione(prenotazione_full);
         fileDBRepository.save(fileDB);
 
         attributes.addFlashAttribute("message","File caricato correttamente!");
-        return "redirect:/";
+        return "redirect:/laboratorio/"+prenotazione.getId();
+    }
+
+    @GetMapping("/download")
+    public void downloadFile(@Param("id") String id, HttpServletResponse response) throws Exception {
+        Optional<FileDB> result = fileDBRepository.findById(id);
+        if(!result.isPresent()) {
+            throw new Exception("Documento non trovato!");
+        }
+
+        FileDB document = result.get();
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=" + document.getName();
+        response.setHeader(headerKey,headerValue);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(document.getData());
+        outputStream.close();
     }
 }

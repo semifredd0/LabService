@@ -16,17 +16,21 @@ public class FileDB {
 
     private Long size;
 
-    private String type;
-
     @Lob
     private byte[] data;
+
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "id_prenotazione"
+    )
+    private Prenotazione prenotazione;
 
     public FileDB() {
     }
 
-    public FileDB(String name, String type, byte[] data) {
+    public FileDB(String name, byte[] data) {
         this.name = name;
-        this.type = type;
         this.data = data;
     }
 
@@ -50,19 +54,19 @@ public class FileDB {
         this.size = size;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public byte[] getData() {
         return data;
     }
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public Prenotazione getPrenotazione() {
+        return prenotazione;
+    }
+
+    public void setPrenotazione(Prenotazione prenotazione) {
+        this.prenotazione = prenotazione;
     }
 }

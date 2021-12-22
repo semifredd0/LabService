@@ -35,25 +35,29 @@
                     <h3 class="record-h2">Documenti Paziente</h3>
                     <dl style="padding-right: 10px" class="record-riga">
                         <hr>
-                        <dt>Questionario Anamnesi:</dt>
+                        <dt>Caricare i seguenti file in formato PDF:</dt>
+                        <ul>
+                            <li>Questionario Anamnesi</li>
+                            <li>Consenso informato</li>
+                            <li>Esito tampone</li>
+                        </ul>
                         <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                            <form th:action="@{/laboratorio/upload}" method="post" th:object="${prenotazione}"
+                                  enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto">
+                                <input class="form-control" type="hidden" th:attr="value = ${prenotazione.id}" th:field="*{id}"/>
+                                <input type="file" name="document" required />
+                                <input type="submit" value="Carica" class="btn btn-primary">
+                            </form>
                         </dd>
                         <hr>
-                        <dt>Consenso Informato:</dt>
-                        <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
-                        </dd>
-                        <hr>
-                        <dt>Esito Tampone:</dt>
-                        <dd style="margin-left: 15px; margin-bottom: 5px">
-                            <input type="file" id="myfile" style="display:none;">
-                            <button class="openbtn" onclick="document.getElementById('myfile').click()"><i class="fa fa-upload"></i> Carica</button>
-                            <button class="openbtn"><i class="fa fa-download"></i> Scarica</button>
+                        <dt>File caricati: </dt>
+                        <dd th:each="doc : ${listDocs}" class="row border rounded">
+                            <div>
+                                <img th:src="@{/img/document.png}" width="50" />
+                            </div>
+                            <div>
+                                <a th:href="@{'/laboratorio/download?id='+${doc.id}}">[[${doc.name}]]</a>
+                            </div>
                         </dd>
                     </dl>
                 </div>

@@ -7,8 +7,12 @@ import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.unit.DataSize;
+
+import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 public class LabServiceApplication {
@@ -34,6 +38,14 @@ public class LabServiceApplication {
 		// Aggiunge il metodo per il reindirizzamento
 		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 		return tomcat;
+	}
+
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setMaxFileSize(DataSize.ofBytes(100000000L));
+		factory.setMaxRequestSize(DataSize.ofBytes(100000000L));
+		return factory.createMultipartConfig();
 	}
 
 	// Reindirizzamento da :8080 a :8443
