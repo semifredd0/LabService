@@ -26,6 +26,9 @@
             <img th:src="@{~/img/prenotazione.png}" alt="prenotazione" class="avatar " style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
         </div>
 
+        <div class="text-success">
+            <h3>[[${message}]]</h3>
+        </div>
         <div class="colonne">
             <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
@@ -78,7 +81,7 @@
         </div>
 
         <div class="form-group">
-            <a th:href="@{/laboratorio/listaPrenotazioni}" type="submit" class="openbtn">Chiudi</a>
+            <a th:href="@{/laboratorio/lista}" type="submit" class="openbtn">Chiudi</a>
         </div>
     </fieldset>
 </div>

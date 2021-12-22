@@ -4,11 +4,13 @@ import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneListaDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
+import com.uniba.di.dfmdevelop.labservice.model.FileDB;
 import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.GiornoLavorativo;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
+import com.uniba.di.dfmdevelop.labservice.repository.FileDBRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.PrenotazioneRepository;
 import com.uniba.di.dfmdevelop.labservice.repository.UtenteGenericoRepository;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
@@ -18,10 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +41,7 @@ public class LaboratorioController {
     private final CustomUserDetailService service;
     private final UtenteGenericoRepository utenteGenericoRepository;
     private final PrenotazioneRepository prenotazioneRepository;
+    private final FileDBRepository fileDBRepository;
 
     @GetMapping("index")
     public String index() {
@@ -237,5 +244,19 @@ public class LaboratorioController {
 
         model.addAttribute("prenotazione",prenotazione);
         return "laboratorio/dettagliPrenotazione";
+    }
+
+    @PostMapping("/upload")
+    public String uploadFile(@RequestParam("document") MultipartFile file,
+                             RedirectAttributes attributes) throws IOException {
+        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        FileDB fileDB = new FileDB();
+        fileDB.setName(filename);
+        fileDB.setData(file.getBytes());
+        fileDB.setSize(file.getSize());
+        fileDBRepository.save(fileDB);
+
+        attributes.addFlashAttribute("message","File caricato correttamente!");
+        return "redirect:/";
     }
 }

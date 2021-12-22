@@ -14,6 +14,8 @@ public class FileDB {
 
     private String name;
 
+    private Long size;
+
     private String type;
 
     @Lob
@@ -38,6 +40,14 @@ public class FileDB {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public String getType() {

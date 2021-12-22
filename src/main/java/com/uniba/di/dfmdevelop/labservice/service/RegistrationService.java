@@ -261,7 +261,7 @@ public class RegistrationService {
         l1.setLatitudine(result.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude());
         l1.setLongitudine(result.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude());
 
-                /* ----- Scrittura e salvataggio file nel DB -----
+        /* ----- Scrittura e salvataggio file nel DB -----
                 // Scrivo su file il calendario
                 Long userID = utenteGenericoRepository.count() +1;
                 try {
@@ -296,7 +296,7 @@ public class RegistrationService {
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
-                --------- */
+        --------- */
 
         // Salvo utente e i relativi tamponi nel DB
         token = userDetailService.signUpUser(u1);
