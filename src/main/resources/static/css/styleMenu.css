@@ -143,6 +143,10 @@ span{
     color: #000000;
 }
 
+.new-form{
+    width: 45%;
+}
+
 .record {
     background-color: #fff;
     margin: 15px 0;
