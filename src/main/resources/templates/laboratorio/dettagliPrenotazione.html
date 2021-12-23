@@ -22,18 +22,14 @@
 
 <div style="width:1100px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
     <fieldset>
-        <div class="imgcontainer">
-            <img th:src="@{~/img/prenotazione.png}" alt="prenotazione" class="avatar " style="max-height: 200px; max-width: 200px; margin-bottom: 20px; margin-top: 20px ">
-        </div>
-
-        <div class="text-success">
-            <h3>[[${message}]]</h3>
-        </div>
         <div class="colonne">
             <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
                     <h3 class="record-h2">Documenti Paziente</h3>
                     <dl style="padding-right: 10px" class="record-riga">
+                        <div style="margin-left: 15px; margin-bottom: 5px; width: 95%" class="text-success">
+                            <h4>[[${message}]]</h4>
+                        </div>
                         <hr>
                         <dt>Caricare i seguenti file in formato PDF:</dt>
                         <dd>
@@ -53,12 +49,12 @@
                             </form>
                         </dd>
                         <hr>
-                        <dt>File caricati: </dt>
+                        <dt>File caricati: </dt><br><br>
                         <dd th:each="doc : ${listDocs}">
                             <div>
                                 <ul>
                                     <li>
-                                        <img th:src="@{/img/document.png}" style="width:85px; height: 75px "  /><br>
+                                        <img th:src="@{/img/document.png}" style="width:50px; height: 40px"/>
                                         <a class="a1" th:href="@{'/laboratorio/download?id='+${doc.id}}">[[${doc.name}]]</a>
                                     </li>
                                 </ul>
@@ -87,7 +83,7 @@
                     </div>
                 </form>
                 <div class="form-group" style="float: right">
-                    <a th:href="@{/laboratorio/lista}" type="submit" class="openbtn" style="background: red">Chiudi & Salva</a>
+                    <a th:href="@{/laboratorio/lista}" type="submit" class="openbtn" style="background: red">Indietro</a>
                 </div>
             </div>
         </div>

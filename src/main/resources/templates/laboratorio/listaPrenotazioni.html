@@ -30,11 +30,12 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row">
         <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
-            <h2 style="color: black; padding-bottom: 8px"> <b>Lista Prenotazioni</b></h2>
+            <h2 style="color: black; padding-bottom: 8px"><b>Lista Prenotazioni</b></h2>
             <div style="float: left; padding-bottom: 5px;">
-                <form>
-                    Selezionare la data per cui si vogliono conoscere le prenotazioni.
-                    <input type="date" id="date" class="form-control"></input>
+                <form th:action="@{/laboratorio/lista}" th:object="${data}" th:method="post">
+                    Selezionare la data per cui si vogliono conoscere le prenotazioni:
+                    <input type="date" id="date" class="form-control" th:field="*{dataCercata}" th:errorClass="is-invalid" required />
+                    <div th:if="${#fields.hasErrors('dataCercata')}" th:errors="*{dataCercata}" class="invalid-feedback"></div>
                     <button style="float: left;" type="submit" class="button">Cerca</button>
                 </form>
             </div>
@@ -43,10 +44,10 @@
             <table class="table table-secondary table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">Id_prenotazione</th>
-                    <th scope="col">Codice fiscale</th>
-                    <th scope="col">Tipologia tampone</th>
-                    <th scope="col">Data prenotazione</th>
+                    <th scope="col">ID Prenotazione</th>
+                    <th scope="col">Codice Fiscale</th>
+                    <th scope="col">Tipologia Tampone</th>
+                    <th scope="col">Data Prenotazione</th>
                     <th scope="col">Dettagli</th>
                 </tr>
                 </thead>

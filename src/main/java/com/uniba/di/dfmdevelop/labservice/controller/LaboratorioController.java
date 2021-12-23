@@ -1,5 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
+import com.uniba.di.dfmdevelop.labservice.dto.DataDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneListaDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -223,21 +224,64 @@ public class LaboratorioController {
     }
 
     @GetMapping("lista")
-    public String listaPrenotazioni(@AuthenticationPrincipal UtenteGenerico utente, Model model) {
+    public String listaPrenotazioni(@AuthenticationPrincipal UtenteGenerico utente,
+                                    Model model) {
         List<Prenotazione> lista_prenotazioni = prenotazioneRepository
                 .findPrenotazioneByLaboratorioTampone_Laboratorio(utente.getLaboratorio());
         List<PrenotazioneListaDTO> lista = new ArrayList<>();
 
-        for(Prenotazione prenotazione : lista_prenotazioni) {
+        for (Prenotazione prenotazione : lista_prenotazioni) {
             PrenotazioneListaDTO temp = new PrenotazioneListaDTO();
             temp.setPrenotazione(prenotazione);
-            if(prenotazione.getUtenteEsterno() == null)
+            if (prenotazione.getUtenteEsterno() == null)
                 temp.setCodiceFiscale(prenotazione.getUtenteGenerico().getCittadino().getCodFiscale());
             else
                 temp.setCodiceFiscale(prenotazione.getUtenteEsterno().getCodFiscale());
             lista.add(temp);
         }
+
         model.addAttribute("lista",lista);
+        model.addAttribute("data",new DataDTO());
+        return "laboratorio/listaPrenotazioni";
+    }
+
+    @PostMapping("/lista")
+    public String listaPrenotazioniData(@AuthenticationPrincipal UtenteGenerico utente,
+                                        @Valid DataDTO data,
+                                        BindingResult bindingResult,
+                                        Model model) {
+        if (bindingResult.hasErrors()) {
+            log.error("Error in lista prenotazioni");
+            return "laboratorio/listaPrenotazioni";
+        }
+
+        List<Prenotazione> lista_prenotazioni = prenotazioneRepository
+                .findPrenotazioneByLaboratorioTampone_Laboratorio(utente.getLaboratorio());
+        List<PrenotazioneListaDTO> lista = new ArrayList<>();
+
+        for (Prenotazione prenotazione : lista_prenotazioni) {
+            PrenotazioneListaDTO temp = new PrenotazioneListaDTO();
+            temp.setPrenotazione(prenotazione);
+            if (prenotazione.getUtenteEsterno() == null)
+                temp.setCodiceFiscale(prenotazione.getUtenteGenerico().getCittadino().getCodFiscale());
+            else
+                temp.setCodiceFiscale(prenotazione.getUtenteEsterno().getCodFiscale());
+            lista.add(temp);
+        }
+
+        if(data.getDataCercata() != null) {
+            List<PrenotazioneListaDTO> lista_filtered = new ArrayList<>();
+            for(PrenotazioneListaDTO prenotazione : lista) {
+                if(prenotazione.getPrenotazione().getDataPrenotazione().isEqual(data.getDataCercata()))
+                    lista_filtered.add(prenotazione);
+            }
+            lista = lista_filtered;
+            model.addAttribute("lista",lista);
+        }
+        else
+            model.addAttribute("lista",null);
+
+        model.addAttribute("data",data);
         return "laboratorio/listaPrenotazioni";
     }
 
