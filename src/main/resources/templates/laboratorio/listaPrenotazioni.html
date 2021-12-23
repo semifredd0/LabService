@@ -34,9 +34,21 @@
             <div style="float: left; padding-bottom: 5px;">
                 <form th:action="@{/laboratorio/lista}" th:object="${data}" th:method="post">
                     Selezionare la data per cui si vogliono conoscere le prenotazioni:
-                    <input type="date" id="date" class="form-control" th:field="*{dataCercata}" th:errorClass="is-invalid" required />
-                    <div th:if="${#fields.hasErrors('dataCercata')}" th:errors="*{dataCercata}" class="invalid-feedback"></div>
-                    <button style="float: left;" type="submit" class="button">Cerca</button>
+                    <table style="border: hidden">
+                        <tr>
+                            <td style="padding-right: 10px">
+                                <input type="date" id="date" class="form-control" th:field="*{dataCercata}" th:errorClass="is-invalid" required style="width:300px;"/>
+                                <div th:if="${#fields.hasErrors('dataCercata')}" th:errors="*{dataCercata}" class="invalid-feedback"></div>
+                            </td>
+                            <td>
+                                <button style="float: left;" type="submit" class="button">Cerca</button>
+                            </td>
+
+                        </tr>
+                    </table>
+
+
+
                 </form>
             </div>
             <br><br><br>
@@ -44,17 +56,17 @@
             <table class="table table-secondary table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">ID Prenotazione</th>
+                    <th style="width: 150px">ID Prenotazione</th>
                     <th scope="col">Codice Fiscale</th>
                     <th scope="col">Tipologia Tampone</th>
-                    <th scope="col">Data Prenotazione</th>
+                    <th style="margin-right: 5px">Data Prenotazione [YYYY-MM-DD]</th>
                     <th scope="col">Dettagli</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr th:each="element,iterationStatus : ${lista}">
-                    <td th:text="${element.prenotazione.id}" style="width: 10px"></td>
+                    <td th:text="${element.prenotazione.id}"></td>
                     <td th:text="${element.codiceFiscale}"></td>
                     <td th:text="${element.prenotazione.laboratorioTampone.tampone.nome}"></td>
                     <td th:text="${element.prenotazione.dataPrenotazione}"></td>

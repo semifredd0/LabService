@@ -18,7 +18,7 @@
     <div style="padding-left: 20px">
         <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
     </div>
-</div>
+</div><br><br><br>
 
 <div style="width:1100px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
     <fieldset>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="breaks2 " id="floating1">
-                <form th:action="@{/cittadino/ricercaLaboratorio}" method="post">
+                <form th:action="@{/laboratorio/index}" method="post">
                     <div id="containerCalendario" class="breaks3 record">
                         <h3 class="record-h2">Informazioni Pagamento</h3>
                         <hr>
@@ -76,9 +76,12 @@
                         <hr>
                         <dt>Stato pagamento:</dt>
                         <dd>
-                            <input class="form-check-input" type="checkbox">
+                            <input class="form-check-input" type="checkbox" id="myCheck">
                             <span>Il paziente ha pagato?</span>
                         </dd>
+                        <div style="float:right; margin-right: 8px; margin-bottom: 15px">
+                            <input type="submit" value="Salva" class="openbtn">
+                        </div>
                         <br><br>
                     </div>
                 </form>
@@ -90,5 +93,6 @@
     </fieldset>
 </div>
 
+<script th:src="@{~/js/pagamento.js}"></script>
 </body>
 </html>
