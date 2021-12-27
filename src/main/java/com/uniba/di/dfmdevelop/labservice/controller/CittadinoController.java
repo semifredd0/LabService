@@ -233,6 +233,7 @@ public class CittadinoController {
             utenteEsternoRepository.save(utenteEsterno);
         }
 
+        prenotazione_obj.setPagamentoOnline(prenotazione.isPagamento());
         if(!prenotazione.isPagamento()) {
             // Pagamento in sede
             String nomeLab = laboratorioRepository.getById(prenotazione.getIdLaboratorio()).getNome();

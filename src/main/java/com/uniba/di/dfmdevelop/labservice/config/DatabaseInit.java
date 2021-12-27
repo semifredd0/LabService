@@ -98,6 +98,16 @@ public class DatabaseInit implements CommandLineRunner {
         p7.setUtenteGenerico(utenteGenerico1);
         p8.setUtenteGenerico(utenteGenerico2);
 
+        // Quattro prenotazioni pagate online, altre quattro pagate in sede
+        p1.setPagamentoOnline(true);
+        p2.setPagamentoOnline(true);
+        p3.setPagamentoOnline(true);
+        p4.setPagamentoOnline(true);
+        p5.setPagamentoOnline(false);
+        p6.setPagamentoOnline(false);
+        p7.setPagamentoOnline(false);
+        p8.setPagamentoOnline(false);
+
         utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
         prenotazioneRepository.saveAll(List.of(p1,p2,p3,p4,p5,p6,p7,p8));
     }

@@ -31,7 +31,8 @@
                             <h4>[[${message}]]</h4>
                         </div>
                         <hr>
-                        <dt>Caricare i seguenti file in formato PDF:</dt>
+                        <dt style="width: 100%;">Caricare i seguenti file in formato PDF:</dt>
+                        <br><br>
                         <dd>
                             <ul>
                                 <li>Questionario Anamnesi</li>
@@ -39,6 +40,7 @@
                                 <li>Esito tampone</li>
                             </ul>
                         </dd>
+                        <br>
                         <dd style="margin-left: 15px; margin-bottom: 5px; width: 95%">
                             <form th:action="@{/laboratorio/upload}" method="post" th:object="${prenotazione}"
                                   enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto">
@@ -68,21 +70,21 @@
                 <form th:action="@{/laboratorio/index}" method="post">
                     <div id="containerCalendario" class="breaks3 record">
                         <h3 class="record-h2">Informazioni Pagamento</h3>
-                        <hr>
                         <dt>Modalità pagamento:</dt>
-                        <dd style="margin-bottom: 10px">
-                            <span sec:authentication="principal.email"></span>
+                        <dd style="margin-bottom: 10px" th:switch="${prenotazione.pagamentoOnline}">
+                            <span th:case="${true}">Pagamento online</span>
+                            <span th:case="*">Pagamento in sede</span>
                         </dd>
                         <hr>
-                        <dt>Stato pagamento:</dt>
-                        <dd>
-                            <input class="form-check-input" type="checkbox" id="myCheck">
-                            <span>Il paziente ha pagato?</span>
+                        <dt>Tipologia tampone:</dt>
+                        <dd style="margin-bottom: 10px">
+                            <span th:text="${prenotazione.laboratorioTampone.tampone.nome}"></span>
                         </dd>
-                        <div style="float:right; margin-right: 8px; margin-bottom: 15px">
-                            <input type="submit" value="Salva" class="openbtn">
-                        </div>
-                        <br><br>
+                        <hr>
+                        <dt>Prezzo tampone:</dt>
+                        <dd style="margin-bottom: 10px">
+                            <span th:text="${#numbers.formatDecimal(prenotazione.laboratorioTampone.prezzo,1,2,'POINT')} +' €'"></span>
+                        </dd>
                     </div>
                 </form>
                 <div class="form-group" style="float: right">

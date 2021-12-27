@@ -55,4 +55,11 @@ public class Prenotazione {
             columnDefinition = "DATE"
     )
     private LocalDate dataPrenotazione;
+
+    @Column(
+            name = "pagamento_online",
+            nullable = false,
+            columnDefinition = "BOOLEAN"
+    )
+    private boolean pagamentoOnline;
 }
