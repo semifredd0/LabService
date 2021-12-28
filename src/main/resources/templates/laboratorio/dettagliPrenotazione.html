@@ -31,7 +31,7 @@
                             <h4>[[${message}]]</h4>
                         </div>
                         <hr>
-                        <dt style="width: 100%;">Caricare i seguenti file in formato PDF e premere su "Carica":</dt>
+                        <dt style="width: 100%;">Caricare i seguenti file in formato PDF:</dt>
                         <br><br>
                         <dd>
                             <ul>
@@ -53,7 +53,7 @@
                         <hr>
                         <dt>File caricati: </dt><br><br>
                         <dd th:each="doc : ${listDocs}">
-                            <div>
+                            <div style="width: 500px;">
                                 <ul>
                                     <li>
                                         <img th:src="@{/img/document.png}" style="width:50px; height: 40px"/>
