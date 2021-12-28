@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <!--/*@thymesVar id="ruolo" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
                     <label class="control-label" for="ruolo"> Ruolo </label>
-                    <select id="ruolo" class="form-control" th:field="*{ruolo}" required autofocus="autofocus">
+                    <select id="ruolo" class="form-select form-select-lg mb-4" th:field="*{ruolo}" required autofocus="autofocus">
                         <option value="LABORATORIO">Laboratorio</option>
                         <option value="CITTADINO">Cittadino</option>
                         <option value="MEDICO">Medico di Medicina Generale</option>
@@ -87,7 +87,7 @@
                     </select>
                 </div>
 
-                <div class="form-group" style="text-align: center">
+                <div class="form-group" style="float: right">
                     <button type="submit" class="button"> Continua </button>
                 </div>
             </form>
