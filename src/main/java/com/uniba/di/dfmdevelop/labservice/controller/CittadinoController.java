@@ -1,6 +1,7 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.DataDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneCittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -8,7 +9,10 @@ import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
-import com.uniba.di.dfmdevelop.labservice.model.*;
+import com.uniba.di.dfmdevelop.labservice.model.FileDB;
+import com.uniba.di.dfmdevelop.labservice.model.Payment;
+import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
+import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.cittadino.UtenteEsterno;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
@@ -18,16 +22,20 @@ import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -43,6 +51,7 @@ public class CittadinoController {
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final PrenotazioneRepository prenotazioneRepository;
     private final UtenteEsternoRepository utenteEsternoRepository;
+    private final FileDBRepository fileDBRepository;
     private final GeocodeController geocode;
     private final EmailSender emailSender;
 
@@ -123,6 +132,75 @@ public class CittadinoController {
 
     //------------
 
+    @GetMapping("esitoTamponi")
+    public String listaPrenotazioni(@AuthenticationPrincipal UtenteGenerico utente,
+                                    Model model) {
+        List<Prenotazione> lista_prenotazioni = prenotazioneRepository
+                .findPrenotazioneByUtenteGenerico(utente);
+
+        model.addAttribute("lista",lista_prenotazioni);
+        model.addAttribute("data",new DataDTO());
+        return "cittadino/esitoTamponi";
+    }
+
+    @PostMapping("/esitoTamponi")
+    public String listaPrenotazioniData(@AuthenticationPrincipal UtenteGenerico utente,
+                                        @Valid DataDTO data,
+                                        BindingResult bindingResult,
+                                        Model model) {
+        if(bindingResult.hasErrors()) {
+            log.error("Error in lista prenotazioni");
+            return "cittadino/esitoTamponi";
+        }
+
+        List<Prenotazione> lista_prenotazioni = prenotazioneRepository
+                .findPrenotazioneByUtenteGenerico(utente);
+
+        if(data.getDataCercata() != null) {
+            List<Prenotazione> lista_filtered = new ArrayList<>();
+            for(Prenotazione prenotazione : lista_prenotazioni) {
+                if(prenotazione.getDataPrenotazione().isEqual(data.getDataCercata()))
+                    lista_filtered.add(prenotazione);
+            }
+            lista_prenotazioni = lista_filtered;
+            model.addAttribute("lista",lista_prenotazioni);
+        }
+        else
+            model.addAttribute("lista",null);
+
+        model.addAttribute("data",data);
+        return "cittadino/esitoTamponi";
+    }
+
+    @GetMapping("/prenotazione/{id}")
+    public String prenotazioneSelezionata(@PathVariable("id") Long id, Model model) {
+        Prenotazione prenotazione = prenotazioneRepository.getById(id);
+        List<FileDB> listDocs = fileDBRepository.findFileDBByPrenotazione(prenotazione);
+        model.addAttribute("listDocs",listDocs);
+        model.addAttribute("prenotazione",prenotazione);
+        return "cittadino/dettagliPrenotazione";
+    }
+
+    @GetMapping("/download")
+    public void downloadFile(@Param("id") String id, HttpServletResponse response) throws Exception {
+        Optional<FileDB> result = fileDBRepository.findById(id);
+        if(!result.isPresent()) {
+            throw new Exception("Documento non trovato!");
+        }
+
+        FileDB document = result.get();
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=" + document.getName();
+        response.setHeader(headerKey,headerValue);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(document.getData());
+        outputStream.close();
+    }
+
+    //------------
+
     @PostMapping("ricercaLaboratorio")
     public String ricercaLaboratorio(@RequestParam String posizione, Model model) {
         // Trovo latitudine e longitudine della posizione inserita
@@ -199,7 +277,7 @@ public class CittadinoController {
                                  @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) throws CustomException {
 
-        if (bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors()) {
             log.error("Error in booking tampone");
             return "cittadino/bookTampone";
         }

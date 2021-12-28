@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Cittadino</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{~/css/styleMenu.css}">
+</head>
+<body>
+
+<div class="header">
+    <div style="padding-left: 20px">
+        <a th:href="@{/cittadino/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
+    </div>
+</div><br><br><br>
+
+<div style="width:1100px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;" >
+    <fieldset>
+        <div class="colonne">
+            <div class="breaks2 " id="floating" style="margin-right: 23px">
+                <div id="containerDettagli" class="breaks3 record">
+                    <h3 class="record-h2">Documenti prenotazione</h3>
+                    <dl style="padding-right: 10px" class="record-riga">
+                        <div th:if="${listDocs.isEmpty()}">
+                            <span style="margin-left: 5px">Nessun documento caricato.</span>
+                            <br><br>
+                        </div>
+                        <div th:unless="${listDocs.isEmpty()}">
+                            <dd th:each="doc : ${listDocs}">
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <img th:src="@{/img/document.png}" style="width:50px; height: 40px"/>
+                                            <a class="a1" th:href="@{'/cittadino/download?id='+${doc.id}}">[[${doc.name}]]</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="breaks2 " id="floating1">
+                <div id="containerCalendario" class="breaks3 record">
+                    <h3 class="record-h2">Informazioni Pagamento</h3>
+                    <dt>Modalità pagamento:</dt>
+                    <dd style="margin-bottom: 10px" th:switch="${prenotazione.pagamentoOnline}">
+                        <span th:case="${true}">Pagamento online</span>
+                        <span th:case="*">Pagamento in sede</span>
+                    </dd>
+                    <hr>
+                    <dt>Tipologia tampone:</dt>
+                    <dd style="margin-bottom: 10px">
+                        <span th:text="${prenotazione.laboratorioTampone.tampone.nome}"></span>
+                    </dd>
+                    <hr>
+                    <dt>Prezzo tampone:</dt>
+                    <dd style="margin-bottom: 10px">
+                        <span th:text="${#numbers.formatDecimal(prenotazione.laboratorioTampone.prezzo,1,2,'POINT')} +' €'"></span>
+                    </dd>
+                </div>
+
+                <div class="form-group" style="float: right">
+                    <a th:href="@{/cittadino/esitoTamponi}" type="submit" class="openbtn" style="background: red">Indietro</a>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script th:src="@{~/js/pagamento.js}"></script>
+</body>
+</html>
