@@ -94,9 +94,8 @@
                     <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
                 </div>
 
-                <div class="form-group">
-                    <button type="submit" class="button">Registati</button>
-                    <span >Sei gia' registrato? <a th:href="@{/login}">Conferma</a></span>
+                <div class="form-group" style="float: right">
+                    <button type="submit" class="button">Registrati</button>
                 </div>
             </form>
         </div>

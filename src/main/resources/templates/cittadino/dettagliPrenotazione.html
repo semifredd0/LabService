@@ -24,7 +24,7 @@
     <fieldset>
         <div class="colonne">
             <div class="breaks2 " id="floating" style="margin-right: 23px">
-                <div id="containerDettagli" class="breaks3 record">
+                <div id="containerDettagli" class="breaks2 record">
                     <h3 class="record-h2">Documenti prenotazione</h3>
                     <dl style="padding-right: 10px" class="record-riga">
                         <div th:if="${listDocs.isEmpty()}">
@@ -32,8 +32,9 @@
                             <br><br>
                         </div>
                         <div th:unless="${listDocs.isEmpty()}">
+                            <dd style="margin: 5px">File caricati: </dd><br><br>
                             <dd th:each="doc : ${listDocs}">
-                                <div>
+                                <div style="width: 500px;">
                                     <ul>
                                         <li>
                                             <img th:src="@{/img/document.png}" style="width:50px; height: 40px"/>
