@@ -1,4 +1,4 @@
-package com.uniba.di.dfmdevelop.labservice.config;
+package com.uniba.di.dfmdevelop.labservice.paypal;
 
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;

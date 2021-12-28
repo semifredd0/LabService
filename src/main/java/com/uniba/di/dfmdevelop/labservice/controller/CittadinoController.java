@@ -10,7 +10,7 @@ import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.FileDB;
-import com.uniba.di.dfmdevelop.labservice.model.Payment;
+import com.uniba.di.dfmdevelop.labservice.paypal.Payment;
 import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;

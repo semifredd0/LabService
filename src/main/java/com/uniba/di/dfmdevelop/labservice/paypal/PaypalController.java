@@ -1,9 +1,7 @@
-package com.uniba.di.dfmdevelop.labservice.controller;
+package com.uniba.di.dfmdevelop.labservice.paypal;
 
 import com.paypal.api.payments.Links;
 import com.paypal.base.rest.PayPalRESTException;
-import com.uniba.di.dfmdevelop.labservice.model.Payment;
-import com.uniba.di.dfmdevelop.labservice.service.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

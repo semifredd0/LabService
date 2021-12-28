@@ -1,4 +1,4 @@
-package com.uniba.di.dfmdevelop.labservice.model;
+package com.uniba.di.dfmdevelop.labservice.paypal;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

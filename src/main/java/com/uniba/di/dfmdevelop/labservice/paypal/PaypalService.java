@@ -1,6 +1,7 @@
-package com.uniba.di.dfmdevelop.labservice.service;
+package com.uniba.di.dfmdevelop.labservice.paypal;
 
 import com.paypal.api.payments.*;
+import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class PaypalService {
     @Autowired
     private APIContext apiContext;
 
-    public Payment createPayment(
+    public com.paypal.api.payments.Payment createPayment(
             Double total,
             String currency,
             String method,
@@ -40,7 +41,7 @@ public class PaypalService {
         Payer payer = new Payer();
         payer.setPaymentMethod(method.toString());
 
-        Payment payment = new Payment();
+        com.paypal.api.payments.Payment payment = new com.paypal.api.payments.Payment();
         payment.setIntent(intent.toString());
         payment.setPayer(payer);
         payment.setTransactions(transactions);
@@ -52,8 +53,8 @@ public class PaypalService {
         return payment.create(apiContext);
     }
 
-    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
-        Payment payment = new Payment();
+    public com.paypal.api.payments.Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
+        com.paypal.api.payments.Payment payment = new Payment();
         payment.setId(paymentId);
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId(payerId);

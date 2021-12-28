@@ -3,6 +3,7 @@ package com.uniba.di.dfmdevelop.labservice.service;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.uniba.di.dfmdevelop.labservice.LabServiceApplication;
+import com.uniba.di.dfmdevelop.labservice.paypal.PaypalService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
