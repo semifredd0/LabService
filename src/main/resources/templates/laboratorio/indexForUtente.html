@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div style=" width:1500px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
+<div style=" width:1100px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
     <fieldset>
         <div class="imgcontainer ">
             <img th:src="@{~/img/img_avatar.png}" alt="avatar" class="avatar "
@@ -28,7 +28,7 @@
         </div>
 
         <div class="colonne">
-            <div class="breaks3 " id="floating" style="margin-right: 23px">
+            <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
                     <h3 class="record-h2">Informazioni Laboratorio</h3>
                     <dl style="padding-right: 10px" class="record-riga">
@@ -62,12 +62,39 @@
                         <dd>
                             <span th:text="${laboratorio.partitaIVA}"></span>
                         </dd>
-                        <br><br>
+                        <br>
                     </dl>
                 </div>
             </div>
 
-            <div class="breaks3 " id="floating1" style="margin-right: 23px">
+
+
+            <form th:action="@{/cittadino/bookTampone}" th:object="${tampone}" th:method="post">
+                <input class="form-control" type="hidden"
+                       th:attr="value = ${tampone.laboratorio.id}" th:field="*{laboratorio.id}"/>
+
+                <div class="breaks2 " id="floating2">
+                    <div id="containerTamponi" class="breaks3 record">
+                        <h3 class="record-h2">Seleziona Tampone</h3>
+                        <dl th:each="element : ${tamponi}" style="padding-right: 10px" class="record-riga">
+                            <hr>
+                            <div style="margin-left: 1%">
+                                <input type="radio" th:field="${tampone.tampone.id}" th:value="${element.tampone.id}">
+                            </div>
+                            <dt th:text="${element.tampone.nome}"></dt>
+                            <dd th:text="${#numbers.formatDecimal(element.prezzo,1,2,'POINT')} +' €'"></dd>
+                        </dl>
+                    </div>
+
+                    <div style="float: right">
+                        <div class="form-group" style="margin-left: 2%">
+                            <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Prenota</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="breaks1" id="floating1" style="margin-right: 23px; margin-top: 20px">
                 <div id="containerCalendario" class="breaks3 record">
                     <h3 class="record-h2">Calendario Laboratorio</h3>
                     <dl style="padding-right: 10px" class="record-riga">
@@ -208,31 +235,6 @@
                     </dl>
                 </div>
             </div>
-
-            <form th:action="@{/cittadino/bookTampone}" th:object="${tampone}" th:method="post">
-                <input class="form-control" type="hidden"
-                       th:attr="value = ${tampone.laboratorio.id}" th:field="*{laboratorio.id}"/>
-
-                <div class="breaks3 " id="floating2">
-                    <div id="containerTamponi" class="breaks3 record">
-                        <h3 class="record-h2">Seleziona Tampone</h3>
-                        <dl th:each="element : ${tamponi}" style="padding-right: 10px" class="record-riga">
-                            <hr>
-                            <div style="margin-left: 1%">
-                                <input type="radio" th:field="${tampone.tampone.id}" th:value="${element.tampone.id}">
-                            </div>
-                            <dt th:text="${element.tampone.nome}"></dt>
-                            <dd th:text="${#numbers.formatDecimal(element.prezzo,1,2,'POINT')} +' €'"></dd>
-                        </dl>
-                    </div>
-
-                    <div style="float: right">
-                        <div class="form-group" style="margin-left: 2%">
-                            <button type="submit" class="openbtn" style="float: right; margin-right: 5px">Prenota</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
 
         </div>
     </fieldset>

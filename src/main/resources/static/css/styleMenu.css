@@ -56,6 +56,10 @@ hr {
     width: 48%;
 }
 
+.breaks1{
+    width: 98%;
+}
+
 .openbtn {
     cursor: pointer;
     background-color: #0e1f75;

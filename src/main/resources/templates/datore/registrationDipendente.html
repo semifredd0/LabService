@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Registrazione Dipendente</title>
+    <title>Registrazione Cittadino</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -16,7 +16,7 @@
 
 <div class="header">
     <div class="logo" style="padding-left: 20px;">
-        <a th:href="@{/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
+        <a th:href="@{/datore/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"></a>
     </div>
 </div>
 
@@ -34,10 +34,8 @@
                 </div>
             </div>
 
-            <form th:action="@{/datore/registrationDipendente}" th:object="${dipendenteDTO}" th:method="post">
+            <form th:action="@{/datore/registrationDipendente}" th:object="${datoreDTO}" th:method="post">
 
-                <!--/*
-                NON LI HO CANCELLATI ANCORA TI SEVONO, IN CASO CONTRARIO PUOI ELIMINARLI A ME NON SERVONO
                 <input class="form-control" type="hidden"
                        th:attr="value = ${datoreDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
 
@@ -48,10 +46,9 @@
                        th:attr="value = ${datoreDTO.conferma_password}" th:field="*{conferma_password}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${datoreDTO.ruolo}" th:field="*{ruolo}"/>*/-->
+                       th:attr="value = ${datoreDTO.ruolo}" th:field="*{ruolo}"/>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="nome"> Nome </label> <input
                         id="nome" class="form-control" th:field="*{nome}"
                         th:errorClass="is-invalid" required autofocus="autofocus" />
@@ -59,23 +56,20 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="nomeLaboratorio" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="nome"> Cognome </label> <input
+                    <label class="control-label" for="cognome"> Cognome </label> <input
                         id="cognome" class="form-control" th:field="*{cognome}"
                         th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="indirizzoStradale" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="dataNascita"> Data di nascita </label> <input
-                        id="dataNascita" class="form-control" th:field="*{dataNascita}"
-                        th:errorClass="is-invalid" required/>
+                    <label class="control-label" for="dataNascita"> Data di nascita </label>
+                    <input type="date" id="dataNascita" class="form-control" th:field="*{dataNascita}"
+                           th:errorClass="is-invalid" required/>
                     <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="numeroTelefono" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
                     <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
                         id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
                         th:errorClass="is-invalid" required/>
@@ -83,22 +77,13 @@
                 </div>
 
                 <div class="form-group">
-                    <!--/*@thymesVar id="codiceIban" type="com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO"*/-->
-                    <label class="control-label" for="codFiscale"> Codice Fiscale </label> <input
-                        id="codFiscale" class="form-control" th:field="*{codFiscale}"
-                        th:errorClass="is-invalid" required/>
-                    <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
+                    <label class="control-label" for="codiceFiscale"> Codice Fiscale </label> <input
+                        id="codiceFiscale" class="form-control" th:field="*{codiceFiscale}"
+                        th:errorClass="is-invalid" required />
+                    <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
                 </div>
 
-                <div class="form-group">
-                    <!--/*@thymesVar id="indirizzoEmail" type="com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO"*/-->
-                    <label class="control-label" for="indirizzoEmail"> Indirizzo Email </label>
-                    <input type="text" id="indirizzoEmail" class="form-control" th:field="*{indirizzoEmail}"
-                           th:errorClass="is-invalid" required />
-                    <div th:if="${#fields.hasErrors('indirizzoEmail')}" th:errors="*{indirizzoEmail}" class="invalid-feedback"></div>
-                </div>
-
-                <!--/* DA MODIFICARE con il campo ASL di apparteneneza
+                <!--/* DA MODIFICARE con il campo ASL di appartenenza
                 <div class="form-group">
                     <label class="control-label" for="asl"> Asl di appartenenza </label>
 
@@ -111,9 +96,8 @@
                     <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
                 </div>*/-->
 
-                <div class="form-group">
-                    <button type="submit" class="button">Registati</button>
-                    <span >Sei gia' registrato? <a th:href="@{/login}">Conferma</a></span>
+                <div class="form-group" style="float: right">
+                    <button type="submit" class="button">Registra Dipendente</button>
                 </div>
             </form>
         </div>
