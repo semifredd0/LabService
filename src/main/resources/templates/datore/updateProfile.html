@@ -64,6 +64,15 @@
                             </div>
                         </dd>
                         <hr>
+                        <dt>Data di nascita</dt>
+                        <dd>
+                            <div class="form-group">
+                                <input type="date" id="dataNascita" class="form-control" th:field="*{dataNascita}" th:value="*{dataNascita}"
+                                       th:errorClass="is-invalid" required autofocus="autofocus" />
+                                <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
+                            </div>
+                        </dd>
+                        <hr>
                         <dt>Nome dell'azienda</dt>
                         <dd>
                             <div class="form-group">

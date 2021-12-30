@@ -63,6 +63,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label" for="dataNascita"> Data di nascita </label>
+                    <input type="date" id="dataNascita" class="form-control" th:field="*{dataNascita}"
+                           th:errorClass="is-invalid" required/>
+                    <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
                     <label class="control-label" for="specializzazione"> Specializzazione </label> <input
                         id="specializzazione" class="form-control" th:field="*{specializzazione}"
                         th:errorClass="is-invalid" required/>
