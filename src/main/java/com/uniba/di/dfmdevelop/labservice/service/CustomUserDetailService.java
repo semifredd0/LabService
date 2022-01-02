@@ -2,6 +2,7 @@ package com.uniba.di.dfmdevelop.labservice.service;
 
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.MedicoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
@@ -30,7 +31,7 @@ public class CustomUserDetailService implements UserDetailsService {
     private final LaboratorioRepository laboratorioRepository;
     private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
-    private final TamponeRepository tamponeRepository;
+    private final MedicoRepository medicoRepository;
     private final CittadinoRepository cittadinoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
@@ -39,7 +40,7 @@ public class CustomUserDetailService implements UserDetailsService {
                                    LaboratorioRepository laboratorioRepository,
                                    CalendarioLaboratorioRepository calendarioLaboratorioRepository,
                                    LaboratorioTamponeRepository laboratorioTamponeRepository,
-                                   TamponeRepository tamponeRepository,
+                                   MedicoRepository medicoRepository,
                                    BCryptPasswordEncoder bCryptPasswordEncoder,
                                    ConfirmationTokenService confirmationTokenService,
                                    CittadinoRepository cittadinoRepository) {
@@ -47,7 +48,7 @@ public class CustomUserDetailService implements UserDetailsService {
         this.laboratorioRepository = laboratorioRepository;
         this.calendarioLaboratorioRepository = calendarioLaboratorioRepository;
         this.laboratorioTamponeRepository = laboratorioTamponeRepository;
-        this.tamponeRepository = tamponeRepository;
+        this.medicoRepository = medicoRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
         this.cittadinoRepository = cittadinoRepository;
@@ -108,6 +109,18 @@ public class CustomUserDetailService implements UserDetailsService {
                     cittadinoRepository.updateNumeroTelefono(utenteGenerico2, tmp_req2.getNumeroTelefono());
                     cittadinoRepository.updateCodiceFiscale(utenteGenerico2, tmp_req2.getCodiceFiscale());
                     break;
+                case "medicoDTO":
+                    MedicoDTO tmp_req3 = (MedicoDTO) request;
+                    UtenteGenerico utenteGenerico3 = utenteGenericoRepository.
+                            findByEmail(request.getIndirizzoEmail()).get();
+                    medicoRepository.updateNome(utenteGenerico3, tmp_req3.getNome());
+                    medicoRepository.updateCognome(utenteGenerico3, tmp_req3.getCognome());
+                    medicoRepository.updateDataNascita(utenteGenerico3, tmp_req3.getDataNascita());
+                    medicoRepository.updateSpecializzazione(utenteGenerico3, tmp_req3.getSpecializzazione());
+                    medicoRepository.updateIndirizzoStudio(utenteGenerico3, tmp_req3.getIndirizzoStudio());
+                    medicoRepository.updateNumeroTelefono(utenteGenerico3, tmp_req3.getNumeroTelefono());
+                    break;
+                case "datoreDTO": break;
             }
     }
 

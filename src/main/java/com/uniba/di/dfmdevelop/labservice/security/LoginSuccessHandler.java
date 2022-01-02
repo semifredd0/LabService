@@ -33,7 +33,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         if (utenteGenerico.hasRole("CITTADINO")) {
             redirectURL = "cittadino/index";
         }
-        // Aggiungere altri redirect
+        if (utenteGenerico.hasRole("MEDICO")) {
+            redirectURL = "medico/index";
+        }
+        if (utenteGenerico.hasRole("DATORE")) {
+            redirectURL = "datore/index";
+        }
 
         response.sendRedirect(redirectURL);
     }

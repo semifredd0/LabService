@@ -3,11 +3,13 @@ package com.uniba.di.dfmdevelop.labservice.service;
 import com.uniba.di.dfmdevelop.labservice.controller.GeocodeController;
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.MedicoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
+import com.uniba.di.dfmdevelop.labservice.model.MedicoMedicinaGenerale;
 import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.ConfirmationToken;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
@@ -147,8 +149,12 @@ public class RegistrationService {
                 return tokenLaboratorio(request);
             case "cittadinoDTO":
                 return tokenCittadino(request);
+            case "medicoDTO":
+                return tokenMedico(request);
+            case "datoreDTO":
+                return tokenDatore(request); //modificare
         }
-        return null; // eliminare alla fine
+        return null;
     }
 
     private String tokenLaboratorio(UtenteGenericoDTO request) throws CustomException {
@@ -316,6 +322,49 @@ public class RegistrationService {
                 tmp_req.getCognome(), tmp_req.getDataNascita(),
                 tmp_req.getNumeroTelefono(), tmp_req.getCodiceFiscale(), u1);
         u1.setCittadino(c1);
+
+        // Salvo utente nel DB
+        token = userDetailService.signUpUser(u1);
+        return token;
+    }
+
+    private String tokenMedico(UtenteGenericoDTO request) throws CustomException {
+        String token;
+        MedicoDTO tmp_req = (MedicoDTO) request;
+
+        // Creo utente e laboratorio
+        UtenteGenerico u1 = new UtenteGenerico(
+                tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
+        MedicoMedicinaGenerale m1 = new MedicoMedicinaGenerale();
+        m1.setNome(tmp_req.getNome());
+        m1.setCognome(tmp_req.getCognome());
+        m1.setDataNascita(tmp_req.getDataNascita());
+        m1.setSpecializzazione(tmp_req.getSpecializzazione());
+        m1.setIndirizzoStudio(tmp_req.getIndirizzoStudio());
+        m1.setNumeroTelefono(tmp_req.getNumeroTelefono());
+        m1.setUtenteGenerico(u1);
+        u1.setMedico(m1);
+
+        // Salvo utente nel DB
+        token = userDetailService.signUpUser(u1);
+        return token;
+    }
+
+    private String tokenDatore(UtenteGenericoDTO request) throws CustomException {
+        String token;
+        MedicoDTO tmp_req = (MedicoDTO) request;
+
+        // Creo utente e laboratorio
+        UtenteGenerico u1 = new UtenteGenerico(
+                tmp_req.getIndirizzoEmail(), tmp_req.getPassword(), tmp_req.getRuolo());
+        MedicoMedicinaGenerale m1 = new MedicoMedicinaGenerale();
+        m1.setNome(tmp_req.getNome());
+        m1.setCognome(tmp_req.getCognome());
+        m1.setDataNascita(tmp_req.getDataNascita());
+        m1.setSpecializzazione(tmp_req.getSpecializzazione());
+        m1.setIndirizzoStudio(tmp_req.getIndirizzoStudio());
+        m1.setUtenteGenerico(u1);
+        //u1.setMedicoMedicinaGenerale(m1);
 
         // Salvo utente nel DB
         token = userDetailService.signUpUser(u1);

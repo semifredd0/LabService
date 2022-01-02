@@ -56,7 +56,7 @@
                 <tr th:each="element,iterationStatus : ${lista}">
                     <td th:text="${element.id}"></td>
                     <td th:text="${element.laboratorioTampone.tampone.nome}"></td>
-                    <td th:text="${element.id}"></td>
+                    <td th:text="${element.utenteEsterno.codFiscale}"></td>
                     <td th:text="${element.dataPrenotazione}"></td>
                     <td>
                         <a th:href="@{/medico/prenotazione/{id}(id=${element.id})}" th:text="Visualizza"></a>

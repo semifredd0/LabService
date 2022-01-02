@@ -34,19 +34,19 @@
                 </div>
             </div>
 
-            <form th:action="@{/cittadino/registration}" th:object="${cittadinoDTO}" th:method="post">
+            <form th:action="@{/medico/registration}" th:object="${medicoDTO}" th:method="post">
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${cittadinoDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
+                       th:attr="value = ${medicoDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${cittadinoDTO.password}" th:field="*{password}"/>
+                       th:attr="value = ${medicoDTO.password}" th:field="*{password}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${cittadinoDTO.conferma_password}" th:field="*{conferma_password}"/>
+                       th:attr="value = ${medicoDTO.conferma_password}" th:field="*{conferma_password}"/>
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${cittadinoDTO.ruolo}" th:field="*{ruolo}"/>
+                       th:attr="value = ${medicoDTO.ruolo}" th:field="*{ruolo}"/>
 
                 <div class="form-group">
                     <label class="control-label" for="nome"> Nome </label> <input

@@ -1,9 +1,10 @@
 package com.uniba.di.dfmdevelop.labservice.config;
 
+import com.uniba.di.dfmdevelop.labservice.model.MedicoMedicinaGenerale;
 import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.model.cittadino.UtenteEsterno;
+import com.uniba.di.dfmdevelop.labservice.model.UtenteEsterno;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
@@ -29,6 +30,7 @@ public class DatabaseInit implements CommandLineRunner {
     private final CalendarioLaboratorioRepository calendarioLaboratorioRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // Prenotazioni da cittadini
     Prenotazione p1 = new Prenotazione();
     Prenotazione p2 = new Prenotazione();
     Prenotazione p3 = new Prenotazione();
@@ -37,6 +39,9 @@ public class DatabaseInit implements CommandLineRunner {
     Prenotazione p6 = new Prenotazione();
     Prenotazione p7 = new Prenotazione();
     Prenotazione p8 = new Prenotazione();
+    // Prenotazioni da medici
+    Prenotazione p9 = new Prenotazione();
+    Prenotazione p10 = new Prenotazione();
 
     public DatabaseInit(UtenteGenericoRepository utenteGenericoRepository,
                         TamponeRepository tamponeRepository,
@@ -58,58 +63,7 @@ public class DatabaseInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
         initLaboratorio();
         initCittadino();
-    }
-
-    private void initCittadino() {
-
-        UtenteGenerico utenteGenerico1 = new UtenteGenerico(
-                "matteo.costa@labservice.it",
-                passwordEncoder.encode("111111"),
-                "CITTADINO"
-        );
-        UtenteGenerico utenteGenerico2 = new UtenteGenerico(
-                "francesco.brescia@labservice.it",
-                passwordEncoder.encode("111111"),
-                "CITTADINO"
-        );
-        utenteGenerico1.setEnabled(true);
-        utenteGenerico2.setEnabled(true);
-
-        Cittadino cittadino1 = new Cittadino(
-                "Matteo","Costantini", LocalDate.of(2000,1,12),
-                "3339898765","CSTMTT00A12E876T",utenteGenerico1
-        );
-        Cittadino cittadino2 = new Cittadino(
-                "Francesco","Brescia", LocalDate.of(2000,6,29),
-                "3261288654","FRNBRS00F29K012U",utenteGenerico2
-        );
-        utenteGenerico1.setCittadino(cittadino1);
-        utenteGenerico2.setCittadino(cittadino2);
-
-        // Le 6 prenotazioni sono state fatte dai due cittadini
-        p1.setUtenteGenerico(utenteGenerico1);
-        p2.setUtenteGenerico(utenteGenerico1);
-        p3.setUtenteGenerico(utenteGenerico1);
-        p4.setUtenteGenerico(utenteGenerico1);
-        p5.setUtenteGenerico(utenteGenerico1);
-        p6.setUtenteGenerico(utenteGenerico1);
-
-        // Le due prenotazioni per utenti esterni sono state fatte dai due cittadini
-        p7.setUtenteGenerico(utenteGenerico1);
-        p8.setUtenteGenerico(utenteGenerico2);
-
-        // Quattro prenotazioni pagate online, altre quattro pagate in sede
-        p1.setPagamentoOnline(true);
-        p2.setPagamentoOnline(true);
-        p3.setPagamentoOnline(true);
-        p4.setPagamentoOnline(true);
-        p5.setPagamentoOnline(false);
-        p6.setPagamentoOnline(false);
-        p7.setPagamentoOnline(false);
-        p8.setPagamentoOnline(false);
-
-        utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
-        prenotazioneRepository.saveAll(List.of(p1,p2,p3,p4,p5,p6,p7,p8));
+        initMedico();
     }
 
     private void initLaboratorio() {
@@ -212,6 +166,14 @@ public class DatabaseInit implements CommandLineRunner {
         p8.setLaboratorioTampone(laboratorioTampone1);
         p8.setDataPrenotazione(LocalDate.of(2021,11,12));
 
+        // Aggiungo due prenotazioni per assistiti [Lab1 - Molecolare]
+        p9.setUtenteEsterno(ue1);
+        p9.setLaboratorioTampone(laboratorioTampone1);
+        p9.setDataPrenotazione(LocalDate.of(2021,11,12));
+        p10.setUtenteEsterno(ue2);
+        p10.setLaboratorioTampone(laboratorioTampone1);
+        p10.setDataPrenotazione(LocalDate.of(2021,11,12));
+
         // Aggiungo un calendario vuoto ai vari laboratori
         Calendario cal1 = new Calendario();
         Calendario cal2 = new Calendario();
@@ -227,5 +189,105 @@ public class DatabaseInit implements CommandLineRunner {
                 laboratorioTampone3,laboratorioTampone4,
                 laboratorioTampone5,laboratorioTampone6));
         utenteEsternoRepository.saveAll(List.of(ue1,ue2));
+    }
+
+    private void initCittadino() {
+
+        UtenteGenerico utenteGenerico1 = new UtenteGenerico(
+                "matteo.costa@labservice.it",
+                passwordEncoder.encode("111111"),
+                "CITTADINO"
+        );
+        UtenteGenerico utenteGenerico2 = new UtenteGenerico(
+                "francesco.brescia@labservice.it",
+                passwordEncoder.encode("111111"),
+                "CITTADINO"
+        );
+        utenteGenerico1.setEnabled(true);
+        utenteGenerico2.setEnabled(true);
+
+        Cittadino cittadino1 = new Cittadino(
+                "Matteo","Costantini", LocalDate.of(2000,1,12),
+                "3339898765","CSTMTT00A12E876T",utenteGenerico1
+        );
+        Cittadino cittadino2 = new Cittadino(
+                "Francesco","Brescia", LocalDate.of(2000,6,29),
+                "3261288654","FRNBRS00F29K012U",utenteGenerico2
+        );
+        utenteGenerico1.setCittadino(cittadino1);
+        utenteGenerico2.setCittadino(cittadino2);
+
+        // Le 6 prenotazioni sono state fatte dai due cittadini
+        p1.setUtenteGenerico(utenteGenerico1);
+        p2.setUtenteGenerico(utenteGenerico1);
+        p3.setUtenteGenerico(utenteGenerico1);
+        p4.setUtenteGenerico(utenteGenerico1);
+        p5.setUtenteGenerico(utenteGenerico1);
+        p6.setUtenteGenerico(utenteGenerico1);
+
+        // Le due prenotazioni per utenti esterni sono state fatte dai due cittadini
+        p7.setUtenteGenerico(utenteGenerico1);
+        p8.setUtenteGenerico(utenteGenerico2);
+
+        // Quattro prenotazioni pagate online, altre quattro pagate in sede
+        p1.setPagamentoOnline(true);
+        p2.setPagamentoOnline(true);
+        p3.setPagamentoOnline(true);
+        p4.setPagamentoOnline(true);
+        p5.setPagamentoOnline(false);
+        p6.setPagamentoOnline(false);
+        p7.setPagamentoOnline(false);
+        p8.setPagamentoOnline(false);
+
+        utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
+        prenotazioneRepository.saveAll(List.of(p1,p2,p3,p4,p5,p6,p7,p8));
+    }
+
+    private void initMedico() {
+
+        UtenteGenerico utenteGenerico1 = new UtenteGenerico(
+                "dottor_costa@labservice.it",
+                passwordEncoder.encode("111111"),
+                "MEDICO"
+        );
+        UtenteGenerico utenteGenerico2 = new UtenteGenerico(
+                "dottor_brescia@labservice.it",
+                passwordEncoder.encode("111111"),
+                "MEDICO"
+        );
+        utenteGenerico1.setEnabled(true);
+        utenteGenerico2.setEnabled(true);
+
+        MedicoMedicinaGenerale medico1 = new MedicoMedicinaGenerale();
+        medico1.setNome("Matteo");
+        medico1.setCognome("Costantini");
+        medico1.setDataNascita(LocalDate.of(2000,6,29));
+        medico1.setSpecializzazione("Dentista");
+        medico1.setIndirizzoStudio("Via Matteotti, 80, Lecce");
+        medico1.setNumeroTelefono("3275412098");
+        medico1.setUtenteGenerico(utenteGenerico1);
+
+        MedicoMedicinaGenerale medico2 = new MedicoMedicinaGenerale();
+        medico2.setNome("Francesco");
+        medico2.setCognome("Brescia");
+        medico2.setDataNascita(LocalDate.of(2000,6,29));
+        medico2.setSpecializzazione("Dermatologo");
+        medico2.setIndirizzoStudio("Via Giulio Cesare, 2, Bari");
+        medico2.setNumeroTelefono("3265542448");
+        medico2.setUtenteGenerico(utenteGenerico2);
+
+        utenteGenerico1.setMedico(medico1);
+        utenteGenerico2.setMedico(medico2);
+
+        // Le 2 prenotazioni sono state fatte da medico1
+        p9.setUtenteGenerico(utenteGenerico1);
+        p10.setUtenteGenerico(utenteGenerico1);
+
+        // Le 2 prenotazioni sono state pagate tutte online
+        p9.setPagamentoOnline(true);
+        p10.setPagamentoOnline(true);
+
+        utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
+        prenotazioneRepository.saveAll(List.of(p9,p10));
     }
 }

@@ -1,7 +1,7 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
-import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.DataDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.MedicoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneCittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -10,13 +10,13 @@ import com.uniba.di.dfmdevelop.labservice.maps.DistanceSorter;
 import com.uniba.di.dfmdevelop.labservice.maps.GeocodeResult;
 import com.uniba.di.dfmdevelop.labservice.maps.LaboratorioDistanza;
 import com.uniba.di.dfmdevelop.labservice.model.FileDB;
-import com.uniba.di.dfmdevelop.labservice.paypal.Payment;
+import com.uniba.di.dfmdevelop.labservice.model.MedicoMedicinaGenerale;
 import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.UtenteEsterno;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
+import com.uniba.di.dfmdevelop.labservice.paypal.Payment;
 import com.uniba.di.dfmdevelop.labservice.repository.*;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
 import com.uniba.di.dfmdevelop.labservice.service.RegistrationService;
@@ -39,9 +39,9 @@ import java.util.Optional;
 
 @Slf4j
 @Controller
-@RequestMapping("cittadino")
+@RequestMapping("medico")
 @AllArgsConstructor
-public class CittadinoController {
+public class MedicoController {
 
     private final RegistrationService registrationService;
     private final CustomUserDetailService service;
@@ -58,7 +58,7 @@ public class CittadinoController {
     @GetMapping("index")
     public String index(Model model) {
         model.addAttribute("posizione",null);
-        return "cittadino/index";
+        return "medico/index";
     }
 
     @GetMapping("updateProfile")
@@ -66,58 +66,60 @@ public class CittadinoController {
         // Ricarico l'utente dal DB, in quanto possono essere state fatte delle modifiche
         utente = utenteGenericoRepository.getById(utente.getId());
         // Imposto tutti i campi per l'autocompilazione
-        CittadinoDTO cittadinoDTO = new CittadinoDTO();
-        cittadinoDTO.setIndirizzoEmail(utente.getEmail());
-        cittadinoDTO.setPassword(utente.getPassword());
-        cittadinoDTO.setConferma_password(utente.getPassword());
-        cittadinoDTO.setRuolo(utente.getRole());
-        cittadinoDTO.setNome(utente.getCittadino().getNome());
-        cittadinoDTO.setCognome(utente.getCittadino().getCognome());
-        cittadinoDTO.setDataNascita(utente.getCittadino().getDataNascita());
-        cittadinoDTO.setNumeroTelefono(utente.getCittadino().getNumeroTelefono());
-        cittadinoDTO.setCodiceFiscale(utente.getCittadino().getCodFiscale());
+        MedicoDTO medicoDTO = new MedicoDTO();
+        medicoDTO.setIndirizzoEmail(utente.getEmail());
+        medicoDTO.setPassword(utente.getPassword());
+        medicoDTO.setConferma_password(utente.getPassword());
+        medicoDTO.setRuolo(utente.getRole());
+        medicoDTO.setNome(utente.getMedico().getNome());
+        medicoDTO.setCognome(utente.getMedico().getCognome());
+        medicoDTO.setDataNascita(utente.getMedico().getDataNascita());
+        medicoDTO.setNumeroTelefono(utente.getMedico().getNumeroTelefono());
+        medicoDTO.setSpecializzazione(utente.getMedico().getSpecializzazione());
+        medicoDTO.setIndirizzoStudio(utente.getMedico().getIndirizzoStudio());
         // Aggiungo il DTO completo al modello
-        model.addAttribute("cittadinoDTO",cittadinoDTO);
-        return "cittadino/updateProfile";
+        model.addAttribute("medicoDTO",medicoDTO);
+        return "medico/updateProfile";
     }
 
     @PostMapping("updateProfile")
-    public String updateProfile(@Valid @ModelAttribute("cittadinoDTO") CittadinoDTO request,
+    public String updateProfile(@Valid @ModelAttribute("medicoDTO") MedicoDTO request,
                                 BindingResult bindingResult,
                                 @AuthenticationPrincipal UtenteGenerico utente,
                                 Model model) {
 
-        model.addAttribute("cittadinoDTO", request);
+        model.addAttribute("medicoDTO", request);
         if (bindingResult.hasErrors()) {
             log.error("Error in updating profile");
-            return "cittadino/updateProfile";
+            return "medico/updateProfile";
         }
         // Aggiorna i campi del principal nella sessione corrente
-        Cittadino cittadino = new Cittadino();
-        cittadino.setNome(request.getNome());
-        cittadino.setCognome(request.getCognome());
-        cittadino.setDataNascita(request.getDataNascita());
-        cittadino.setNumeroTelefono(request.getNumeroTelefono());
-        cittadino.setCodFiscale(request.getCodiceFiscale());
-        utente.setCittadino(cittadino);
+        MedicoMedicinaGenerale medico = new MedicoMedicinaGenerale();
+        medico.setNome(request.getNome());
+        medico.setCognome(request.getCognome());
+        medico.setDataNascita(request.getDataNascita());
+        medico.setNumeroTelefono(request.getNumeroTelefono());
+        medico.setSpecializzazione(request.getSpecializzazione());
+        medico.setIndirizzoStudio(request.getIndirizzoStudio());
+        utente.setMedico(medico);
         // Carico le modifiche nel database
-        service.updateUser(request,"cittadinoDTO");
-        return "redirect:/cittadino/updateProfile?success";
+        service.updateUser(request,"medicoDTO");
+        return "redirect:/medico/updateProfile?success";
     }
 
     @PostMapping("registration")
-    public String register(@Valid @ModelAttribute("cittadinoDTO") CittadinoDTO request,
+    public String register(@Valid @ModelAttribute("medicoDTO") MedicoDTO request,
                            BindingResult bindingResult,
                            Model model) {
 
-        model.addAttribute("cittadinoDTO", request);
+        model.addAttribute("medicoDTO", request);
         if (bindingResult.hasErrors()) {
-            log.error("Error in cittadino registration");
-            return "cittadino/registration";
+            log.error("Error in medico registration");
+            return "medico/registration";
         }
         try {
             log.info("Trying to register...");
-            registrationService.register(request, "cittadinoDTO");
+            registrationService.register(request, "medicoDTO");
         } catch (CustomException e) {
             switch (e.getMessage()) {
                 case ErrorMessage.EMAIL_ALREADY_TAKEN:
@@ -140,7 +142,7 @@ public class CittadinoController {
 
         model.addAttribute("lista",lista_prenotazioni);
         model.addAttribute("data",new DataDTO());
-        return "cittadino/esitoTamponi";
+        return "medico/esitoTamponi";
     }
 
     @PostMapping("/esitoTamponi")
@@ -150,7 +152,7 @@ public class CittadinoController {
                                         Model model) {
         if(bindingResult.hasErrors()) {
             log.error("Error in lista prenotazioni");
-            return "cittadino/esitoTamponi";
+            return "medico/esitoTamponi";
         }
 
         List<Prenotazione> lista_prenotazioni = prenotazioneRepository
@@ -169,7 +171,7 @@ public class CittadinoController {
             model.addAttribute("lista",null);
 
         model.addAttribute("data",data);
-        return "cittadino/esitoTamponi";
+        return "medico/esitoTamponi";
     }
 
     @GetMapping("/prenotazione/{id}")
@@ -178,7 +180,7 @@ public class CittadinoController {
         List<FileDB> listDocs = fileDBRepository.findFileDBByPrenotazione(prenotazione);
         model.addAttribute("listDocs",listDocs);
         model.addAttribute("prenotazione",prenotazione);
-        return "cittadino/dettagliPrenotazione";
+        return "medico/dettagliPrenotazione";
     }
 
     @GetMapping("/download")
@@ -210,7 +212,7 @@ public class CittadinoController {
             if(result.getResults().isEmpty())
                 throw new Exception();
         } catch(Exception e) {
-            return "redirect:/cittadino/index?posizione_not_valid";
+            return "redirect:/medico/index?posizione_not_valid";
         }
         String latitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLatitude();
         String longitudine = result.getResults().get(0).getGeometry().getGeocodeLocation().getLongitude();
@@ -232,7 +234,7 @@ public class CittadinoController {
 
         model.addAttribute("posizione",result.getResults().get(0).getFormattedAddress());
         model.addAttribute("lista",lista);
-        return "cittadino/listaLaboratori";
+        return "medico/listaLaboratori";
     }
 
     @GetMapping("/{id}")
@@ -245,30 +247,22 @@ public class CittadinoController {
         model.addAttribute("laboratorio",lab1);
         model.addAttribute("tamponi",lista);
         model.addAttribute("tampone",laboratorioTampone);
-        return "cittadino/indexForUtente";
+        return "medico/indexForUtente";
     }
 
     @PostMapping("/bookTampone")
     public String prenotaTampone(@ModelAttribute("tampone") LaboratorioTampone tampone,
-                                 @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) {
         // LabID: tampone.getLaboratorio().getId();
         // TamponeID: tampone.getTampone().getId();
         // LocalDate date = LocalDate.now();
-
-        // Imposto tutti i campi per l'autocompilazione
+        
         PrenotazioneCittadinoDTO prenotazioneCittadinoDTO = new PrenotazioneCittadinoDTO();
-        prenotazioneCittadinoDTO.setIndirizzoEmail(utente.getEmail());
-        prenotazioneCittadinoDTO.setNome(utente.getCittadino().getNome());
-        prenotazioneCittadinoDTO.setCognome(utente.getCittadino().getCognome());
-        prenotazioneCittadinoDTO.setDataNascita(utente.getCittadino().getDataNascita());
-        prenotazioneCittadinoDTO.setNumeroTelefono(utente.getCittadino().getNumeroTelefono());
-        prenotazioneCittadinoDTO.setCodiceFiscale(utente.getCittadino().getCodFiscale());
-
         prenotazioneCittadinoDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
         prenotazioneCittadinoDTO.setIdTampone(tampone.getTampone().getId());
+
         model.addAttribute("prenotazioneDTO",prenotazioneCittadinoDTO);
-        return "cittadino/bookTampone";
+        return "medico/bookTampone";
     }
 
     @PostMapping("/payment")
@@ -279,7 +273,7 @@ public class CittadinoController {
 
         if(bindingResult.hasErrors()) {
             log.error("Error in booking tampone");
-            return "cittadino/bookTampone";
+            return "medico/bookTampone";
         }
 
         Prenotazione prenotazione_obj = new Prenotazione();
@@ -288,28 +282,19 @@ public class CittadinoController {
                 tamponeRepository.getById(prenotazione.getIdTampone())
         );
 
-        if(prenotazione.getIndirizzoEmail().equals(utente.getEmail())) {
-            // Prenota per se stesso
-            prenotazione_obj.setUtenteGenerico(utente);
-            prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
-            prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
-            prenotazione_obj.setUtenteEsterno(null);
-        }
-        else {
-            // Prenota per cittadino esterno
-            UtenteEsterno utenteEsterno = new UtenteEsterno();
-            utenteEsterno.setNome(prenotazione.getNome());
-            utenteEsterno.setCognome(prenotazione.getCognome());
-            utenteEsterno.setDataNascita(prenotazione.getDataNascita());
-            utenteEsterno.setCodFiscale(prenotazione.getCodiceFiscale());
-            utenteEsterno.setNumeroTelefono(prenotazione.getNumeroTelefono());
+        // Un assistito è come un utente esterno
+        UtenteEsterno utenteEsterno = new UtenteEsterno();
+        utenteEsterno.setNome(prenotazione.getNome());
+        utenteEsterno.setCognome(prenotazione.getCognome());
+        utenteEsterno.setDataNascita(prenotazione.getDataNascita());
+        utenteEsterno.setCodFiscale(prenotazione.getCodiceFiscale());
+        utenteEsterno.setNumeroTelefono(prenotazione.getNumeroTelefono());
 
-            prenotazione_obj.setUtenteGenerico(utente);
-            prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
-            prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
-            prenotazione_obj.setUtenteEsterno(utenteEsterno);
-            utenteEsternoRepository.save(utenteEsterno);
-        }
+        prenotazione_obj.setUtenteGenerico(utente);
+        prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
+        prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
+        prenotazione_obj.setUtenteEsterno(utenteEsterno);
+        utenteEsternoRepository.save(utenteEsterno);
 
         prenotazione_obj.setPagamentoOnline(prenotazione.isPagamento());
         if(!prenotazione.isPagamento()) {
@@ -322,14 +307,14 @@ public class CittadinoController {
                     "Prenotazione tampone");
 
             prenotazioneRepository.save(prenotazione_obj);
-            return "cittadino/payment/earlySuccess";
+            return "payment/success";
         }
         else {
             // Pagamento online
             String nomeLab = laboratorioRepository.getById(prenotazione.getIdLaboratorio()).getNome();
             emailSender.send(
-                   prenotazione.getIndirizzoEmail(),
-                   prenotazioneOnline(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab),
+                    prenotazione.getIndirizzoEmail(),
+                    prenotazioneOnline(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab),
                     "Prenotazione tampone");
 
             prenotazioneRepository.save(prenotazione_obj);
@@ -338,7 +323,7 @@ public class CittadinoController {
             payment.setPrice(prenotazione_obj.getLaboratorioTampone().getPrezzo());
             model.addAttribute("payment",payment);
             model.addAttribute("prenotazione",prenotazione);
-            return "cittadino/payment/index";
+            return "payment/index";
         }
     }
 

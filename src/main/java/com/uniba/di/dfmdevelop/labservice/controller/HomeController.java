@@ -2,6 +2,7 @@ package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.MedicoDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
@@ -107,6 +108,18 @@ public class HomeController {
                 cittadinoDTO.setRuolo(request.getRuolo());
                 model.addAttribute("cittadinoDTO", cittadinoDTO);
                 return "cittadino/registration";
+            case "MEDICO":
+                log.info("Connecting to medico registration");
+                MedicoDTO medicoDTO = new MedicoDTO();
+                // Aggiungo le info di UtenteGenericoDTO al modello
+                medicoDTO.setIndirizzoEmail(request.getIndirizzoEmail());
+                medicoDTO.setPassword(request.getPassword());
+                medicoDTO.setConferma_password(request.getConferma_password());
+                medicoDTO.setRuolo(request.getRuolo());
+                model.addAttribute("medicoDTO", medicoDTO);
+                return "medico/registration";
+            case "DATORE": break;
+            case "ASL": break;
         }
         return null; // TOGLIERE INFINE
     }

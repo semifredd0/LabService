@@ -16,7 +16,7 @@
 
 <div class="header">
     <div style="padding-left: 20px">
-        <a th:href="@{/laboratorio/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
+        <a th:href="@{/medico/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
     </div>
 </div>
 
@@ -67,9 +67,7 @@
                 </div>
             </div>
 
-
-
-            <form th:action="@{/cittadino/bookTampone}" th:object="${tampone}" th:method="post">
+            <form th:action="@{/medico/bookTampone}" th:object="${tampone}" th:method="post">
                 <input class="form-control" type="hidden"
                        th:attr="value = ${tampone.laboratorio.id}" th:field="*{laboratorio.id}"/>
 
