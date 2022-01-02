@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class PaypalController {
-    
+public class PaypalControllerDatore {
+
     @Autowired
     PaypalService paymentService;
-    
-    public static final String SUCCESS_URL = "payment/success";
-    public static final String CANCEL_URL = "payment/cancel";
 
-    @PostMapping("/pay")
+    public static final String SUCCESS_URL = "datore/payment/success";
+    public static final String CANCEL_URL = "datore/payment/cancel";
+
+    @PostMapping("/pay_datore")
     public String payment(@ModelAttribute("payment") Payment p_payment) {
         p_payment.setCurrency("EUR");
         p_payment.setMethod("paypal");

@@ -1,6 +1,5 @@
-package com.uniba.di.dfmdevelop.labservice.model.cittadino;
+package com.uniba.di.dfmdevelop.labservice.model;
 
-import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
 import lombok.Data;
 
 import javax.persistence.*;

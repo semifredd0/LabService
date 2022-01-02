@@ -15,13 +15,13 @@
 <body>
 <div class="header">
     <div style="padding-left: 20px">
-        <a th:href="@{/cittadino/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
+        <a th:href="@{/medico/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px" class="logo"></a>
     </div>
 </div>
 
 <div style=" width:1200px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
     <div class="container">
-        <form th:action="@{/pay_cittadino}" th:object="${payment}" th:method="post">
+        <form th:action="@{/pay_medico}" th:object="${payment}" th:method="post">
 
             <div class="breaks3 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">

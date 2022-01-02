@@ -1,6 +1,5 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
-import com.uniba.di.dfmdevelop.labservice.model.cittadino.Cittadino;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

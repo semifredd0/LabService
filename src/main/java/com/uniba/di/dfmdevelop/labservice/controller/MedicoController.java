@@ -307,7 +307,7 @@ public class MedicoController {
                     "Prenotazione tampone");
 
             prenotazioneRepository.save(prenotazione_obj);
-            return "payment/success";
+            return "medico/payment/success";
         }
         else {
             // Pagamento online
@@ -323,7 +323,7 @@ public class MedicoController {
             payment.setPrice(prenotazione_obj.getLaboratorioTampone().getPrezzo());
             model.addAttribute("payment",payment);
             model.addAttribute("prenotazione",prenotazione);
-            return "payment/index";
+            return "medico/payment/index";
         }
     }
 
