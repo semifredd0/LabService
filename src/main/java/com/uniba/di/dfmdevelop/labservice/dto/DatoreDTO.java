@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode
 @ToString
-public class MedicoDTO extends UtenteGenericoDTO {
+public class DatoreDTO extends UtenteGenericoDTO {
 
     @NotEmpty
     @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
@@ -25,18 +25,18 @@ public class MedicoDTO extends UtenteGenericoDTO {
     private LocalDate dataNascita;
 
     @NotEmpty
+    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
+    private String nomeAzienda;
+
+    @NotEmpty
+    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
+    private String indirizzoAzienda;
+
+    @NotEmpty
     @Size(min = 10, max = 10, message = "Il campo deve contenere esattamente 10 caratteri")
     private String numeroTelefono;
 
-    @NotEmpty
-    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
-    private String specializzazione;
-
-    @NotEmpty
-    @Size(min = 2, message = "Il campo deve contenere almeno 2 caratteri")
-    private String indirizzoStudio;
-
-    public MedicoDTO() {
+    public DatoreDTO() {
         super();
     }
 }

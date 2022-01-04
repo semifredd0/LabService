@@ -1,10 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.config;
 
-import com.uniba.di.dfmdevelop.labservice.model.MedicoMedicinaGenerale;
-import com.uniba.di.dfmdevelop.labservice.model.Cittadino;
-import com.uniba.di.dfmdevelop.labservice.model.Prenotazione;
-import com.uniba.di.dfmdevelop.labservice.model.UtenteGenerico;
-import com.uniba.di.dfmdevelop.labservice.model.UtenteEsterno;
+import com.uniba.di.dfmdevelop.labservice.model.*;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Calendario;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.Laboratorio;
 import com.uniba.di.dfmdevelop.labservice.model.laboratorio.LaboratorioTampone;
@@ -42,6 +38,9 @@ public class DatabaseInit implements CommandLineRunner {
     // Prenotazioni da medici
     Prenotazione p9 = new Prenotazione();
     Prenotazione p10 = new Prenotazione();
+    // Prenotazioni da medici
+    Prenotazione p11 = new Prenotazione();
+    Prenotazione p12 = new Prenotazione();
 
     public DatabaseInit(UtenteGenericoRepository utenteGenericoRepository,
                         TamponeRepository tamponeRepository,
@@ -64,6 +63,7 @@ public class DatabaseInit implements CommandLineRunner {
         initLaboratorio();
         initCittadino();
         initMedico();
+        initDatore();
     }
 
     private void initLaboratorio() {
@@ -173,6 +173,15 @@ public class DatabaseInit implements CommandLineRunner {
         p10.setUtenteEsterno(ue2);
         p10.setLaboratorioTampone(laboratorioTampone1);
         p10.setDataPrenotazione(LocalDate.of(2021,11,12));
+
+        // Aggiungo due prenotazioni per dipendenti [Lab1 - Molecolare]
+        p11.setUtenteEsterno(ue1);
+        p11.setLaboratorioTampone(laboratorioTampone1);
+        p11.setDataPrenotazione(LocalDate.of(2021,11,12));
+        p12.setUtenteEsterno(ue2);
+        p12.setLaboratorioTampone(laboratorioTampone1);
+        p12.setDataPrenotazione(LocalDate.of(2021,11,12));
+
 
         // Aggiungo un calendario vuoto ai vari laboratori
         Calendario cal1 = new Calendario();
@@ -289,5 +298,52 @@ public class DatabaseInit implements CommandLineRunner {
 
         utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
         prenotazioneRepository.saveAll(List.of(p9,p10));
+    }
+
+    private void initDatore() {
+        UtenteGenerico utenteGenerico1 = new UtenteGenerico(
+                "ingegnere_costa@labservice.it",
+                passwordEncoder.encode("111111"),
+                "DATORE"
+        );
+        UtenteGenerico utenteGenerico2 = new UtenteGenerico(
+                "ingegnere_brescia@labservice.it",
+                passwordEncoder.encode("111111"),
+                "DATORE"
+        );
+        utenteGenerico1.setEnabled(true);
+        utenteGenerico2.setEnabled(true);
+
+        DatoreLavoro datore1 = new DatoreLavoro();
+        datore1.setNome("Matteo");
+        datore1.setCognome("Costantini");
+        datore1.setDataNascita(LocalDate.of(2000,6,29));
+        datore1.setNomeAzienda("Syfer SRL");
+        datore1.setIndirizzoAzienda("Via Matteotti, 80, Lecce");
+        datore1.setNumeroTelefono("3275412098");
+        datore1.setUtenteGenerico(utenteGenerico1);
+
+        DatoreLavoro datore2 = new DatoreLavoro();
+        datore2.setNome("Francesco");
+        datore2.setCognome("Brescia");
+        datore2.setDataNascita(LocalDate.of(2000,6,29));
+        datore2.setNomeAzienda("Brescia Company");
+        datore2.setIndirizzoAzienda("Via Giulio Cesare, 2, Bari");
+        datore2.setNumeroTelefono("3265542448");
+        datore2.setUtenteGenerico(utenteGenerico2);
+
+        utenteGenerico1.setDatore(datore1);
+        utenteGenerico2.setDatore(datore2);
+
+        // Le 2 prenotazioni sono state fatte da datore1
+        p11.setUtenteGenerico(utenteGenerico1);
+        p12.setUtenteGenerico(utenteGenerico1);
+
+        // Le 2 prenotazioni sono state pagate tutte online
+        p11.setPagamentoOnline(true);
+        p12.setPagamentoOnline(true);
+
+        utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
+        prenotazioneRepository.saveAll(List.of(p11,p12));
     }
 }

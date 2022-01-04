@@ -15,7 +15,7 @@
 
 <div class="header">
     <div style="padding-left: 20px">
-        <a th:href="@{/medico/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
+        <a th:href="@{/datore/index}"><img th:src="@{~/img/logo.png}" height="53px" width="200px"  class="logo" ></a>
     </div>
 </div><br><br><br>
 
@@ -37,7 +37,7 @@
                                     <ul>
                                         <li>
                                             <img th:src="@{/img/document.png}" style="width:50px; height: 40px"/>
-                                            <a class="a1" th:href="@{'/medico/download?id='+${doc.id}}">[[${doc.name}]]</a>
+                                            <a class="a1" th:href="@{'/datore/download?id='+${doc.id}}">[[${doc.name}]]</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="form-group" style="float: right">
-                    <a th:href="@{/medico/esitoTamponi}" type="submit" class="openbtn" style="background: red">Indietro</a>
+                    <a th:href="@{/datore/esitoTamponi}" type="submit" class="openbtn" style="background: red">Indietro</a>
                 </div>
             </div>
         </div>

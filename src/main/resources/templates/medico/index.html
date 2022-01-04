@@ -50,7 +50,7 @@
         <div class="colonne">
             <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
-                    <h3 class="record-h2">Informazioni sul medico</h3>
+                    <h3 class="record-h2">Informazioni Medico</h3>
                     <dl style="padding-right: 10px" class="record-riga">
                         <hr>
                         <dt>Indirizzo e-mail:</dt>
@@ -66,6 +66,11 @@
                         <dt>Cognome:</dt>
                         <dd>
                             <span sec:authentication="principal.medico.cognome"></span>
+                        </dd>
+                        <hr>
+                        <dt>Data di nascita:</dt>
+                        <dd>
+                            <span sec:authentication="principal.medico.dataNascita"></span>
                         </dd>
                         <hr>
                         <dt>Numero di telefono:</dt>

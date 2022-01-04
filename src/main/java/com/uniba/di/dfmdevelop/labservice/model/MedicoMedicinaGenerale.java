@@ -1,7 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

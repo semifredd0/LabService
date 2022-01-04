@@ -51,7 +51,7 @@
         <div class="colonne">
             <div class="breaks2 " id="floating" style="margin-right: 23px">
                 <div id="containerDettagli" class="breaks3 record">
-                    <h3 class="record-h2">Informazioni sul datore</h3>
+                    <h3 class="record-h2">Informazioni Datore</h3>
                     <dl style="padding-right: 10px" class="record-riga">
                         <hr>
                         <dt>Indirizzo e-mail:</dt>
@@ -61,29 +61,34 @@
                         <hr>
                         <dt>Nome:</dt>
                         <dd>
-                            <span sec:authentication="principal.cittadino.nome"></span>
+                            <span sec:authentication="principal.datore.nome"></span>
                         </dd>
                         <hr>
                         <dt>Cognome:</dt>
                         <dd>
-                            <span sec:authentication="principal.cittadino.cognome"></span>
+                            <span sec:authentication="principal.datore.cognome"></span>
+                        </dd>
+                        <hr>
+                        <dt>Data di nascita:</dt>
+                        <dd>
+                            <span sec:authentication="principal.datore.dataNascita"></span>
+                        </dd>
+                        <hr>
+                        <dt>Numero di telefono:</dt>
+                        <dd>
+                            <span sec:authentication="principal.datore.numeroTelefono"></span>
                         </dd>
                         <hr>
                         <dt>Nome Azienda:</dt>
                         <dd>
-                            <span sec:authentication="principal.cittadino.dataNascita"></span>
+                            <span sec:authentication="principal.datore.nomeAzienda"></span>
                         </dd>
                         <hr>
-                        <dt>Indirizzo stadale azienda:</dt>
+                        <dt>Indirizzo stradale azienda:</dt>
                         <dd>
-                            <span sec:authentication="principal.cittadino.numeroTelefono"></span>
+                            <span sec:authentication="principal.datore.indirizzoAzienda"></span>
                         </dd>
                         <hr>
-
-                        <dt>Numero di telefono:</dt>
-                        <dd>
-                            <span sec:authentication="principal.cittadino.codFiscale"></span>
-                        </dd>
                         <br><br>
                     </dl>
                 </div>
