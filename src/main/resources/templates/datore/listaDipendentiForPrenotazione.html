@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Lista Dipendenti</title>
+    <title>Seleziona dipendente</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -22,18 +22,31 @@
 <div class="container" style="margin-top: 20px;">
     <div class="row">
         <div style="width:1000px;margin-left: auto;margin-right: auto;margin-top:80px;padding: 24px;">
-            <h2 style="color: black; padding-bottom: 8px"><b>Lista Dipendenti</b></h2>
-
-            <div th:if="${param.success}">
-                <div class="alert alert-success">
-                    Dipendente registrato correttamente.
-                </div>
+            <h2 style="color: black; padding-bottom: 8px"><b>Seleziona dipendente da tamponare</b></h2>
+            <!--
+            <div style="float: left; padding-bottom: 5px;">
+                <form th:action="@{/datore/listaDipendentiForPrenotazione}" th:object="${codiceFiscale}" th:method="post">
+                    Indicare il codice fiscale del dipendente che si vuole cercare:
+                    <table style="border: hidden">
+                        <tr>
+                            <td style="padding-right: 10px">
+                                <input type="text" id="codiceFiscale" class="form-control" th:field="*{codFiscCercato}" th:errorClass="is-invalid" required style="width:300px;"/>
+                                <div th:if="${#fields.hasErrors('codFiscCercato')}" th:errors="*{codFiscCercato}" class="invalid-feedback"></div>
+                            </td>
+                            <td>
+                                <button style="float: left;" type="submit" class="button">Cerca</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
+            <br><br><br>-->
 
             <table class="table table-secondary table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Cognome</th>
                     <th scope="col">Data di Nascita</th>
@@ -44,6 +57,11 @@
 
                 <tbody>
                 <tr th:each="element,iterationStatus : ${lista}">
+                    <td>
+                        <div style="margin-left: 1%">
+                            <input type="radio" th:id="${element.id}" th:field="${element.id}" th:value="${element.id}">
+                        </div>
+                    </td>
                     <td th:text="${element.id}"></td>
                     <td th:text="${element.nome}"></td>
                     <td th:text="${element.cognome}"></td>
