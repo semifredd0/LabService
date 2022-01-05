@@ -41,38 +41,44 @@
                 </form>
             </div>
             <br><br><br>-->
-            <form th:action="" th:object="" th:method="post">
-                <table class="table table-secondary table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col">Data di Nascita</th>
-                        <th scope="col">Codice Fiscale</th>
 
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr th:each="element,iterationStatus : ${lista}">
-                        <td style="width: 10px"><input type="radio" name="infoDipendente"></td>
-                        <td th:text="${element.nome}"></td>
-                        <td th:text="${element.cognome}"></td>
-                        <td th:text="${element.dataNascita}"></td>
-                        <td th:text="${element.codiceFiscale}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div class="form-group">
-                    <a th:href="@{/cittadino/index}" type="submit" class="button" style="float: right; background: red; text-decoration: none;">Indietro</a>
+            <div th:if="${param.success}">
+                <div class="alert alert-success">
+                    Dipendente registrato correttamente.
                 </div>
+            </div>
 
-                <div class="form-group" style="float: right">
-                    <button type="submit" class="button">Avanti</button>
-                </div>
-            </form>
+            <table class="table table-secondary table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Data di Nascita</th>
+                    <th scope="col">Codice Fiscale</th>
+                    <th scope="col">Numero di Telefono</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="element,iterationStatus : ${lista}">
+                    <td th:text="${element.id}"></td>
+                    <td th:text="${element.nome}"></td>
+                    <td th:text="${element.cognome}"></td>
+                    <td th:text="${element.dataNascita}"></td>
+                    <td th:text="${element.codFiscale}"></td>
+                    <td th:text="${element.numeroTelefono}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="form-group">
+                <a th:href="@{/datore/index}" type="submit" class="button" style="float: right; background: red; text-decoration: none;">Indietro</a>
+            </div>
+
+            <div class="form-group">
+                <a th:href="@{/datore/registraDipendente}" class="button" style="float: right; background: mediumseagreen; text-decoration: none;">Aggiungi</a>
+            </div>
         </div>
     </div>
 </div>

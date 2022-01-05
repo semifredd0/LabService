@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 public interface DatoreRepository extends JpaRepository<DatoreLavoro, Long> {
 
-    @Query("SELECT c FROM datore_lavoro c WHERE c.utenteGenerico = ?1")
-    DatoreLavoro getByIdUtente(UtenteGenerico utenteGenerico);
+    @Query("SELECT c FROM datore_lavoro c WHERE c.utenteGenerico.id = ?1")
+    DatoreLavoro getByIdUtente(Long idUtente);
 
     @Transactional
     @Modifying

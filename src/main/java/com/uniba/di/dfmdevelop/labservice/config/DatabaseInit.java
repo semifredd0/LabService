@@ -174,14 +174,14 @@ public class DatabaseInit implements CommandLineRunner {
         p10.setLaboratorioTampone(laboratorioTampone1);
         p10.setDataPrenotazione(LocalDate.of(2021,11,12));
 
-        // Aggiungo due prenotazioni per dipendenti [Lab1 - Molecolare]
-        p11.setUtenteEsterno(ue1);
+        /* Aggiungo due prenotazioni per dipendenti [Lab1 - Molecolare]
+            In questo caso i dipendenti, ossia UtenteEsterno, vengono
+            istanziati e aggiunti alla prenotazione nella funzione initDatore().
+        */
         p11.setLaboratorioTampone(laboratorioTampone1);
         p11.setDataPrenotazione(LocalDate.of(2021,11,12));
-        p12.setUtenteEsterno(ue2);
         p12.setLaboratorioTampone(laboratorioTampone1);
         p12.setDataPrenotazione(LocalDate.of(2021,11,12));
-
 
         // Aggiungo un calendario vuoto ai vari laboratori
         Calendario cal1 = new Calendario();
@@ -335,15 +335,30 @@ public class DatabaseInit implements CommandLineRunner {
         utenteGenerico1.setDatore(datore1);
         utenteGenerico2.setDatore(datore2);
 
+        // Creo due dipendenti per datore1
+        UtenteEsterno dipendente1 = new UtenteEsterno(
+                "Luca","Manta", LocalDate.of(2000,1,12),
+                "3339898765","MNTLCA00A12E876T");
+        UtenteEsterno dipendente2 = new UtenteEsterno(
+                "Diego","Donadei", LocalDate.of(2000,1,12),
+                "3339898765","DNDDGO00A12E876T");
+        dipendente1.setDatoreLavoro(datore1);
+        dipendente2.setDatoreLavoro(datore1);
+
         // Le 2 prenotazioni sono state fatte da datore1
         p11.setUtenteGenerico(utenteGenerico1);
         p12.setUtenteGenerico(utenteGenerico1);
+
+        // Le 2 prenotazioni sono state fatte per i 2 dipendenti
+        p11.setUtenteEsterno(dipendente1);
+        p12.setUtenteEsterno(dipendente2);
 
         // Le 2 prenotazioni sono state pagate tutte online
         p11.setPagamentoOnline(true);
         p12.setPagamentoOnline(true);
 
         utenteGenericoRepository.saveAll(List.of(utenteGenerico1,utenteGenerico2));
+        utenteEsternoRepository.saveAll(List.of(dipendente1,dipendente2));
         prenotazioneRepository.saveAll(List.of(p11,p12));
     }
 }

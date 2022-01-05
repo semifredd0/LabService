@@ -2,6 +2,7 @@ package com.uniba.di.dfmdevelop.labservice.controller;
 
 import com.uniba.di.dfmdevelop.labservice.dto.DataDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.DatoreDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.DipendenteDTO;
 import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneCittadinoDTO;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
@@ -46,6 +47,7 @@ public class DatoreController {
     private final TamponeRepository tamponeRepository;
     private final LaboratorioTamponeRepository laboratorioTamponeRepository;
     private final PrenotazioneRepository prenotazioneRepository;
+    private final DatoreRepository datoreRepository;
     private final UtenteEsternoRepository utenteEsternoRepository;
     private final FileDBRepository fileDBRepository;
     private final GeocodeController geocode;
@@ -104,7 +106,7 @@ public class DatoreController {
     }
 
     @PostMapping("registration")
-    public String register(@Valid @ModelAttribute("medicdatoreDTO") DatoreDTO request,
+    public String register(@Valid @ModelAttribute("datoreDTO") DatoreDTO request,
                            BindingResult bindingResult,
                            Model model) {
 
@@ -199,6 +201,50 @@ public class DatoreController {
 
     //------------
 
+    @GetMapping("listaDipendenti")
+    public String listaDipendenti(@AuthenticationPrincipal UtenteGenerico utente, Model model) {
+        List<UtenteEsterno> lista =
+                utenteEsternoRepository.findUtenteEsternoByDatoreLavoro(utente.getDatore());
+        if(lista.isEmpty())
+            model.addAttribute("lista",null);
+        else
+            model.addAttribute("lista",lista);
+        return "datore/listaDipendenti";
+    }
+
+    @GetMapping("registraDipendente")
+    public String registraDipendente(@AuthenticationPrincipal UtenteGenerico utente, Model model) {
+        DipendenteDTO dipendenteDTO = new DipendenteDTO();
+        dipendenteDTO.setIdUtente(utente.getId());
+        model.addAttribute("dipendenteDTO",dipendenteDTO);
+        return "datore/registraDipendente";
+    }
+
+    @PostMapping("registraDipendente")
+    public String registraDipendente(@Valid @ModelAttribute("dipendenteDTO") DipendenteDTO request,
+                                     BindingResult bindingResult,
+                                     Model model) {
+
+        model.addAttribute("dipendenteDTO",request);
+        if (bindingResult.hasErrors()) {
+            log.error("Error in dipendente registration");
+            return "datore/registraDipendente";
+        }
+
+        DatoreLavoro datore = datoreRepository.getByIdUtente(request.getIdUtente());
+        UtenteEsterno utenteEsterno = new UtenteEsterno();
+        utenteEsterno.setNome(request.getNome());
+        utenteEsterno.setCognome(request.getCognome());
+        utenteEsterno.setDataNascita(request.getDataNascita());
+        utenteEsterno.setNumeroTelefono(request.getNumeroTelefono());
+        utenteEsterno.setCodFiscale(request.getCodiceFiscale());
+        utenteEsterno.setDatoreLavoro(datore);
+        utenteEsternoRepository.save(utenteEsterno);
+        return "redirect:/datore/listaDipendenti?success";
+    }
+
+    //------------
+
     @PostMapping("ricercaLaboratorio")
     public String ricercaLaboratorio(@RequestParam String posizione, Model model) {
         // Trovo latitudine e longitudine della posizione inserita
@@ -266,7 +312,6 @@ public class DatoreController {
                                  BindingResult bindingResult,
                                  @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) throws CustomException {
-
         if(bindingResult.hasErrors()) {
             log.error("Error in booking tampone");
             return "datore/bookTampone";

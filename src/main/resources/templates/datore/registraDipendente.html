@@ -28,25 +28,10 @@
         <div class="col-md-6 col-md-offset-3">
             <br><br>
 
-            <div th:if="${param.fail_send}">
-                <div class="alert alert-danger">
-                    Impossibile inviare il link di conferma all'indirizzo e-mail specificato.
-                </div>
-            </div>
-
-            <form th:action="@{/datore/registrationDipendente}" th:object="${datoreDTO}" th:method="post">
+            <form th:action="@{/datore/registraDipendente}" th:object="${dipendenteDTO}" th:method="post">
 
                 <input class="form-control" type="hidden"
-                       th:attr="value = ${datoreDTO.indirizzoEmail}" th:field="*{indirizzoEmail}"/>
-
-                <input class="form-control" type="hidden"
-                       th:attr="value = ${datoreDTO.password}" th:field="*{password}"/>
-
-                <input class="form-control" type="hidden"
-                       th:attr="value = ${datoreDTO.conferma_password}" th:field="*{conferma_password}"/>
-
-                <input class="form-control" type="hidden"
-                       th:attr="value = ${datoreDTO.ruolo}" th:field="*{ruolo}"/>
+                       th:attr="value = ${dipendenteDTO.idUtente}" th:field="*{idUtente}"/>
 
                 <div class="form-group">
                     <label class="control-label" for="nome"> Nome </label> <input
@@ -70,17 +55,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
-                        id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
-                        th:errorClass="is-invalid" required/>
-                    <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-group">
                     <label class="control-label" for="codiceFiscale"> Codice Fiscale </label> <input
                         id="codiceFiscale" class="form-control" th:field="*{codiceFiscale}"
                         th:errorClass="is-invalid" required />
                     <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="numeroTelefono"> Numero di telefono </label> <input
+                        id="numeroTelefono" class="form-control" th:field="*{numeroTelefono}"
+                        th:errorClass="is-invalid" required/>
+                    <div th:if="${#fields.hasErrors('numeroTelefono')}" th:errors="*{numeroTelefono}" class="invalid-feedback"></div>
                 </div>
 
                 <!--/* DA MODIFICARE con il campo ASL di appartenenza

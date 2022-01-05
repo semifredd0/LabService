@@ -6,6 +6,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/*
+    Rappresenta utenti esterni per cui è stato prenotato un tampone
+    da parte di un cittadino registrato.
+    Inoltre questa Entity viene utilizzata per rappresentare assistiti
+    e dipendenti per cui i medici e i datori di lavoro possono prenotare tamponi.
+    Se si tratta di dipendenti, il campo Datore contiene l'ID del datore di lavoro
+    a cui fa riferimento il dipendente. Altrimenti il campo = NULL.
+ */
+
 @Data
 @NoArgsConstructor
 @Entity(name = "utente_esterno")
@@ -58,6 +67,10 @@ public class UtenteEsterno {
             columnDefinition = "TEXT"
     )
     private String codFiscale;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "datore_id")
+    private DatoreLavoro datoreLavoro;
 
     public UtenteEsterno(String nome,
                      String cognome,

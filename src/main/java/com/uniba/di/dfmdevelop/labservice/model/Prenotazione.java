@@ -31,6 +31,7 @@ public class Prenotazione {
     )
     private Long id;
 
+    // Possono essere cittadini, medici oppure datori di lavoro
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "utente_id", nullable = false)
     private UtenteGenerico utenteGenerico;
