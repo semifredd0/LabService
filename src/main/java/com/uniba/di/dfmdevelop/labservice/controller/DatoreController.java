@@ -1,9 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
-import com.uniba.di.dfmdevelop.labservice.dto.DataDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.DatoreDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.DipendenteDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.PrenotazioneCittadinoDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.*;
 import com.uniba.di.dfmdevelop.labservice.email.EmailSender;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
@@ -294,21 +291,24 @@ public class DatoreController {
 
     @PostMapping("/bookTampone")
     public String prenotaTampone(@ModelAttribute("tampone") LaboratorioTampone tampone,
+                                 @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) {
         // LabID: tampone.getLaboratorio().getId();
         // TamponeID: tampone.getTampone().getId();
         // LocalDate date = LocalDate.now();
 
-        PrenotazioneCittadinoDTO prenotazioneCittadinoDTO = new PrenotazioneCittadinoDTO();
-        prenotazioneCittadinoDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
-        prenotazioneCittadinoDTO.setIdTampone(tampone.getTampone().getId());
+        PrenotazioneDipendenteDTO prenotazioneDTO = new PrenotazioneDipendenteDTO();
+        prenotazioneDTO.setIdLaboratorio(tampone.getLaboratorio().getId());
+        prenotazioneDTO.setIdTampone(tampone.getTampone().getId());
+        List<UtenteEsterno> lista = utenteEsternoRepository.findUtenteEsternoByDatoreLavoro(utente.getDatore());
 
-        model.addAttribute("prenotazioneDTO",prenotazioneCittadinoDTO);
+        model.addAttribute("listaDipendenti",lista);
+        model.addAttribute("prenotazioneDTO",prenotazioneDTO);
         return "datore/bookTampone";
     }
 
     @PostMapping("/payment")
-    public String prenotaTampone(@Valid @ModelAttribute("prenotazioneDTO") PrenotazioneCittadinoDTO prenotazione,
+    public String prenotaTampone(@Valid @ModelAttribute("prenotazioneDTO") PrenotazioneDipendenteDTO prenotazione,
                                  BindingResult bindingResult,
                                  @AuthenticationPrincipal UtenteGenerico utente,
                                  Model model) throws CustomException {
@@ -324,26 +324,20 @@ public class DatoreController {
         );
 
         // Un dipendente è come un utente esterno
-        UtenteEsterno utenteEsterno = new UtenteEsterno();
-        utenteEsterno.setNome(prenotazione.getNome());
-        utenteEsterno.setCognome(prenotazione.getCognome());
-        utenteEsterno.setDataNascita(prenotazione.getDataNascita());
-        utenteEsterno.setCodFiscale(prenotazione.getCodiceFiscale());
-        utenteEsterno.setNumeroTelefono(prenotazione.getNumeroTelefono());
-
+        UtenteEsterno utenteEsterno =
+                utenteEsternoRepository.getUtenteEsternoById(prenotazione.getIdDipendente());
         prenotazione_obj.setUtenteGenerico(utente);
         prenotazione_obj.setLaboratorioTampone(laboratorioTampone);
         prenotazione_obj.setDataPrenotazione(prenotazione.getDataPrenotazione());
         prenotazione_obj.setUtenteEsterno(utenteEsterno);
-        utenteEsternoRepository.save(utenteEsterno);
 
         prenotazione_obj.setPagamentoOnline(prenotazione.isPagamento());
         if(!prenotazione.isPagamento()) {
             // Pagamento in sede
             String nomeLab = laboratorioRepository.getById(prenotazione.getIdLaboratorio()).getNome();
             emailSender.send(
-                    prenotazione.getIndirizzoEmail(),
-                    prenotazioneInSede(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab,
+                    utente.getEmail(),
+                    prenotazioneInSede(utente.getEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab,
                             String.format("%.2f",prenotazione_obj.getLaboratorioTampone().getPrezzo())),
                     "Prenotazione tampone");
 
@@ -354,8 +348,8 @@ public class DatoreController {
             // Pagamento online
             String nomeLab = laboratorioRepository.getById(prenotazione.getIdLaboratorio()).getNome();
             emailSender.send(
-                    prenotazione.getIndirizzoEmail(),
-                    prenotazioneOnline(prenotazione.getIndirizzoEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab),
+                    utente.getEmail(),
+                    prenotazioneOnline(utente.getEmail(),prenotazione.getDataPrenotazione().toString(),nomeLab),
                     "Prenotazione tampone");
 
             prenotazioneRepository.save(prenotazione_obj);
@@ -441,7 +435,7 @@ public class DatoreController {
                 "        \n" +
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "            La sua prenotazione è avvenuta con successo!<br>" +
-                "            Si presenti il giorno " + date +" per effettuare un tampone presso il laboratorio: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + lab + " </p></blockquote>\n<p>A presto!</p>" +
+                "            Il suo dipendente dovrà presentarsi il giorno " + date +" per effettuare un tampone presso il laboratorio: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + lab + " </p></blockquote>\n<p>A presto!</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
@@ -512,7 +506,7 @@ public class DatoreController {
                 "        \n" +
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "            La sua prenotazione è avvenuta con successo!<br>" +
-                "            Si presenti il giorno " + date +" per effettuare un tampone presso il laboratorio: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + lab + " </p></blockquote>\n" +
+                "            Il suo dipendente dovrà presentarsi il giorno " + date +" per effettuare un tampone presso il laboratorio: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " + lab + " </p></blockquote>\n" +
                 "            Prima di effettuare il tampone bisogna effettuare il pagamento in contanti.<br>Prezzo del tampone prenotato: € " + price + "\n<p>A presto!</p>" +
                 "        \n" +
                 "      </td>\n" +
