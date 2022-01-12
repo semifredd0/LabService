@@ -1,9 +1,6 @@
 package com.uniba.di.dfmdevelop.labservice.controller;
 
-import com.uniba.di.dfmdevelop.labservice.dto.CittadinoDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.LaboratorioDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.MedicoDTO;
-import com.uniba.di.dfmdevelop.labservice.dto.UtenteGenericoDTO;
+import com.uniba.di.dfmdevelop.labservice.dto.*;
 import com.uniba.di.dfmdevelop.labservice.exception.CustomException;
 import com.uniba.di.dfmdevelop.labservice.exception.ErrorMessage;
 import com.uniba.di.dfmdevelop.labservice.service.CustomUserDetailService;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Slf4j
@@ -118,10 +116,18 @@ public class HomeController {
                 medicoDTO.setRuolo(request.getRuolo());
                 model.addAttribute("medicoDTO", medicoDTO);
                 return "medico/registration";
-            case "DATORE": break;
-            case "ASL": break;
+            case "DATORE":
+                log.info("Connecting to datore registration");
+                DatoreDTO datoreDTO = new DatoreDTO();
+                // Aggiungo le info di UtenteGenericoDTO al modello
+                datoreDTO.setIndirizzoEmail(request.getIndirizzoEmail());
+                datoreDTO.setPassword(request.getPassword());
+                datoreDTO.setConferma_password(request.getConferma_password());
+                datoreDTO.setRuolo(request.getRuolo());
+                model.addAttribute("datoreDTO", datoreDTO);
+                return "datore/registration";
         }
-        return null; // TOGLIERE INFINE
+        return null;
     }
 
     @GetMapping(path = "registration/confirm")
