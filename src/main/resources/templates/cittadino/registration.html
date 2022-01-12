@@ -83,19 +83,6 @@
                     <div th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}" class="invalid-feedback"></div>
                 </div>
 
-                <!--/* DA MODIFICARE con il campo ASL di appartenenza
-                <div class="form-group">
-                    <label class="control-label" for="asl"> Asl di appartenenza </label>
-
-                    <select class="form-select form-select-sm" id="asl" th:field="*{asl}" required autofocus="autofocus">
-                        <option selected>Seleziona asl di appartenenza</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <div th:if="${#fields.hasErrors('codFiscale')}" th:errors="*{codFiscale}" class="invalid-feedback"></div>
-                </div>*/-->
-
                 <div class="form-group" style="float: right">
                     <button type="submit" class="button">Registrati</button>
                 </div>
