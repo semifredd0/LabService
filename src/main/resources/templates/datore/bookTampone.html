@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label class="control-label"> ID Dipendente </label>
-                    <select th:field="*{idDipendente}">
+                    <select th:field="*{idDipendente}" style="width: 60%">
                         <option th:each="i : ${listaDipendenti}" th:value="${i.id}" th:text="${i.id}">
                         </option>
                     </select>
